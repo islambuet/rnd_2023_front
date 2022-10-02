@@ -17,4 +17,7 @@
     npm run serve
 ### Compiles and minifies for production
     npm run build
-
+## Other Packages
+    ### https://github.com/Maronato/vue-toastification/tree/next
+        npm install --save vue-toastification@next
+    
