@@ -21,3 +21,5 @@
     ### https://github.com/Maronato/vue-toastification/tree/next
         npm install --save vue-toastification@next
     
+        npm install axios -save
+    

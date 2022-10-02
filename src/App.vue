@@ -1,30 +1,24 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div id="system_main_container">
+  </div>
 </template>
+<script setup>
+  import globalVariables from "@/assets/globalVariables";
+  import systemFunctions from "@/assets/systemFunctions";
+  import toastFunctions from "@/assets/toastFunctions";
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+  import {ref,reactive } from 'vue';
+  import axios from 'axios';
 
-nav {
-  padding: 30px;
-}
+  axios.defaults.baseURL = 'http://192.168.0.109/base/apivue2base2/public/api/';
+  axios.defaults.headers.common['language'] =globalVariables.language;
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + globalVariables.user[globalVariables.localStorageAuthTokenStr];
+  axios.interceptors.request.use(function (config) {
+    toastFunctions.clearToast()
+    globalVariables.validationErrors='';
+    return config;
+  }, function (error) {
+    return Promise.reject(error);
+  });
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+</script>
