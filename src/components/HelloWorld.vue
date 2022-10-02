@@ -28,7 +28,29 @@
     </ul>
   </div>
 </template>
+<script setup>
+import axios from "axios";
+const instance = axios.create({
+});
 
+const init=async ()=>{
+  await axios.get('user/initialize').then((response)=>{
+    console.log("local response");
+  }).catch(error=>{
+    console.log("local error");
+  })
+}
+const init2=async ()=>{
+  await instance.get('user/initialize1').then((response)=>{
+    console.log("local response2");
+  }).catch(error=>{
+    console.log("local error2");
+  })
+}
+//
+init2();
+init();
+</script>
 <script>
 export default {
   name: 'HelloWorld',

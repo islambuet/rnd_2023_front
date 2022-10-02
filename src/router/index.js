@@ -1,27 +1,31 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: function () {
-      return import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+function getRoutes() {
+  let routes =[];
+  routes.push({ path: '/', component: () => import('@/tasks/Dashboard.vue')});
+  let vue_index_files = require.context('@/tasks/',true,/\/Index\.vue$/).keys();
+  for(let i=0;i<vue_index_files.length;i++) {
+    let index_file=vue_index_files[i];
+    let path=index_file.substr(1,index_file.length-11);
+    let children=[];
+    try{
+      let data=require(`@/tasks${path}/routes.children.js`);
+      children=data.default;
     }
+    catch (error) {
+      //console.log(error);
+    }
+    routes.push({ path: path, component: () => import('@/tasks'+path+'/Index.vue'), children: children});
   }
-]
+  //routes.push({ path: '/:pathMatch(.*)', component: () => import('@/components/busy-states/404.vue')});
+  return routes;
+}
+//console.log(getRoutes())
+
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  base: process.env.BASE_URL,
+  routes:getRoutes()
 })
 
 export default router

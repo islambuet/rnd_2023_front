@@ -1,24 +1,26 @@
 import globalVariables from "@/assets/globalVariables";
 import ResponseError from "@/components/busy-states/ResponseError.vue";
-// import LoadingAccessDenyVue from "@/components/busy-states/LoadingAccessDeny.vue";
+import AccessDeny from "@/components/busy-states/AccessDeny.vue";
 // import SiteOffline from "@/components/busy-states/SiteOffline.vue";
-// import labels from "@/labels";
+import labels from "@/labels";
 import { useToast } from "vue-toastification";
 const toast = useToast();
 export default{
     clearToast() {
         toast.clear();
     },
+    showSuccessfullySavedMessage(){
+        this.showSuccessMessage("Need to write message for this")
+    },
+    showSuccessMessage(msg) {
+        toast.success(msg, {timeout: 2000 });
+    },
     showResponseError() {
         toast.error(ResponseError);
     },
-    // showSuccessMessage(msg) {
-    //     toast.success(msg, {timeout: 2000 });
-    // },
-    // showAccessDenyMessage() {
-    //     toast(LoadingAccessDenyVue);
-    // },
-
+    showAccessDenyMessage() {
+        toast(AccessDeny);
+    },
     // showApiOfflineMessage() {
     //     toast(SiteOffline);
     // },

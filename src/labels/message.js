@@ -16,7 +16,7 @@ export default {
         en: "Data loading problem. Wait some moment and refresh your browser. You may contact with system admin.",
         bn: "ডেটা লোড সমস্যা। কিছুক্ষণ অপেক্ষা করুন এবং আপনার ব্রাউজারটি রিফ্রেশ করুন, অথবা আপনি অ্যাডমিনের সাথে যোগাযোগ করুন।"
     },
-    msg_loading_access_deny_title: {
+    msg_access_deny_title: {
         en: "Access Deny",
         bn: "প্রবেশ অনুমতি নাই"
     },
