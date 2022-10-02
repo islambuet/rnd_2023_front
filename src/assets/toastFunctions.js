@@ -1,4 +1,5 @@
 import globalVariables from "@/assets/globalVariables";
+import ResponseError from "@/components/busy-states/ResponseError.vue";
 // import LoadingAccessDenyVue from "@/components/busy-states/LoadingAccessDeny.vue";
 // import SiteOffline from "@/components/busy-states/SiteOffline.vue";
 // import labels from "@/labels";
@@ -8,15 +9,16 @@ export default{
     clearToast() {
         toast.clear();
     },
+    showResponseError() {
+        toast.error(ResponseError);
+    },
     // showSuccessMessage(msg) {
     //     toast.success(msg, {timeout: 2000 });
     // },
     // showAccessDenyMessage() {
     //     toast(LoadingAccessDenyVue);
     // },
-    // showResponseFailure() {
-    //     toast.error(labels.get('msg_loading_failed_message'));
-    // },
+
     // showApiOfflineMessage() {
     //     toast(SiteOffline);
     // },
