@@ -28,7 +28,7 @@
                                             <div class="input-group-prepend eye_password">
                                               <span class="input-group-text" ><i class="feather icon-eye"></i></span>
                                             </div>
-                                            <input type="password" class="form-control" placeholder="Password" name="password" value="12345678" required="" />
+                                            <input type="password" class="form-control" :placeholder="labels.get('label_password')" name="password" value="12345678" required="" />
                                           </div>
                                             <button type="submit" class="btn btn-primary btn-inline waves-effect waves-light float-right">{{ labels.get('label_login') }}</button>
                                         </form>
@@ -49,12 +49,17 @@
 <script setup>
   import globalVariables from "@/assets/globalVariables";
   import systemFunctions from "@/assets/systemFunctions";
-  import labels from '@/labels'   
+  import labels from '@/labels'
+  import { reactive } from 'vue'
   import {useRoute,useRouter} from 'vue-router';
   import axios from 'axios';
   const route =useRoute()
   const router =useRouter()
-  
+  let taskData=reactive({
+    taskBaseUrl:systemFunctions.getTaskBaseURL(import.meta.url)
+  })
+  labels.add([{language:globalVariables.language,file:'tasks'+taskData.taskBaseUrl+'/labels.js'}])
+
   const init=()=>{
     if(globalVariables.user.id>0){        
       router.push("/");

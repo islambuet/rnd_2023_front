@@ -13,6 +13,9 @@ export default{
             }
         }
     },
+    getTaskBaseURL(file){
+        return file.substring(file.indexOf('src/tasks')+9,file.indexOf('/Index.vue'));
+    },
     getFilteredItems(data,columns){
         let filterItems= data.filter((item)=>{
             for(let  key in columns.all)
