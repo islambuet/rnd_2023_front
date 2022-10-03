@@ -1,5 +1,6 @@
 import globalVariables from "@/assets/globalVariables";
 import ResponseError from "@/components/busy-states/ResponseError.vue";
+import ResponseFileServerError from "@/components/busy-states/ResponseFileServerError.vue";
 import AccessDeny from "@/components/busy-states/AccessDeny.vue";
 // import SiteOffline from "@/components/busy-states/SiteOffline.vue";
 import labels from "@/labels";
@@ -16,7 +17,16 @@ export default{
         toast.success(msg, {timeout: 2000 });
     },
     showResponseError() {
-        toast.error(ResponseError);
+        console.log(globalVariables.uploadingFiles)
+        if(globalVariables.uploadingFiles==1){
+            console.log("if",globalVariables.uploadingFiles)
+            toast.error(ResponseFileServerError);
+        }
+        else{
+            console.log("else",globalVariables.uploadingFiles)
+            toast.error(ResponseError);
+        }
+
     },
     showAccessDenyMessage() {
         toast(AccessDeny);

@@ -34,11 +34,13 @@
   });
   axios.interceptors.response.use(function (response) {
     globalVariables.statusDataLoaded=1;
+    globalVariables.uploadingFiles=0;
     return response;
   }, function (error) {
     console.log("global error")
     globalVariables.statusDataLoaded=1;
     toastFunctions.showResponseError();
+    globalVariables.uploadingFiles=0;
     return Promise.reject(error);
   });
   let statusSiteLoaded=ref(0);

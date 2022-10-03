@@ -19,6 +19,7 @@ export default reactive({
   baseUrl: process.env.BASE_URL, 
   imageBaseUrl:'http://localhost/rnd_2023_upload/public/',
   statusDataLoaded: 1,    //Loading=0,loaded=1
+  uploadingFiles:0,
   validationErrors:'',
   language: language,
   language_available:['en','bn'],

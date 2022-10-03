@@ -56,7 +56,6 @@
   const router =useRouter()
   
   const init=()=>{
-    globalVariables.statusDataLoaded = 1;    
     if(globalVariables.user.id>0){        
       router.push("/");
     }      

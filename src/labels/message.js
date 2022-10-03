@@ -8,13 +8,21 @@ export default {
         en: "It's looking like you may have taken a wrong turn. Don't worry... it happens to the best of us. You might want to check your internet connection. Here's a little tip that might help you get back on track.",
         bn: "দেখে মনে হচ্ছে আপনি কোনও ভুল পাল্টে নিয়েছেন। চিন্তা করবেন না ... এটি আমাদের সেরা ক্ষেত্রে ঘটে। আপনি নিজের ইন্টারনেট সংযোগটি পরীক্ষা করতে চাইতে পারেন। এখানে একটি সামান্য টিপ যা আপনাকে ট্র্যাকটিতে ফিরে আসতে সহায়তা করতে পারে।"
     },
-    msg_loading_failed_title: {
-        en: "Data Loading Problem",
-        bn: "ডেটা লোড সমস্যা"
+    msg_server_error_title: {
+        en: "Internet/Server Problem",
+        bn: "ইন্টারনেট/সার্ভার সমস্যা"
     },
-    msg_loading_failed_message: {
-        en: "Data loading problem. Wait some moment and refresh your browser. You may contact with system admin.",
-        bn: "ডেটা লোড সমস্যা। কিছুক্ষণ অপেক্ষা করুন এবং আপনার ব্রাউজারটি রিফ্রেশ করুন, অথবা আপনি অ্যাডমিনের সাথে যোগাযোগ করুন।"
+    msg_server_error_message: {
+        en: "Please Check your Internet Connection. Wait some moment and Try again. You may contact with admin.",
+        bn: "আপনার ইন্টারনেট সংযোগটি পরীক্ষা করুন । কিছুক্ষণ অপেক্ষা করে আবার চেষ্টা করুন, অথবা আপনি অ্যাডমিনের সাথে যোগাযোগ করুন।"
+    },
+    msg_file_server_error_title: {
+        en: "File Server/ Internet Problem",
+        bn: "ফাইল সার্ভার/ইন্টারনেট সমস্যা"
+    },
+    msg_file_server_error_message: {
+        en: "Problem uploading file. Please Check your Internet Connection. Wait some moment and Try again. You may contact with admin.",
+        bn: "ফাইল আপলোড সমস্যা । আপনার ইন্টারনেট সংযোগটি পরীক্ষা করুন । কিছুক্ষণ অপেক্ষা করে আবার চেষ্টা করুন, অথবা আপনি অ্যাডমিনের সাথে যোগাযোগ করুন।"
     },
     msg_access_deny_title: {
         en: "Access Deny",

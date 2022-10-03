@@ -7,12 +7,12 @@
         </div>
         <div class="row d-flex align-items-center justify-content-center mb-2">
             <div class="col-8 text-center">
-            <h2>{{labels.get('msg_loading_failed_title')}}</h2>
+            <h4>{{labels.get('msg_server_error_title')}}</h4>
             </div>
         </div>
         <div class="row d-flex align-items-center justify-content-center ">
             <div class="col-8 text-center">
-            <h4>{{labels.get('msg_loading_failed_message')}}</h4>
+            <div>{{labels.get('msg_server_error_message')}}</div>
             <button @click.prevent="reloadPage" class="btn btn-danger">{{labels.get('button_refresh')}}</button>
             </div>
         </div>
