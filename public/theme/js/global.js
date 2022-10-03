@@ -3,9 +3,20 @@
  */
 $(document).ready(function ()
 {
+    $(document).on("click", "#handler_left_sidebar", function(event)
+    {
+        $('#system_left_sidebar').toggleClass('inactive');
+        $('#system_content').toggleClass('inactive_left_sidebar');
+    });
+    $(document).on("click", ".system_task_link", function(event)
+    {
+        $('#system_left_sidebar').removeClass('inactive');
+        $('#system_content').removeClass('inactive_left_sidebar');
+    });
+
     $(document).on("click", ".eye_password", function(event)
     {
-        var input=$(this).siblings('input');
+        let input=$(this).siblings('input');
         if(input.attr('type')=='password')
         {
             $(this).find('i').removeClass('icon-eye').addClass('icon-eye-off');
@@ -49,7 +60,7 @@ $(document).ready(function ()
     ####### additional parameter
     ##### for display
      * data-preview-container
-     * data-preview-width //has higer priority
+     * data-preview-width //has higher priority
      * data-preview-height
     #### for upload
      * data-minimum-size-to-resize//1372022
@@ -64,35 +75,31 @@ $(document).ready(function ()
         }
         if(this.files && this.files[0])
         {
-            var input_file=$(this);
-            var container=$(this).attr('data-preview-container');
-            var file=this.files[0];
-            var file_type=file.type;
-            if(file_type && file_type.substr(0,5)=="image")
+            let container=$(this).attr('data-preview-container');
+            let file=this.files[0];
+            let file_type=file.type;
+            if(file_type && file_type.substring (0,5)=="image")
             {
-                var key=input_file.attr('name');
-                var file_name=file.name.replace(/\.[^/.]+$/,"");
-                //var file_name=file.name;
-                var preview_height=200;
+                let preview_height=200;
                 if($(this).attr('data-preview-height'))
                 {
                     preview_height=$(this).attr('data-preview-height');
                 }
-                var path=URL.createObjectURL(file);
+                let path=URL.createObjectURL(file);
                 if(container)
                 {
-                    var img_tag='';
+                    let img_tag;
                     if($(this).attr('data-preview-width'))
                     {
-                        var preview_width=$(this).attr('data-preview-width');
+                        let preview_width=$(this).attr('data-preview-width');
                         //img_tag='<img width="'+preview_width+'" src="'+path+'" >';
-                        img_tag='<img style="max-height: 100%;max-width:'+preview_width+'px"  src="'+path+'"></img>';
+                        img_tag='<img alt="Image" style="max-height: 100%;max-width:'+preview_width+'px"  src="'+path+'"/>';
                         $(container).html(img_tag);
                     }
                     else
                     {                        
                         // img_tag='<img height="'+preview_height+'" src="'+path+'" >';
-                        img_tag='<img style="max-width: 100%;max-height:'+preview_height+'px"  src="'+path+'"></img>';                        
+                        img_tag='<img alt="Image" style="max-width: 100%;max-height:'+preview_height+'px"  src="'+path+'"/>';
                         $(container).html(img_tag);
                     }
                 }
@@ -101,7 +108,7 @@ $(document).ready(function ()
             {
                 //TODO path of base
                 let path='/vue3test/theme/images/not_an_image.jpg';
-                var img_tag='<img style="max-width: 100%;max-height:200px"  src="'+path+'"></img>';                        
+                let img_tag='<img alt="Image" style="max-width: 100%;max-height:200px"  src="'+path+'"/>';
                 $(container).html(img_tag);
                 //$(container).html('Not A Picture');
                 //or display Picture showing not a picture

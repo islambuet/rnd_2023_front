@@ -64,12 +64,12 @@
 
   const login=()=>{
     let formData=new FormData(document.getElementById('formLogin')); 
-    axios.post("user/login1", formData)
+    axios.post("user/login", formData)
       .then((res) => {
-        // if (res.data.error == "") {
-        //   systemFunctions.setUser(res.data.user);
-        //   router.push("/");//due to theme change init method is calling again and redirect happening there
-        // }
+        if (res.data.error == "") {
+          systemFunctions.setUser(res.data.user);
+          router.push("/");
+        }
       })
   }
 </script>

@@ -2,7 +2,8 @@
   <div id="system_main_container">
     <Loading v-show="globalVariables.statusDataLoaded == 0" />
     <template v-if="statusSiteLoaded==1">
-      <ThemeLogin v-if="!(globalVariables.user.id > 0)" />
+      <ThemeLogged v-if="globalVariables.user.id > 0" />
+      <ThemeLogin v-else />
     </template>
   </div>
 </template>
@@ -11,16 +12,17 @@
   import systemFunctions from "@/assets/systemFunctions";
   import toastFunctions from "@/assets/toastFunctions";
 
+  import ThemeLogin from "@/components/themes/ThemeLogin.vue";
+  import ThemeLogged from "@/components/themes/ThemeLogged/Index.vue";
+  import Loading from "@/components/busy-states/Loading.vue";
+
   import {ref } from 'vue';
   import axios from 'axios';
 
   import {useRoute,useRouter} from 'vue-router';
   const route =useRoute()
   const router =useRouter()
-
-  import ThemeLogin from "@/components/themes/ThemeLogin.vue";
-  import Loading from "@/components/busy-states/Loading.vue";
-
+  //global axios setup
   axios.defaults.baseURL = 'http://192.168.0.109/base/apivue2base2/public/api/';
   axios.defaults.headers.common['language'] =globalVariables.language;
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + globalVariables.user[globalVariables.localStorageAuthTokenStr];
@@ -43,6 +45,7 @@
     globalVariables.uploadingFiles=0;
     return Promise.reject(error);
   });
+  //global axios end
   let statusSiteLoaded=ref(0);
   const init=async ()=>{
     await axios.get('user/initialize').then((response)=>{

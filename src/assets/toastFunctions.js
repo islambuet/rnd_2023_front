@@ -17,13 +17,10 @@ export default{
         toast.success(msg, {timeout: 2000 });
     },
     showResponseError() {
-        console.log(globalVariables.uploadingFiles)
         if(globalVariables.uploadingFiles==1){
-            console.log("if",globalVariables.uploadingFiles)
             toast.error(ResponseFileServerError);
         }
         else{
-            console.log("else",globalVariables.uploadingFiles)
             toast.error(ResponseError);
         }
 
