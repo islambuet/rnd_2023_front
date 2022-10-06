@@ -15,4 +15,8 @@ export default {
         en:'This Data already Saved.\nPlease Reload your website or Go back',
         bn:'এই ডেটা ইতিমধ্যেই সংরক্ষিত হয়েছে।\nঅনুগ্রহ করে আপনার ওয়েবসাইট পুনরায় লোড করুন অথবা পেছনে যান '
     },
+    INPUT_NOT_FOUND:{
+        en:'Input Missing.\nContact with admin',
+        bn:'ইনপুট অনুপস্থিত।\nঅ্যাডমিনের সাথে যোগাযোগ করুন।'
+    },
 }
