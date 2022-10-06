@@ -22,8 +22,8 @@
                                             <div class="input-group-prepend">
                                               <span class="input-group-text"><i class="feather icon-user"></i></span>
                                             </div>
-                                            <input type="text" class="form-control" id="user-name" :placeholder="labels.get('label_username')" name="username" value="0500454" required="" />                                                    
-                                          </div>                                                  
+                                            <input type="text" class="form-control" id="user-name" :placeholder="labels.get('label_username')" name="username" value="0500454" required="" />
+                                          </div>
                                           <div class="input-group mb-3">
                                             <div class="input-group-prepend eye_password">
                                               <span class="input-group-text" ><i class="feather icon-eye"></i></span>
@@ -49,10 +49,12 @@
 <script setup>
   import globalVariables from "@/assets/globalVariables";
   import systemFunctions from "@/assets/systemFunctions";
+  import toastFunctions from "@/assets/toastFunctions";
   import labels from '@/labels'
   import { reactive } from 'vue'
   import {useRoute,useRouter} from 'vue-router';
   import axios from 'axios';
+
   const route =useRoute()
   const router =useRouter()
   let taskData=reactive({
@@ -63,7 +65,7 @@
   const init=()=>{
     if(globalVariables.user.id>0){        
       router.push("/");
-    }      
+    }
   }
   init();
 
@@ -74,6 +76,9 @@
         if (res.data.error == "") {
           systemFunctions.setUser(res.data.user);
           router.push("/");
+        }
+        else{
+          toastFunctions.showResponseError(res.data)
         }
       })
   }

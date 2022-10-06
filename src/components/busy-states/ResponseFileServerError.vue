@@ -12,8 +12,8 @@
         </div>
         <div class="row d-flex align-items-center justify-content-center ">
             <div class="col-8 text-center">
-            <div>{{labels.get('msg_file_server_error_message')}}</div>
-            <button @click.prevent="reloadPage" class="btn btn-danger">{{labels.get('button_refresh')}}</button>
+              <div>{{labels.get('msg_file_server_error_message')}}</div>
+              <button @click.prevent="reloadPage" class="btn btn-danger">{{labels.get('button_refresh')}}</button>
             </div>
         </div>
     </div>
