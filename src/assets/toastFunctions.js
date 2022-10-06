@@ -5,6 +5,7 @@ import AccessDeny from "@/components/busy-states/AccessDeny.vue";
 import SiteOffline from "@/components/busy-states/SiteOffline.vue";
 import labels from "@/labels";
 import { useToast } from "vue-toastification";
+import { h } from 'vue'
 const toast = useToast();
 export default{
     clearToast() {
@@ -50,15 +51,15 @@ export default{
         // }
         else if (data.error == 'VALIDATION_FAILED') {
             if(typeof data.messages=='string'){
-                displayMessages = data.messages;
+                displayMessages = labels.get(data.messages);
             }else if(typeof data.messages=='object'){
                 let messages='';
                 for (let message in data.messages) {
-                    messages+=data.messages[message]+'<br>';
+                    messages+=labels.get(data.messages[message])+'<br>';
                   }
                 displayMessages = messages;
             } else{
-                displayMessages = data.messages;
+                displayMessages = labels.get(data.messages);
             }
         }
         //DATA_ALREADY_SAVED,INPUT_NOT_FOUND
@@ -73,7 +74,7 @@ export default{
                 globalVariables.validationErrors=displayMessages;
             }
             else{
-                toast.error(displayMessages);
+                toast.error(h('div', { innerHTML: displayMessages }));
             }
         }
         if (data.error == 'DATA_ALREADY_SAVED') {

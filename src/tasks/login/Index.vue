@@ -22,13 +22,13 @@
                                             <div class="input-group-prepend">
                                               <span class="input-group-text"><i class="feather icon-user"></i></span>
                                             </div>
-                                            <input type="text" class="form-control" id="user-name" :placeholder="labels.get('label_username')" name="username" value="0500454" required="" />
+                                            <input type="text" class="form-control" id="user-name" :placeholder="labels.get('label_username')" name="item[username]" value="0500456"  />
                                           </div>
                                           <div class="input-group mb-3">
                                             <div class="input-group-prepend eye_password">
                                               <span class="input-group-text" ><i class="feather icon-eye"></i></span>
                                             </div>
-                                            <input type="password" class="form-control" :placeholder="labels.get('label_password')" name="password" value="12345678" required="" />
+                                            <input type="password" class="form-control" :placeholder="labels.get('label_password')" name="item[password]" value="12345678" required="" />
                                           </div>
                                             <button type="submit" class="btn btn-primary btn-inline waves-effect waves-light float-right">{{ labels.get('label_login') }}</button>
                                         </form>
@@ -78,7 +78,13 @@
           router.push("/");
         }
         else{
-          toastFunctions.showResponseError(res.data)
+          if(res.data.error=='MOBILE_VERIFICATION_REQUIRED'){
+
+          }
+          else{
+            toastFunctions.showResponseError(res.data)
+          }
+
         }
       })
   }
