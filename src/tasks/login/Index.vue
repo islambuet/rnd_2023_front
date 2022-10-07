@@ -14,7 +14,7 @@
                                         <h4 class="mb-0">{{ labels.get('label_login') }}</h4>
                                     </div>
                                 </div>
-                                <p class="px-2">{{ labels.get('label_welcome') }}</p>
+                                <p class="px-2">{{ labels.get('label_please_login') }}</p>
                                 <div class="card-content">
                                     <div class="card-body pt-1">
                                         <form @submit.prevent="login" id="formLogin">
@@ -30,13 +30,22 @@
                                             </div>
                                             <input type="password" class="form-control" :placeholder="labels.get('label_password')" name="item[password]" value="12345678" required="" />
                                           </div>
-                                            <button type="submit" class="btn btn-primary btn-inline waves-effect waves-light float-right">{{ labels.get('label_login') }}</button>
+                                          <div v-if="taskData.otp_required">
+                                            <div v-html="labels.get('label_verify_otp')"></div>
+                                            <div class="input-group mb-3">
+                                              <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="feather icon-check"></i></span>
+                                              </div>
+                                              <input type="text" class="form-control" id="otp" :placeholder="labels.get('label_otp')" name="item[otp]" value=""  />
+                                            </div>
+                                          </div>
+                                          <button type="submit" class="btn btn-primary btn-inline waves-effect waves-light float-right">{{ labels.get('label_login') }}</button>
                                         </form>
                                     </div>
                                 </div>
-                                <div class="login-footer">
-                                  <!-- <router-link to="/users-groups">asdfasdf</router-link> -->
-                                </div>
+                              <div class="login-footer">
+                                <!-- <router-link to="/users-groups">asdfasdf</router-link> -->
+                              </div>
                             </div>
                         </div>
                     </div>
@@ -52,13 +61,12 @@
   import toastFunctions from "@/assets/toastFunctions";
   import labels from '@/labels'
   import { reactive } from 'vue'
-  import {useRoute,useRouter} from 'vue-router';
+  import {useRouter} from 'vue-router';
   import axios from 'axios';
-
-  const route =useRoute()
   const router =useRouter()
   let taskData=reactive({
-    taskBaseUrl:systemFunctions.getTaskBaseURL(import.meta.url)
+    taskBaseUrl:systemFunctions.getTaskBaseURL(import.meta.url),
+    otp_required:false
   })
   labels.add([{language:globalVariables.language,file:'tasks'+taskData.taskBaseUrl+'/labels.js'}])
 
@@ -70,23 +78,28 @@
   init();
 
   const login=()=>{
-    let formData=new FormData(document.getElementById('formLogin')); 
-    axios.post("user/login", formData)
+    let formData=new FormData(document.getElementById('formLogin'));
+    if(taskData.otp_required){
+
+    }
+    else{
+      axios.post("user/login", formData)
       .then((res) => {
         if (res.data.error == "") {
-          systemFunctions.setUser(res.data.user);
+          systemFunctions.setUser(res.data.data.user);
           router.push("/");
         }
         else{
           if(res.data.error=='MOBILE_VERIFICATION_REQUIRED'){
-
+            taskData.otp_required=true;
           }
           else{
             toastFunctions.showResponseError(res.data)
           }
-
         }
       })
+    }
+
   }
 </script>
 
@@ -96,9 +109,7 @@
    height: auto;
 }
 
-.login-left {
-  background: #0d6efd;
-}
+
 
 .login-left > img {
   margin-left: 12%;
@@ -106,8 +117,8 @@
 
 .center-align {
   /*margin-top: 20vh;*/
-  margin-right: 0px;
-  margin-left: 0px;
+  margin-right: 0;
+  margin-left: 0;
 }
 
 .center-align > div{
@@ -117,25 +128,12 @@
 .bg-authentication {
   background-color: #eff2f7;
 }
-
-.bg-authentication .login-footer {
-  padding: 0rem 1.5rem 3.5rem;
-}
-
-.bg-authentication .login-footer .footer-btn .btn {
-  padding: 0.9rem 1.2rem !important;
-  margin: 1rem 1rem 1rem 0rem;
-}
-
-#user-password {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
-
 .input-group-text {
   background-color: #ffffff;
 }
-
+.bg-authentication .login-footer {
+  padding: 0 1.5rem 3.5rem;
+}
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   .bg-authentication {
     width: 100%;

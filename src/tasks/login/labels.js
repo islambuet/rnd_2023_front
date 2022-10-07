@@ -3,7 +3,7 @@ export default {
         en:"Login",
         bn:"প্রবেশ করুন"
     },
-    label_welcome:{
+    label_please_login:{
         en:"Welcome, please login to your account.",
         bn:"স্বাগতম, আপনার অ্যাকাউন্টে লগইন করুন।"
     },
@@ -14,6 +14,14 @@ export default {
     label_password:{
         en:"Password",
         bn:"পাসওয়ার্ড"
+    },
+    label_otp:{
+        en:"OTP",
+        bn:"ওটিপি"
+    },
+    label_verify_otp:{
+        en:"An OTP sent to your mobile.</br>please verify you otp",
+        bn:"আপনার মোবাইলে একটি ওটিপি পাঠানো হয়েছে৷</br>দয়া করে আপনার ওটিপি যাচাই করুন৷"
     },
     //api response
     INVALID_CREDENTIALS:{

@@ -123,7 +123,7 @@
       current_add_more_index++;
     }
     const getImageUrl=(url)=>{
-      return url?globalVariables.imageBaseUrl+url:globalVariables.baseUrl+'theme/images/no_image.jpg';
+      return url?url:globalVariables.baseUrl+'theme/images/no_image.jpg';
     }
     const resetFile=(fileId,defaultUrl)=>{
       console.log(defaultUrl)

@@ -8,7 +8,7 @@ function getNotLoggedUser(){
     authToken: localStorage.getItem(localStorageAuthTokenStr) ? localStorage.getItem(localStorageAuthTokenStr) : '',
     id: 0,
     name: language == 'en' ? 'Guest' : 'অতিথি',
-    info:{},
+    infos:{},
     profile_picture_url: '',
     tasks: []
   }    
@@ -16,8 +16,7 @@ function getNotLoggedUser(){
 export default reactive({
   localStorageAuthTokenStr:localStorageAuthTokenStr,
   localStorageLanguageStr:localStorageLanguageStr,
-  baseUrl: process.env.BASE_URL, 
-  imageBaseUrl:'http://localhost/rnd_2023_upload/public/',
+  baseUrl: process.env.BASE_URL,
   statusDataLoaded: 1,    //Loading=0,loaded=1
   uploadingFiles:0,
   validationErrors:'',
