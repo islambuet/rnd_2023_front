@@ -79,18 +79,14 @@
 
   const login=()=>{
     let formData=new FormData(document.getElementById('formLogin'));
-    if(taskData.otp_required){
-
-    }
-    else{
       axios.post("user/login", formData)
       .then((res) => {
         if (res.data.error == "") {
-          systemFunctions.setUser(res.data.data.user);
+          systemFunctions.setUser(res.data.user);
           router.push("/");
         }
         else{
-          if(res.data.error=='MOBILE_VERIFICATION_REQUIRED'){
+          if(res.data.error=='VERIFY_MOBILE'){
             taskData.otp_required=true;
           }
           else{
@@ -98,8 +94,6 @@
           }
         }
       })
-    }
-
   }
 </script>
 

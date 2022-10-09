@@ -20,7 +20,7 @@ export default {
         bn:"ওটিপি"
     },
     label_verify_otp:{
-        en:"An OTP sent to your mobile.</br>please verify you otp",
+        en:"An OTP sent to your mobile.</br>Please verify you otp",
         bn:"আপনার মোবাইলে একটি ওটিপি পাঠানো হয়েছে৷</br>দয়া করে আপনার ওটিপি যাচাই করুন৷"
     },
     //api response
@@ -35,6 +35,22 @@ export default {
     USER_NOT_FOUND:{
         en:'This user Not Found.',
         bn:'এই ইউজার পাওয়া যায়নি।'
+    },
+    OTP_MISMATCHED:{
+        en:'OTP did not matched.',
+        bn:'ওটিপি মেলেনি।'
+    },
+    OTP_EXPIRED:{
+        en:'Your has been OTP Expired.',
+        bn:'আপনার ওটিপির মেয়াদ শেষ হয়ে গেছে।'
+    },
+    OTP_USED:{
+        en:'Your OTP has been used.',
+        bn:'আপনার ওটিপি ব্যবহার করা হয়েছে।'
+    },
+    OTP_INVALID:{
+        en:'Your OTP is invalid.',
+        bn:'আপনার ওটিপি সঠিক নয়।'
     },
     'The username field is required.':{
         en:"The username field is required.",

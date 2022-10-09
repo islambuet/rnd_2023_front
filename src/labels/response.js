@@ -7,4 +7,12 @@ export default {
         en:'Input Missing.</br>Contact with admin',
         bn:'ইনপুট অনুপস্থিত।</br>অ্যাডমিনের সাথে যোগাযোগ করুন।'
     },
+    MOBILE_NUMBER_NOT_SET:{
+        en:"Your mobile not is not set.</br>Please Contact with admin",
+        bn:"আপনার মোবাইল সেট করা নেই।</br>অ্যাডমিনের সাথে যোগাযোগ করুন।"
+    },
+    SMS_TOKEN_NOT_SET:{
+        en:"Mobile sms system is not set.</br>Please Contact with admin",
+        bn:"মোবাইলের এসএমএস সিস্টেম সেট করা নেই।</br>অ্যাডমিনের সাথে যোগাযোগ করুন।"
+    },
 }
