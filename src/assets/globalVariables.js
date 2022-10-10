@@ -10,7 +10,7 @@ function getNotLoggedUser(){
     name: language == 'en' ? 'Guest' : 'অতিথি',
     infos:{},
     profile_picture_url: '',
-    tasks: []
+    tasks: {}
   }    
 }
 export default reactive({

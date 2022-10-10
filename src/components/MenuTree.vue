@@ -12,11 +12,10 @@
   </li>
 </template>
 <script setup>
-import globalVariables from "@/assets/globalVariables";
-const getName=(menu)=>{
-      let name=JSON.parse(menu['name']);
-      return (name[globalVariables.language]?name[globalVariables.language]:'MENU NAME NOT SET')      
-    }
+  import globalVariables from "@/assets/globalVariables";
+  const getName=(menu)=>{
+    return menu.name;
+  }
 </script>
 
 <script> 
