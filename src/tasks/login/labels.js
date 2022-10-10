@@ -3,6 +3,10 @@ export default {
         en:"Login",
         bn:"প্রবেশ করুন"
     },
+    label_clear_login:{
+        en:"Retry Login",
+        bn:"পুনরায় চেষ্টা করুন"
+    },
     label_please_login:{
         en:"Welcome, please login to your account.",
         bn:"স্বাগতম, আপনার অ্যাকাউন্টে লগইন করুন।"

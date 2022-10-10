@@ -17,14 +17,14 @@
                                 <p class="px-2">{{ labels.get('label_please_login') }}</p>
                                 <div class="card-content">
                                     <div class="card-body pt-1">
-                                        <form @submit.prevent="login" id="formLogin">
-                                          <div class="input-group mb-3">
+                                        <form  id="formLogin">
+                                          <div v-show="!taskData.otp_required" class="input-group mb-3">
                                             <div class="input-group-prepend">
                                               <span class="input-group-text"><i class="feather icon-user"></i></span>
                                             </div>
                                             <input type="text" class="form-control" id="user-name" :placeholder="labels.get('label_username')" name="item[username]" value="0500456"  />
                                           </div>
-                                          <div class="input-group mb-3">
+                                          <div v-show="!taskData.otp_required" class="input-group mb-3">
                                             <div class="input-group-prepend eye_password">
                                               <span class="input-group-text" ><i class="feather icon-eye"></i></span>
                                             </div>
@@ -39,7 +39,8 @@
                                               <input type="text" class="form-control" id="otp" :placeholder="labels.get('label_otp')" name="item[otp]" value=""  />
                                             </div>
                                           </div>
-                                          <button type="submit" class="btn btn-primary btn-inline waves-effect waves-light float-right">{{ labels.get('label_login') }}</button>
+                                          <button @click="login" type="button" class="btn btn-primary btn-inline waves-effect waves-light float-right">{{ labels.get('label_login') }}</button>
+                                          <button @click="resetLogin" v-if="taskData.otp_required" type="button" class="btn btn-primary btn-inline waves-effect waves-light">{{ labels.get('label_clear_login') }}</button>
                                         </form>
                                     </div>
                                 </div>
@@ -76,6 +77,9 @@
     }
   }
   init();
+  const resetLogin=()=>{
+    taskData.otp_required=false;
+  }
 
   const login=()=>{
     let formData=new FormData(document.getElementById('formLogin'));
