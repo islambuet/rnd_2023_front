@@ -2,11 +2,11 @@
 export default {
     msg_404_title: {
         en: "Page Not found",
-        bn: "পৃষ্ঠা খুঁজে পাওয়া যায়নি"
+        bn: "লিংক খুঁজে পাওয়া যায়নি"
     },
     msg_404_message: {
-        en: "It's looking like you may have taken a wrong turn. Don't worry... it happens to the best of us. You might want to check your internet connection. Here's a little tip that might help you get back on track.",
-        bn: "দেখে মনে হচ্ছে আপনি কোনও ভুল পাল্টে নিয়েছেন। চিন্তা করবেন না ... এটি আমাদের সেরা ক্ষেত্রে ঘটে। আপনি নিজের ইন্টারনেট সংযোগটি পরীক্ষা করতে চাইতে পারেন। এখানে একটি সামান্য টিপ যা আপনাকে ট্র্যাকটিতে ফিরে আসতে সহায়তা করতে পারে।"
+        en: "It's look like you are in wrong page. Make sure you have copied the link properly.",
+        bn: "দেখে মনে হচ্ছে আপনি ভুল লিংকে আছেন। নিশ্চিত করুন যে আপনি লিঙ্কটি সঠিকভাবে কপি  করেছেন।"
     },
     msg_server_error_title: {
         en: "Internet/Server Problem",

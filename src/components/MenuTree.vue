@@ -13,8 +13,10 @@
 </template>
 <script setup>
   import globalVariables from "@/assets/globalVariables";
+  import menuLabels from "@/labels/menu.js"
   const getName=(menu)=>{
-    return menu.name;
+    return menuLabels[menu.name] ? (menuLabels[menu.name][globalVariables.language]?menuLabels[menu.name][globalVariables.language]: menu.name) : menu.name;
+    //return menu.name;
   }
 </script>
 
