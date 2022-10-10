@@ -32,8 +32,6 @@
                 <div class="dropdown-item">
                     <h6 class="text-overflow m-0">{{labels.get('label_welcome')}} {{globalVariables.user.name}}</h6>
                 </div>
-                <!-- item-->    
-                <router-link to="/profile" :class="'dropdown-item'"><i class="bi bi-person-square"></i> {{labels.get('label_profile')}}</router-link>
                 <router-link to="/profile" :class="'dropdown-item'"><i class="bi bi-person-square"></i> {{labels.get('label_change_password')}}</router-link>                                            
                 <div class="dropdown-divider"></div>
                 <a href="#" class="system_ajax dropdown-item" v-on:click.prevent="logout"><i class="icon-mid bi bi-power me-2"></i> {{labels.get('label_logout')}}</a>

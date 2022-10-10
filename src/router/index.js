@@ -16,7 +16,7 @@ function getRoutes() {
     }
     routes.push({ path: path, component: () => import('@/tasks'+path+'/Index.vue'), children: children});
   }
-  //routes.push({ path: '/:pathMatch(.*)', component: () => import('@/components/busy-states/404.vue')});
+  routes.push({ path: '/:pathMatch(.*)', component: () => import('@/components/busy-states/404.vue')});
   return routes;
 }
 //console.log(getRoutes())

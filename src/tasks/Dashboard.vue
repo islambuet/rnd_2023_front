@@ -2,7 +2,7 @@
     <div>
         <section id="description" class="card">
             <div class="card-header">
-                <h4 class="card-title">Welcome</h4>
+                <h4 class="card-title">{{ labels.get('label_welcome') }}</h4>
             </div>
             <div class="card-content">
                 <div class="card-body">
@@ -16,9 +16,11 @@
     </div>
 </template>
 <script setup>
-    import globalVariables from "@/assets/globalVariables"; 
-    import {useRoute,useRouter} from 'vue-router';
-    const route =useRoute()
+    import globalVariables from "@/assets/globalVariables";
+    import systemFunctions from "@/assets/systemFunctions";
+    import toastFunctions from "@/assets/toastFunctions";
+    import labels from '@/labels'
+    import {useRouter} from 'vue-router';
     const router =useRouter()  
     if(!(globalVariables.user.id>0)){
         router.push("/login")
