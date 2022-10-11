@@ -1,7 +1,6 @@
 import globalVariables from "@/assets/globalVariables";
 let lang_files=[
     "./action",
-    './button',
     './label',
     './message',
     './response'

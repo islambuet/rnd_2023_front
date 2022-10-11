@@ -4,22 +4,21 @@
             <div class="row">
                 <template v-for="(column, key) in columns.all">
                     <div class="col-sm-6 col-md-3" :key="'cc_'+key" v-if="column.hideable">                                                
-                        <label><input type="checkbox" :value="key" :checked="columns.hidden.indexOf(key)>=0?false:true" @change="toggleControlColumns($event)" > {{column.label}}</label>
+                        <label><input type="checkbox" :value="key" :checked="columns.hidden.indexOf(key)<0" @change="toggleControlColumns($event)" > {{column.label}}</label>
                     </div>
                 </template>
             </div>
             <div class="text-center" v-if="allow_save">
-                <button type="button" class="btn btn-sm bg-gradient-primary" @click="saveHiddenColumns"><i class="feather icon-save"></i> {{labels.get('button_save_column_controls')}}</button>
+                <button type="button" class="btn btn-sm bg-gradient-primary" @click="saveHiddenColumns"><i class="feather icon-save"></i> {{labels.get('label_save_column_controls')}}</button>
             </div>
         </div>
     </div>
 </template>
 <script setup>
     import globalVariables from "@/assets/globalVariables";
-    import systemFunctions from "@/assets/systemFunctions";
     import toastFunctions from "@/assets/toastFunctions";
-    import labels from '@/labels'   
-    import { ref, computed } from 'vue' 
+    import labels from '@/labels'
+
     import axios from 'axios';
     const props=defineProps({
         columns: {

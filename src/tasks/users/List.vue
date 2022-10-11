@@ -5,7 +5,7 @@
             <button type="button" v-if="taskData.permissions.action_4" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" onclick="window.print();"><i class="feather icon-printer"></i> {{labels.get('action_4')}}</button>
             <button type="button" v-if="taskData.permissions.action_5" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="systemFunctions.exportCsv(taskData.columns,taskData.itemsFiltered,taskData.api_url.substring(1)+'.csv')"><i class="feather icon-download"></i> {{labels.get('action_5')}}</button>
             <button type="button" v-if="taskData.permissions.action_8" class="mr-2 mb-2 btn btn-sm" :class="[show_column_controls?'bg-gradient-success':'bg-gradient-primary']" @click="show_column_controls = !show_column_controls"><i class="feather icon-command"></i> {{labels.get('action_8')}}</button>
-            <button type="button" v-if="taskData.permissions.action_0" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="globalVariables.loadListData=true;getItems(taskData.pagination)"><i class="feather icon-rotate-cw"></i> {{labels.get('button_refresh')}}</button>
+            <button type="button" v-if="taskData.permissions.action_0" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="globalVariables.loadListData=true;getItems(taskData.pagination)"><i class="feather icon-rotate-cw"></i> {{labels.get('label_refresh')}}</button>
         </div>            
     </div>
   <ColumnControl :url="taskData.api_url" :columns="taskData.columns"  v-if="show_column_controls"/>
@@ -61,7 +61,7 @@
     import axios from 'axios';
     import ColumnControl from '@/components/ColumnControl.vue';
     import ColumnSort from '@/components/ColumnSort.vue';
-    // import ColumnFilter from '@/components/ColumnFilter.vue';
+    import ColumnFilter from '@/components/ColumnFilter.vue';
 
     // import Pagination from '@/components/Pagination.vue';
 

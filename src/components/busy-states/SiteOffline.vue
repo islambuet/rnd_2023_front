@@ -13,7 +13,7 @@
         <div class="row d-flex align-items-center justify-content-center ">
             <div class="col-8 text-center">
                 <div>{{labels.get('msg_site_offline_message')}}</div>
-                <button @click.prevent="reloadPage" class="btn btn-danger">{{labels.get('button_refresh')}}</button>
+                <button @click.prevent="reloadPage" class="btn btn-danger">{{labels.get('label_refresh')}}</button>
             </div>
         </div>
     </div>

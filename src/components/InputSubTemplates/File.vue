@@ -10,7 +10,7 @@
             <div class="input-group-prepend">
               <label class="btn btn-sm bg-gradient-primary" style="cursor: pointer;">
                 <input :id="inputKey" type="file" class="d-none" :data-preview-container="'#'+inputKey+'_preview_container'">
-                <i class="bi bi-upload"></i> {{labels.get('button_upload_file')}}
+                <i class="bi bi-upload"></i> {{labels.get('label_upload_file')}}
               </label>
             </div>
             <label class="form-control custom-file-name"></label>
@@ -35,7 +35,7 @@
     <div class="col-lg-4 col-8">
       <div class="row mb-2">
         <div class="col-12">
-          <button type="button" class="system_add_more_button mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="addMore(inputItem.default)"><i class="bi bi-plus-circle"></i> {{labels.get('button_add_more')}}</button>
+          <button type="button" class="system_add_more_button mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="addMore(inputItem.default)"><i class="bi bi-plus-circle"></i> {{labels.get('label_add_more')}}</button>
         </div>
       </div>
     </div>
@@ -48,7 +48,7 @@
                 <div class="input-group-prepend">
                   <label class="btn btn-sm bg-gradient-primary" style="cursor: pointer;">
                     <input type="file" class="d-none">
-                    <i class="bi bi-upload"></i> {{labels.get('button_upload_file')}}
+                    <i class="bi bi-upload"></i> {{labels.get('label_upload_file')}}
                   </label>
                 </div>
                 <label class="form-control custom-file-name"></label>

@@ -19,7 +19,7 @@
     <div class="col-lg-4 col-8">
       <div class="row mb-2">
         <div class="col-12">
-          <button type="button" class="system_add_more_button mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="addMore(inputItem.default)"><i class="bi bi-plus-circle"></i> {{labels.get('button_add_more')}}</button>
+          <button type="button" class="system_add_more_button mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="addMore(inputItem.default)"><i class="bi bi-plus-circle"></i> {{labels.get('label_add_more')}}</button>
         </div>
       </div>
     </div>
