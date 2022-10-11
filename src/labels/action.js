@@ -17,20 +17,20 @@ export default {
         bn:'মুছে ফেলা'
     },
     action_4:{
-        en:'Forward',
-        bn:'অগ্রবর্তী'
-    },
-    action_5:{
         en:'Print',
         bn:'ছাপান'
     },
-    action_6:{
+    action_5:{
         en:'CSV',
         bn:'সিএসভি'
     },
-    action_7:{
+    action_6:{
         en:'Search',
         bn:'অনুসন্ধান'
+    },
+    action_7:{
+        en:'Forward',
+        bn:'অগ্রবর্তী'
     },
     action_8:{
         en:'Column Control',

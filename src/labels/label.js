@@ -31,4 +31,49 @@ export default {
         en:"Change Passwoed",
         bn:"পাসওয়ার্ড পরিবর্তন"
     },
+    label_action:{
+        en:"Action",
+        bn:"অ্যাকশন"
+    },
+    label_id:{
+        en:"ID",
+        bn:"আই.ডি."
+    },
+    label_name:{
+        en:"Name",
+        bn:"নাম"
+    },
+    label_ordering:{
+        en:"Ordering",
+        bn:"ক্রম"
+    },
+    label_status:{
+        en:"Status",
+        bn:"স্ট্যাটাস"
+    },
+    label_new:{
+        en:"New",
+        bn:'নতুন'
+    },
+    label_edit:{
+        en:"Edit",
+        bn:'সম্পাদনা'
+    },
+    label_details:{
+        en:"Details",
+        bn:'বিস্তারিত'
+    },
+    label_mobile_no:{
+        en:"Mobile no.",
+        bn:'মোবাইল নাম্বার'
+    },
+    label_email:{
+        en:"Email",
+        bn:'ইমেইল'
+    },
+    label_select:{
+        en:"Select",
+        bn:'সিলেক্ট'
+    },
+
 }
