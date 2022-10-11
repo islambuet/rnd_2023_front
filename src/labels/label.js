@@ -148,7 +148,7 @@ export default {
         en:'Add More',
         bn:'আরো যোগ করুন'
     },
-    //Filter\
+    //ColumnFilter start
     label_search:{
         en:"Search",
         bn:"অনুসন্ধান "
@@ -161,6 +161,32 @@ export default {
         en:"To",
         bn:"পর্যন্ত"
     },
-    //filter end
+    //ColumnFilter end
+    //Pagination start
+    label_per_page:{
+        en:"Per Page",
+        bn:"প্রতি পৃষ্ঠা "
+    },
+    label_go_page:{
+        en:"Go to page",
+        bn:"পৃষ্ঠায় যান "
+    },
+    label_all_items:{
+        en:"All",
+        bn:"সকল"
+    },
+    label_previous:{
+        en:"Previous",
+        bn:"পূর্ববর্তী "
+    },
+    label_next:{
+        en:"Next",
+        bn:"পরবর্তী "
+    },
+    label_showing:{
+        en:"showing",
+        bn:"দেখাচ্ছে"
+    },
+    //Pagination end
 
 }

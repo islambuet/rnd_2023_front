@@ -25,7 +25,6 @@
                 {{ column.label }}
               </div>
               <ColumnFilter :column="column" :position="'right:5px'"  :onChangeFilter="setFilteredItems" v-if="taskData.permissions.action_6 && column.filterable"/>
-
             </th>
           </template>
         </tr>
@@ -34,7 +33,7 @@
         <tr v-for="item in taskData.itemsFiltered" :key="'item_'+item.id">
           <td class="col-1 d-print-none">
             <button class="btn btn-sm bg-gradient-primary dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{labels.get('label_action')}}</button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0; left: 0; transform: translate3d(0px, 38px, 0px);">
               <router-link v-if="taskData.permissions.action_0"  :to="taskData.api_url+'/details/'+item.id" class="dropdown-item text-info btn-sm" ><i class="feather icon-camera"></i> {{labels.get('label_details')}}</router-link>
               <router-link v-if="taskData.permissions.action_2"  :to="taskData.api_url+'/edit/'+item.id" class="dropdown-item text-info btn-sm" ><i class="feather icon-edit"></i> {{labels.get('label_edit')}}</router-link>
             </div>
@@ -48,7 +47,7 @@
         </tr>
         </tbody>
       </table>
-      <Pagination :items = "taskData.items" :onChangePageOption="taskData.reloadItems" :pagination="taskData.pagination"/>
+      <Pagination :items = "taskData.items" :onChangePageOption="getItems" :pagination="taskData.pagination"/>
     </div>
   </div>
 </template>
@@ -62,8 +61,7 @@
     import ColumnControl from '@/components/ColumnControl.vue';
     import ColumnSort from '@/components/ColumnSort.vue';
     import ColumnFilter from '@/components/ColumnFilter.vue';
-
-    // import Pagination from '@/components/Pagination.vue';
+    import Pagination from '@/components/Pagination.vue';
 
     const router =useRouter()
     let taskData = inject('taskData')
@@ -146,10 +144,7 @@
         type:'date',
         filter:{from:'',to:''}
       };
-
-    taskData.columns.all=columns
-
-
+      taskData.columns.all=columns
     }
     setColumns();
 
@@ -165,6 +160,7 @@
               else{
                 toastFunctions.showResponseError(res.data)
               }
+              globalVariables.loadListData=false;
             })
       }
     }

@@ -1,7 +1,7 @@
 <template>
     <div class="btn-group d-print-none position-absolute" :style="position" style="top: calc(50% - 8px)">
         <i type="button" class="feather icon-search" :class="getFilterClass" data-toggle="dropdown"></i>
-        <div class="dropdown-menu dropdown-menu-right" onclick="event.stopPropagation()">
+        <div class="dropdown-menu dropdown-menu-right" @click.stop>
             <div class="dropdown-item p-1" v-if="column.type=='number'">
                 <small>{{labels.get('label_from')}}</small>
                 <input type="number" class="form-control form-control-sm float_all" v-model="from" @input="column.filter.from=from;onChangeFilter()"> 
