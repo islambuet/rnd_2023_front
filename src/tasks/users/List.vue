@@ -3,7 +3,7 @@
         <div class="card-body">
             <router-link v-if="taskData.permissions.action_1"  :to="taskData.api_url+'/add'" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" ><i class="feather icon-plus-circle"></i> {{labels.get('action_1')}}</router-link>
             <button type="button" v-if="taskData.permissions.action_4" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" onclick="window.print();"><i class="feather icon-printer"></i> {{labels.get('action_4')}}</button>
-<!--            <button type="button" v-if="taskData.permissions.action_5" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="systemFunctions.exportCsv(taskData.columns,taskData.itemsFiltered,taskData.base_url+'.csv')"><i class="feather icon-download"></i> {{labels.get('action_5')}}</button>-->
+            <button type="button" v-if="taskData.permissions.action_5" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="systemFunctions.exportCsv(taskData.columns,taskData.itemsFiltered,taskData.api_url.substring(1)+'.csv')"><i class="feather icon-download"></i> {{labels.get('action_5')}}</button>
             <button type="button" v-if="taskData.permissions.action_8" class="mr-2 mb-2 btn btn-sm" :class="[show_column_controls?'bg-gradient-success':'bg-gradient-primary']" @click="show_column_controls = !show_column_controls"><i class="feather icon-command"></i> {{labels.get('action_8')}}</button>
             <button type="button" v-if="taskData.permissions.action_0" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="globalVariables.loadListData=true;getItems(taskData.pagination)"><i class="feather icon-rotate-cw"></i> {{labels.get('button_refresh')}}</button>
         </div>            
@@ -20,11 +20,11 @@
           <th class="position-relative align-middle d-print-none">{{labels.get('label_action')}}</th>
           <template v-for="(column,key) in taskData.columns.all">
             <th class="position-relative align-middle" v-if="taskData.columns.hidden.indexOf(key)<0" :key="'th_'+key">
-              <ColumnSort :columns="taskData.columns" :sortKey="key" :position="'left:5px'"  :onChangeSort="taskData.setFilteredItems" v-if="taskData.permissions.action_7 && column.sortable"/>
+              <ColumnSort :columns="taskData.columns" :sortKey="key" :position="'left:5px'"  :onChangeSort="setFilteredItems" v-if="taskData.permissions.action_6 && column.sortable"/>
               <div class=" text-center " style="width:calc(100% - 33px);margin-left:17px">
                 {{ column.label }}
               </div>
-              <ColumnFilter :column="column" :position="'right:5px'"  :onChangeFilter="taskData.setFilteredItems" v-if="taskData.permissions.action_7 && column.filterable"/>
+              <ColumnFilter :column="column" :position="'right:5px'"  :onChangeFilter="setFilteredItems" v-if="taskData.permissions.action_6 && column.filterable"/>
 
             </th>
           </template>
@@ -59,9 +59,10 @@
     import { inject,ref } from 'vue'
     import {useRouter} from 'vue-router';
     import axios from 'axios';
-    // import ColumnSort from '@/components/ColumnSort.vue';
-    // import ColumnFilter from '@/components/ColumnFilter.vue';
     import ColumnControl from '@/components/ColumnControl.vue';
+    import ColumnSort from '@/components/ColumnSort.vue';
+    // import ColumnFilter from '@/components/ColumnFilter.vue';
+
     // import Pagination from '@/components/Pagination.vue';
 
     const router =useRouter()

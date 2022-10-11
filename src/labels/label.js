@@ -75,5 +75,9 @@ export default {
         en:"Select",
         bn:'সিলেক্ট'
     },
+    label_created_at:{
+        en:"Creation Time",
+        bn:"তৈরির তারিখ"
+    }
 
 }
