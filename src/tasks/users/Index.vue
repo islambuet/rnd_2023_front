@@ -190,6 +190,9 @@
     await axios.get(taskData.api_url+'/initialize').then((res)=>{
       if (res.data.error == "") {
         taskData.permissions=res.data.permissions;
+        if(res.data.hidden_columns){
+          taskData.columns.hidden=res.data.hidden_columns;
+        }
         routing();
       }
       else{
