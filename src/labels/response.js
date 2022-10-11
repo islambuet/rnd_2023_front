@@ -15,4 +15,12 @@ export default {
         en:"Mobile sms system is not set.</br>Please Contact with admin",
         bn:"মোবাইলের এসএমএস সিস্টেম সেট করা নেই।</br>অ্যাডমিনের সাথে যোগাযোগ করুন।"
     },
+    DB_SAVE_FAILED:{
+        en: 'Fail to save',
+        bn: 'সংরক্ষণ করতে ব্যর্থ হয়েছে',
+    },
+    INPUT_UNCHANGED:{
+        en: 'Nothing changed to save',
+        bn: 'সংরক্ষণ করার জন্য কিছুই পরিবর্তন করা হয়নি',
+    }
 }

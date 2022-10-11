@@ -8,7 +8,7 @@
             <button type="button" v-if="taskData.permissions.action_0" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="globalVariables.loadListData=true;getItems(taskData.pagination)"><i class="feather icon-rotate-cw"></i> {{labels.get('label_refresh')}}</button>
         </div>            
     </div>
-  <ColumnControl :url="taskData.api_url" :columns="taskData.columns"  v-if="show_column_controls"/>
+  <ColumnControl :url="taskData.api_url.substring(1)" :columns="taskData.columns"  v-if="show_column_controls"/>
   <div class="card mb-2">
     <div class="card-header d-print-none">
       {{labels.get('label_task')}}
@@ -53,7 +53,8 @@
 </template>
 <script setup> 
     import globalVariables from "@/assets/globalVariables";    
-    import systemFunctions from "@/assets/systemFunctions";    
+    import systemFunctions from "@/assets/systemFunctions";
+    import toastFunctions from "@/assets/toastFunctions";
     import labels from '@/labels'  
     import { inject,ref } from 'vue'
     import {useRouter} from 'vue-router';
@@ -62,6 +63,7 @@
     import ColumnSort from '@/components/ColumnSort.vue';
     import ColumnFilter from '@/components/ColumnFilter.vue';
     import Pagination from '@/components/Pagination.vue';
+
 
     const router =useRouter()
     let taskData = inject('taskData')

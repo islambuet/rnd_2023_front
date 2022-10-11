@@ -15,7 +15,6 @@
     </div>
 </template>
 <script setup>
-    import globalVariables from "@/assets/globalVariables";
     import toastFunctions from "@/assets/toastFunctions";
     import labels from '@/labels'
 
@@ -40,39 +39,32 @@
         },
     })
     const toggleControlColumns=(event)=>{
-        let key=event.srcElement.value;            
-        if(event.srcElement.checked)
-        { 
-            //this.columns.hidden.splice(this.columns.hidden.indexOf(key), 1);                                  
+        let key=event.target .value;
+        if(event.target .checked){
             props.columns.hidden=props.columns.hidden.filter(function(value) {return value !== key});
-        }else
-        {
+        }
+        else{
             props.columns.hidden.push(key);
         }    
     }
     const saveHiddenColumns=()=>
-        {
-            globalVariables.statusDataLoaded=0;
-            var form_data=new FormData();            
-            form_data.append ('url', props.url);
-            form_data.append ('method', props.method);
-            for(let i=0;i<props.columns.hidden.length;i++){
-                form_data.append ('hidden_columns[]', props.columns.hidden[i]);
-            }
-            axios.post('/columns-control/save-item',form_data)
-            .then(res => {
-                globalVariables.statusDataLoaded = 1;
-                if(res.data.error==''){
-                    toastFunctions.showSuccessMessage(labels.get('msg_success_saved'))
-                    
-                   
-                    
-                }
-            }).catch(error => {                      
-                globalVariables.statusDataLoaded = 1;
-                                        
-            });
+    {
+        let form_data=new FormData();
+        form_data.append ('url', props.url);
+        form_data.append ('method', props.method);
+        for(let i=0;i<props.columns.hidden.length;i++){
+            form_data.append ('hidden_columns[]', props.columns.hidden[i]);
         }
+        axios.post('columns-control/save-item',form_data)
+        .then(res => {
+            if(res.data.error==''){
+                toastFunctions.showSuccessfullySavedMessage()
+            }
+            else{
+              toastFunctions.showResponseError(res.data)
+            }
+        });
+    }
 </script>
 
 

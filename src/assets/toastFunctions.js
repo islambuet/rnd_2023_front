@@ -15,7 +15,7 @@ export default{
         toast.success(msg, {timeout: 2000 });
     },
     showSuccessfullySavedMessage(){
-        this.showSuccessMessage("Need to write message for this")
+        this.showSuccessMessage(labels.get('msg_success_saved'))
     },
     showErrorMessage(msg){
         toast.error(msg);
