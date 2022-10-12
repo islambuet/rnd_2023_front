@@ -3,13 +3,12 @@
     <div v-show="taskData.method=='list'">
       <List/>
     </div>
-<!--    <div v-if="(taskData.permissions.action_1) &&(taskData.method=='add')">-->
-<!--      <Add/>-->
-<!--    </div>-->
-<!--    <div v-if="(taskData.permissions.action_2) &&(taskData.method=='edit')">-->
-<!--      <Add/>-->
-<!--    </div>-->
-    <!-- <Edit/> -->
+    <div v-if="(taskData.permissions.action_1) &&(taskData.method=='add')">
+      <Add/>
+    </div>
+    <div v-if="(taskData.permissions.action_2) &&(taskData.method=='edit')">
+      <Edit/>
+    </div>
     <!-- <Details/>         -->
   </div>
 </template>
@@ -23,6 +22,8 @@
   import axios from 'axios';
 
   import List from './List.vue'
+  import Add from './Add.vue'
+  import Edit from './Edit.vue'
 
   globalVariables.loadListData=true;
   const route =useRoute()
@@ -50,11 +51,21 @@
       taskData.method='list';
     }
     else if(route.path==taskData.api_url+'/add'){
-      taskData.method='add';
-      // addItem();
+      if(!(taskData.permissions.action_1)){
+        router.push(taskData.api_url)
+      }
+      else{
+        taskData.method='add';
+      }
     }
     else if(route.path.indexOf(taskData.api_url+'/edit/')!=-1)
     {
+      if(!(taskData.permissions.action_1)){
+        router.push(taskData.api_url)
+      }
+      else{
+        taskData.method='edit';
+      }
 
       //taskData.method='edit';
       //editItem(route.params['item_id']);
