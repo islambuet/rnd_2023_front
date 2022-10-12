@@ -21,7 +21,7 @@
   const route =useRoute()
   const router =useRouter()
   let taskData = inject('taskData')
-  
+
   const item_id=route.params['item_id']
   
 </script>

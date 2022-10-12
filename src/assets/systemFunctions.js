@@ -27,16 +27,12 @@ export default{
                 if(column.filterable){
                     if(column.type=='number'){
                         if(column.filter.from.toString().length>0){
-                            if(parseFloat(item[key])<parseFloat(column.filter.from))
-                            {
-                                console.log('from')
+                            if(parseFloat(item[key])<parseFloat(column.filter.from)){
                                 return false;
                             }
                         }
                         if(column.filter.to.toString().length>0){
-                            if(parseFloat(item[key])>parseFloat(column.filter.to))
-                            {
-                                console.log('to')
+                            if(parseFloat(item[key])>parseFloat(column.filter.to)){
                                 return false;
                             }
                         }

@@ -2,7 +2,7 @@
     <div class="row d-print-none">
         <div class="col">
             <label>{{labels.get('label_per_page')}}</label>
-            <select class="select-pagination" v-model="pagination.per_page" @change="pagination.current_page=1;globalVariables.loadListData=true;onChangePageOption(pagination)">
+            <select class="select-pagination" v-model="pagination.per_page" @change="pagination.current_page=1;onChangePageOption(pagination)">
                 <option v-for="(option, index) in pagination.per_page_options" :key="index" :value="option">{{ option }}</option>
                 <option v-if="pagination.show_all_items" :value="items.total">{{labels.get('label_all_items')}}</option>
             </select>
@@ -20,18 +20,17 @@
         </div>
         
         <div class="col text-right">
-            <button class="btn-pagination" @click.prevent="--pagination.current_page;globalVariables.loadListData=true;onChangePageOption(pagination)" :disabled="items.current_page < 2">{{labels.get('label_previous')}}</button>
+            <button class="btn-pagination" @click.prevent="--pagination.current_page;onChangePageOption(pagination)" :disabled="items.current_page < 2">{{labels.get('label_previous')}}</button>
             <label>{{labels.get('label_go_page')}}</label>
-            <select v-model="pagination.current_page" class="select-pagination" @change="globalVariables.loadListData=true;onChangePageOption(pagination)">
+            <select v-model="pagination.current_page" class="select-pagination" @change="onChangePageOption(pagination)">
                 <option v-for="(n, index) in items.last_page" :key="index" :value="n">{{ n }}</option>
             </select>
-            <button class="btn-pagination" @click.prevent="++pagination.current_page;globalVariables.loadListData=true;onChangePageOption(pagination)" :disabled="items.current_page >= items.last_page">{{labels.get('label_next')}}</button>
+            <button class="btn-pagination" @click.prevent="++pagination.current_page;onChangePageOption(pagination)" :disabled="items.current_page >= items.last_page">{{labels.get('label_next')}}</button>
         </div>
         
     </div>
 </template>
 <script setup>
-import globalVariables from "@/assets/globalVariables";
 import labels from '@/labels'
     const props=defineProps({
         items: Object,

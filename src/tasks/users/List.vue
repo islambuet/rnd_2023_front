@@ -5,7 +5,7 @@
             <button type="button" v-if="taskData.permissions.action_4" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" onclick="window.print();"><i class="feather icon-printer"></i> {{labels.get('action_4')}}</button>
             <button type="button" v-if="taskData.permissions.action_5" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="systemFunctions.exportCsv(taskData.columns,taskData.itemsFiltered,taskData.api_url.substring(1)+'.csv')"><i class="feather icon-download"></i> {{labels.get('action_5')}}</button>
             <button type="button" v-if="taskData.permissions.action_8" class="mr-2 mb-2 btn btn-sm" :class="[show_column_controls?'bg-gradient-success':'bg-gradient-primary']" @click="show_column_controls = !show_column_controls"><i class="feather icon-command"></i> {{labels.get('action_8')}}</button>
-            <button type="button" v-if="taskData.permissions.action_0" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="globalVariables.loadListData=true;getItems(taskData.pagination)"><i class="feather icon-rotate-cw"></i> {{labels.get('label_refresh')}}</button>
+            <button type="button" v-if="taskData.permissions.action_0" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="taskData.reloadItems(taskData.pagination)"><i class="feather icon-rotate-cw"></i> {{labels.get('label_refresh')}}</button>
         </div>            
     </div>
   <ColumnControl :url="taskData.api_url.substring(1)" :columns="taskData.columns"  v-if="show_column_controls"/>
@@ -20,11 +20,11 @@
           <th class="position-relative align-middle d-print-none">{{labels.get('label_action')}}</th>
           <template v-for="(column,key) in taskData.columns.all">
             <th class="position-relative align-middle" v-if="taskData.columns.hidden.indexOf(key)<0" :key="'th_'+key">
-              <ColumnSort :columns="taskData.columns" :sortKey="key" :position="'left:5px'"  :onChangeSort="setFilteredItems" v-if="taskData.permissions.action_6 && column.sortable"/>
+              <ColumnSort :columns="taskData.columns" :sortKey="key" :position="'left:5px'"  :onChangeSort="taskData.setFilteredItems" v-if="taskData.permissions.action_6 && column.sortable"/>
               <div class=" text-center " style="width:calc(100% - 33px);margin-left:17px">
                 {{ column.label }}
               </div>
-              <ColumnFilter :column="column" :position="'right:5px'"  :onChangeFilter="setFilteredItems" v-if="taskData.permissions.action_6 && column.filterable"/>
+              <ColumnFilter :column="column" :position="'right:5px'"  :onChangeFilter="taskData.setFilteredItems" v-if="taskData.permissions.action_6 && column.filterable"/>
             </th>
           </template>
         </tr>
@@ -47,7 +47,7 @@
         </tr>
         </tbody>
       </table>
-      <Pagination :items = "taskData.items" :onChangePageOption="getItems" :pagination="taskData.pagination"/>
+      <Pagination :items = "taskData.items" :onChangePageOption="taskData.reloadItems" :pagination="taskData.pagination"/>
     </div>
   </div>
 </template>
@@ -69,9 +69,7 @@
     let taskData = inject('taskData')
     let show_column_controls=ref(false)
 
-    const setFilteredItems=()=>{
-      taskData.itemsFiltered=systemFunctions.getFilteredItems(taskData.items.data,taskData.columns);
-    }
+
     const setColumns=()=>{
       let columns={}
       let key='id';
@@ -150,25 +148,10 @@
     }
     setColumns();
 
-    const getItems=async(pagination)=>{
-      if(globalVariables.loadListData)
-      {
-        await axios.get(taskData.api_url+'/get-items?page='+ pagination.current_page+'&perPage='+ pagination.per_page)
-            .then(res => {
-              if(res.data.error==''){
-                taskData.items= res.data.items;
-                setFilteredItems();
-              }
-              else{
-                toastFunctions.showResponseError(res.data)
-              }
-              globalVariables.loadListData=false;
-            })
-      }
-    }
+
 
     //for first time
-    getItems(taskData.pagination);
+    //getItems(taskData.pagination);
 
     //
     // const editDirect=()=>{

@@ -46,26 +46,26 @@
   labels.add([{language:globalVariables.language,file:'tasks'+taskData.api_url+'/labels.js'}])
 
   const routing=async ()=>{
-    //await getItems(taskData.pagination);//Load at least once
+    await getItems(taskData.pagination);//Load at least once
     if(route.path==taskData.api_url){
       taskData.method='list';
     }
     else if(route.path==taskData.api_url+'/add'){
-      if(!(taskData.permissions.action_1)){
-        router.push(taskData.api_url)
-      }
-      else{
-        taskData.method='add';
-      }
+      // if(!(taskData.permissions.action_1)){
+      //   router.push(taskData.api_url)
+      // }
+      // else{
+      //   taskData.method='add';
+      // }
     }
     else if(route.path.indexOf(taskData.api_url+'/edit/')!=-1)
     {
-      if(!(taskData.permissions.action_1)){
-        router.push(taskData.api_url)
-      }
-      else{
-        taskData.method='edit';
-      }
+      // if(!(taskData.permissions.action_1)){
+      //   router.push(taskData.api_url)
+      // }
+      // else{
+      //   taskData.method='edit';
+      // }
 
       //taskData.method='edit';
       //editItem(route.params['item_id']);
@@ -198,6 +198,30 @@
   //   // };
   // }
   //
+
+  const getItems=async(pagination)=>{
+    if(globalVariables.loadListData)
+    {
+      await axios.get(taskData.api_url+'/get-items?page='+ pagination.current_page+'&perPage='+ pagination.per_page)
+          .then(res => {
+            if(res.data.error==''){
+              taskData.items= res.data.items;
+              taskData.setFilteredItems();
+            }
+            else{
+              toastFunctions.showResponseError(res.data)
+            }
+            globalVariables.loadListData=false;
+          })
+    }
+  }
+  taskData.setFilteredItems=()=>{
+    taskData.itemsFiltered=systemFunctions.getFilteredItems(taskData.items.data,taskData.columns);
+  }
+  taskData.reloadItems=(pagination)=>{
+    globalVariables.loadListData=true;
+    getItems(pagination);
+  }
   const init=async ()=>{
     await axios.get(taskData.api_url+'/initialize').then((res)=>{
       if (res.data.error == "") {
