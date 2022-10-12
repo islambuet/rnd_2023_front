@@ -1,7 +1,7 @@
 <template>
   <div class="row mb-2" v-if="!inputItem.more_values">
     <div class="col-4">
-      <label class="font-weight-bold float-right">{{labels.get(inputItem.label)}} <span class="text-danger" v-if="inputItem.mandatory=='Yes'">*</span></label>
+      <label class="font-weight-bold float-right">{{labels.get(inputItem.label)}} <span class="text-danger" v-if="inputItem.mandatory">*</span></label>
     </div>
     <div class="col-lg-4 col-8">
       <div class="input-group" >
@@ -16,7 +16,7 @@
   </div>
   <div class="row mb-2" :id="inputKey+'_system_add_more_input_container'" v-else>
     <div class="col-4">
-      <label class="font-weight-bold float-right">{{labels.get(inputItem.label)}} <span class="text-danger" v-if="inputItem.mandatory=='Yes'">*</span></label>
+      <label class="font-weight-bold float-right">{{labels.get(inputItem.label)}} <span class="text-danger" v-if="inputItem.mandatory">*</span></label>
     </div>
     <div class="col-lg-4 col-8">
       <div class="row mb-2">
@@ -45,13 +45,8 @@
   </div>
 </template>
 <script setup>
-    import globalVariables from "@/assets/globalVariables";
-    import systemFunctions from "@/assets/systemFunctions";
-    import toastFunctions from "@/assets/toastFunctions";
     import { onMounted } from 'vue'
-    import labels from '@/labels'   
-    import { ref, computed } from 'vue' 
-    import axios from 'axios';
+    import labels from '@/labels'
     const props=defineProps({
         inputItem: {
             type: Object,
@@ -71,7 +66,6 @@
       }
     })
     const addMore=(defaultValue)=>{
-      console.log("Dropdown addmore")
       let curIndex=current_add_more_index;
       let html=$("#"+props.inputKey+'_system_add_more_input_container .system_add_more_content > div').clone();
       html.find('select').attr('id',props.inputKey+'_'+curIndex)
@@ -84,9 +78,7 @@
       current_add_more_index++;
     }
     const removeMore=(event)=>{
-      console.log("Remove more")
       $(event.target).closest('.row').remove();
-      //console.log(event.target)
     }
 </script>
 
