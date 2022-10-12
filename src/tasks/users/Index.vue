@@ -24,6 +24,7 @@
 
   import List from './List.vue'
 
+  globalVariables.loadListData=true;
   const route =useRoute()
   const router =useRouter()
 
