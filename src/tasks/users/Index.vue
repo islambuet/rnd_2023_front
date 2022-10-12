@@ -51,25 +51,22 @@
       taskData.method='list';
     }
     else if(route.path==taskData.api_url+'/add'){
-      // if(!(taskData.permissions.action_1)){
-      //   router.push(taskData.api_url)
-      // }
-      // else{
-      //   taskData.method='add';
-      // }
+      if(!(taskData.permissions.action_1)){
+        //toastFunctions.showAccessDenyMessage();
+        await router.push(taskData.api_url)
+      }
+      else{
+        taskData.method='add';
+      }
     }
     else if(route.path.indexOf(taskData.api_url+'/edit/')!=-1)
     {
-      // if(!(taskData.permissions.action_1)){
-      //   router.push(taskData.api_url)
-      // }
-      // else{
-      //   taskData.method='edit';
-      // }
-
-      //taskData.method='edit';
-      //editItem(route.params['item_id']);
-      //addItem();
+      if(!(taskData.permissions.action_2)){
+        await router.push(taskData.api_url)
+      }
+      else{
+        taskData.method='edit';
+      }
     }
   }
   watch(route, () => {
