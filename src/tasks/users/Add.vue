@@ -6,6 +6,7 @@
 <!--      <button  v-if="Object.keys(taskData.item).length>0" type="button" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="save(true)"><i class="feather icon-plus-square"></i> {{labels.get('button_save_new')}}</button>-->
     </div>
   </div>
+
 </template>
 <script setup>
   import globalVariables from "@/assets/globalVariables";
@@ -18,5 +19,11 @@
 
   const router =useRouter()
   let taskData = inject('taskData')
+  if(!(taskData.permissions.action_1)){
+    toastFunctions.showAccessDenyMessage();
+  }
+  else{
+
+  }
 
 </script>

@@ -3,10 +3,10 @@
     <div v-show="taskData.method=='list'">
       <List/>
     </div>
-    <div v-if="(taskData.permissions.action_1) &&(taskData.method=='add')">
+    <div v-if="taskData.method=='add'">
       <Add/>
     </div>
-    <div v-if="(taskData.permissions.action_2) &&(taskData.method=='edit')">
+    <div v-if="taskData.method=='edit'">
       <Edit/>
     </div>
     <!-- <Details/>         -->
@@ -51,22 +51,17 @@
       taskData.method='list';
     }
     else if(route.path==taskData.api_url+'/add'){
-      if(!(taskData.permissions.action_1)){
-        //toastFunctions.showAccessDenyMessage();
-        await router.push(taskData.api_url)
-      }
-      else{
-        taskData.method='add';
-      }
+      taskData.method='add';
     }
     else if(route.path.indexOf(taskData.api_url+'/edit/')!=-1)
     {
-      if(!(taskData.permissions.action_2)){
-        await router.push(taskData.api_url)
-      }
-      else{
-        taskData.method='edit';
-      }
+      taskData.method='edit';
+      // if(!(taskData.permissions.action_2)){
+      //   await router.push(taskData.api_url)
+      // }
+      // else{
+      //   taskData.method='edit';
+      // }
     }
   }
   watch(route, () => {

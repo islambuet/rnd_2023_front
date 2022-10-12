@@ -44,11 +44,10 @@ export default{
         else if (data.error == 'API_OFFLINE') {
             this.showApiOfflineMessage()
         }
-        // else if (data.error == 'USER_SESSION_EXPIRED') {
-        //     globalVariables.logout();
-        //     //this.$routes.push("/login");
-        //     toast.error(labels.get(data.messages));
-        // }
+        else if (data.error == 'USER_SESSION_EXPIRED') {
+            globalVariables.logout();
+            toast.error(labels.get('USER_SESSION_EXPIRED'));
+        }
         else if (data.error == 'VALIDATION_FAILED') {
             if(typeof data.messages=='string'){
                 displayMessages = labels.get(data.messages);

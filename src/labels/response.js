@@ -22,5 +22,13 @@ export default {
     INPUT_UNCHANGED:{
         en: 'Nothing changed to save',
         bn: 'সংরক্ষণ করার জন্য কিছুই পরিবর্তন করা হয়নি',
-    }
+    },
+    ITEM_NOT_FOUND:{
+        en: 'Data not found',
+        bn: 'তথ্য পাওয়া যায়নি',
+    },
+    USER_SESSION_EXPIRED:{
+        en: 'Your login session has expired.',
+        bn: 'আপনার লগইন সেশনের মেয়াদ শেষ হয়ে গেছে',
+    },
 }

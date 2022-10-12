@@ -3,6 +3,14 @@ export default {
         en:"Users",
         bn:'ব্যবহারকারীরা'
     },
+    label_new_task:{
+        en:"New user",
+        bn:'নতুন ব্যবহারকারী'
+    },
+    label_edit_task:{
+        en:"Edit user",
+        bn:'সম্পাদনা ব্যবহারকারী'
+    },
     label_username:{
         en:"Username",
         bn:"ইউজার নেম"
