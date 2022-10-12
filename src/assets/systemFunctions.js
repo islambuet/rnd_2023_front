@@ -1,4 +1,5 @@
 import globalVariables from "@/assets/globalVariables";
+import axios from "axios";
 export default{
     changeLanguage(language)
     {
@@ -9,6 +10,8 @@ export default{
         for (let item_key in data) {
             globalVariables.user[item_key] = data[item_key];
             if(item_key==globalVariables.localStorageAuthTokenStr){
+                //set new AuthToken for axios Authorization
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + globalVariables.user[globalVariables.localStorageAuthTokenStr];
                 localStorage.setItem(globalVariables.localStorageAuthTokenStr, data[item_key]);
             }
         }
