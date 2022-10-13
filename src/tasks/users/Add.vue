@@ -20,18 +20,18 @@
   </div>
 </template>
 <script setup>
+
   import globalVariables from "@/assets/globalVariables";
-  import systemFunctions from "@/assets/systemFunctions";
   import toastFunctions from "@/assets/toastFunctions";
   import labels from '@/labels'
   
-  import {useRoute,useRouter} from "vue-router";
+  import {useRouter} from "vue-router";
   import {inject, reactive} from "vue";
   import axios from "axios";
   import InputTemplate from '@/components/InputTemplate.vue';
+
   
-  
-  const route =useRoute()
+
   const router =useRouter()
   let taskData = inject('taskData')
   let item=reactive({
@@ -40,12 +40,13 @@
     inputFields:{},
     data:{
       id:0,
+      employee_id:'',
       username:'',
       password:'',
+      user_group_id:3,
       email:'',
       name:'',
       mobile_no:'',
-
     }
   })
   const setInputFields=()=>{
@@ -55,6 +56,14 @@
       name: key,
       label: labels.get('label_'+key),
       type:'hidden',
+      default:item.data[key],
+      mandatory:true
+    };
+    key='employee_id';
+    inputFields[key] = {
+      name: 'item[' +key +']',
+      label: labels.get('label_'+key),
+      type:'text',
       default:item.data[key],
       mandatory:true
     };
@@ -72,6 +81,15 @@
       label: labels.get('label_'+key),
       type:'password',
       default:item.data[key],
+      mandatory:true
+    };
+    key='user_group_id';
+    inputFields[key] = {
+      name: 'item[' +key +']',
+      label: labels.get('label_'+key),
+      type:'dropdown',
+      default:item.data[key],
+      options:taskData.user_groups.map((item)=>{ return {value:item.id,label:item.name}}),
       mandatory:true
     };
     key='email';
@@ -98,26 +116,26 @@
       default:item.data[key],
       mandatory:true
     };
-    key='dropdown';
-    inputFields[key] = {
-      name: 'item[' +key +']',
-      label: labels.get('label_'+key),
-      type:'dropdown',
-      default:'',
-      options:[{label:"Super Admin",value:1},{label:"Admin",value:2},{label:"Registered",value:3}],
-      mandatory:true
-    };
-    key='dropdown_more';
-    inputFields[key] = {
-      name: 'item[' +key +']',
-      label: labels.get('label_'+key),
-      type:'dropdown',
-      more_values:[2,3,1],
-      options:[{label:"Super Admin",value:1},{label:"Admin",value:2},{label:"Registered",value:3}],
-      default:'1',
-      mandatory:true
-    };
     item.inputFields=inputFields;
+  }
+  const save=async (save_and_new)=>{
+    let formData=new FormData(document.getElementById('formSaveItem'))
+    await axios.post(taskData.api_url+'/save-item',formData).then((res)=>{
+      if (res.data.error == "") {
+        globalVariables.loadListData=true;
+        toastFunctions.showSuccessfullySavedMessage();
+        if(save_and_new){
+          setInputFields();
+        }
+        else{
+          router.push(taskData.api_url)
+        }
+      }
+      else{
+        toastFunctions.showResponseError(res.data)
+      }
+    });
+
   }
   if(!(taskData.permissions.action_1)){
     toastFunctions.showAccessDenyMessage();

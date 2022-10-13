@@ -40,7 +40,7 @@
     itemsFiltered: [],    //for display
     columns:{all:{},hidden:[],sort:{key:'',dir:''}},
     pagination: {current_page: 1,per_page_options: [1,2,10,20,50,100,500,1000],per_page:1,show_all_items:true},
-    users_groups:[],
+    user_groups:[],
     users_types:[],
   })
   labels.add([{language:globalVariables.language,file:'tasks'+taskData.api_url+'/labels.js'}])
@@ -96,6 +96,7 @@
     await axios.get(taskData.api_url+'/initialize').then((res)=>{
       if (res.data.error == "") {
         taskData.permissions=res.data.permissions;
+        taskData.user_groups= res.data.user_groups;
         if(res.data.hidden_columns){
           taskData.columns.hidden=res.data.hidden_columns;
         }

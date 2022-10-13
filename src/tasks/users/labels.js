@@ -15,9 +15,17 @@ export default {
         en:"Username",
         bn:"ইউজার নেম"
     },
+    label_employee_id :{
+        en:"Employee ID",
+        bn:"কর্মচারী আইডি"
+    },
     label_password:{
         en:"Password",
         bn:"পাসওয়ার্ড"
+    },
+    label_user_group_id :{
+        en:"User Group",
+        bn:"ব্যবহারকারী দল"
     },
     label_user_group_name :{
         en:"User Group",
