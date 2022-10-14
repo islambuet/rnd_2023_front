@@ -57,11 +57,11 @@
       type:'text',
       values:[item.data[key]],
     };
-    key='user_group_id';
+    key='user_group_name';
     detailFields[key] = {
       label: labels.get('label_'+key),
       type:'text',
-      values:[item.data[key]],
+      values:[item.data['user_group_name']],
     };
     key='email';
     detailFields[key] = {
@@ -79,6 +79,30 @@
     detailFields[key] = {
       label: labels.get('label_'+key),
       type:'text',
+      values:[item.data[key]],
+    };
+    key='status';
+    detailFields[key] = {
+      label: labels.get('label_'+key),
+      type:'text',
+      values:[item.data[key]],
+    };
+    key='max_logged_browser';
+    detailFields[key] = {
+      label: labels.get('label_'+key),
+      type:'text',
+      values:[item.data[key]],
+    };
+    key='mobile_authentication_off_end';
+    detailFields[key] = {
+      label: labels.get('label_'+key),
+      type:'date',
+      values:[item.data[key]],
+    };
+    key='created_at';
+    detailFields[key] = {
+      label: labels.get('label_'+key),
+      type:'date-time',
       values:[item.data[key]],
     };
     item.detailFields=detailFields;

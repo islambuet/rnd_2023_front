@@ -47,4 +47,12 @@ export default {
         en:"Personal Information",
         bn:"ব্যক্তিগত তথ্য"
     },
+    label_max_logged_browser :{
+        en:"Maximum Allowed Browser",
+        bn:"সর্বাধিক অনুমোদিত ব্রাউজার"
+    },
+    label_mobile_authentication_off_end :{
+        en:"Mobile authentication off",
+        bn:"মোবাইল যাচাইকরণ বন্ধ"
+    },
 }

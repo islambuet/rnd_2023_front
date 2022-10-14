@@ -122,5 +122,30 @@ export default{
     //handle by browser
     downloadUrl(url){
         window.open(url)
-    }
+    },
+    displayDate(timestamp){
+        let date = new Date(timestamp);
+        if(date.getDate() && timestamp){
+            return  ('0' + date.getDate()).slice(-2)
+                +' '+date.toLocaleString('default', { month: 'short' })
+                +' '+date.getFullYear();
+        }
+        else{
+            return '';
+        }
+    },
+    displayDateTime(timestamp){
+        let date = new Date(timestamp);
+        if(date.getDate() && timestamp){
+            return  ('0' + date.getDate()).slice(-2)
+                +' '+date.toLocaleString('default', { month: 'short' })
+                +' '+date.getFullYear()+" "
+                +('0' + date.getHours()).slice(-2)+":"
+                +('0' + date.getMinutes()).slice(-2)+":"
+                +('0' + date.getSeconds()).slice(-2)
+        }
+        else{
+            return '';
+        }
+    },
 }

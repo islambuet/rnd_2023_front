@@ -11,13 +11,14 @@
             </div>
             <div class="col-12" v-else-if="detailField.type=='file'">
               <button type="button" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="systemFunctions.downloadUrl(fieldValue)"><i class="feather icon-download"></i> {{labels.get('label_download')}}</button>
-
-<!--              <a :href="'http://localhost:8080/rnd_2023/favicon.ico'" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" download><i class="feather icon-download"></i> {{labels.get('label_download')}}</a>-->
-<!--              <a class="mr-2 mb-2 btn btn-sm bg-gradient-primary">Download</a>-->
-<!--              <a href="/images/myw3schoolsimage.jpg" download>-->
-<!--                <img src="/images/myw3schoolsimage.jpg" alt="W3Schools">-->
-<!--              </a>-->
             </div>
+            <div class="col-12" v-else-if="detailField.type=='date'">
+              {{systemFunctions.displayDate(fieldValue)}}
+            </div>
+            <div class="col-12" v-else-if="detailField.type=='date-time'">
+              {{systemFunctions.displayDateTime(fieldValue)}}
+            </div>
+
             <div class="col-12" v-else>
               {{fieldValue}}
             </div>
@@ -30,7 +31,7 @@
 <script setup>
     import systemFunctions from "@/assets/systemFunctions";
     import labels from '@/labels'   
-
+//type==image,file,date,date-time
     const props=defineProps({
       detailFields: {
             type: Object,
