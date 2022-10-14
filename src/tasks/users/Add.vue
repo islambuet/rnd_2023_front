@@ -51,7 +51,15 @@
   })
   const setInputFields=()=>{
     let inputFields={}
-    let key='id';
+    let key='save_token';
+    inputFields[key] = {
+      name: key,
+      label: labels.get('label_'+key),
+      type:'hidden',
+      default:new Date().getTime(),
+      mandatory:true
+    };
+    key='id';
     inputFields[key] = {
       name: key,
       label: labels.get('label_'+key),
