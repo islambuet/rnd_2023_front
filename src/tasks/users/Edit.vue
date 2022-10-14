@@ -14,69 +14,147 @@
     </div>
     <div class="card-body">
       <form id="formSaveItem">
-        {{item}}
-<!--        <InputTemplate :inputItems="taskData.item" />-->
+        <InputTemplate :inputItems="item.inputFields" />
       </form>
     </div>
   </div>
 </template>
 <script setup>
-  import globalVariables from "@/assets/globalVariables";
-  import systemFunctions from "@/assets/systemFunctions";
-  import toastFunctions from "@/assets/toastFunctions";
-  import labels from '@/labels'
 
-  import {useRoute,useRouter} from "vue-router";
-  import {inject, reactive} from "vue";
-  import axios from "axios";
+import globalVariables from "@/assets/globalVariables";
+import toastFunctions from "@/assets/toastFunctions";
+import labels from '@/labels'
+
+import {useRouter} from "vue-router";
+import {inject, reactive} from "vue";
+import axios from "axios";
+import InputTemplate from '@/components/InputTemplate.vue';
+import {useRoute} from "vue-router/dist/vue-router";
 
 
-  const route =useRoute()
-  const router =useRouter()
-  let taskData = inject('taskData')
-  let item=reactive({
-    id:0,
-    exists:false,
-    form:{},
-    data:{}
-  })
-  const getItem=async ()=>{
-    await axios.get(taskData.api_url+'/get-item/'+ item.id).then((res)=>{
-      if (res.data.error == "") {
-        item.data=res.data.item;
-        setItemForm();
-        item.exists=true;
+const route =useRoute()
+const router =useRouter()
+let taskData = inject('taskData')
+let item=reactive({
+  id:0,
+  exists:false,
+  inputFields:{},
+  data:{}
+})
+const setInputFields=()=>{
+  let inputFields={}
+  let key='save_token';
+  inputFields[key] = {
+    name: key,
+    label: labels.get('label_'+key),
+    type:'hidden',
+    default:new Date().getTime(),
+    mandatory:true
+  };
+  key='id';
+  inputFields[key] = {
+    name: key,
+    label: labels.get('label_'+key),
+    type:'hidden',
+    default:item.data[key],
+    mandatory:true
+  };
+  key='employee_id';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'text',
+    default:item.data[key],
+    mandatory:true
+  };
+  key='username';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'text',
+    default:item.data[key],
+    mandatory:true
+  };
+  key='password';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'password',
+    default:item.data[key],
+    mandatory:true
+  };
+  key='user_group_id';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'dropdown',
+    default:item.data[key],
+    options:taskData.user_groups.map((item)=>{ return {value:item.id,label:item.name}}),
+    mandatory:true
+  };
+  key='email';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'email',
+    default:item.data[key],
+    mandatory:true
+  };
+  key='name';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'text',
+    default:item.data[key],
+    mandatory:true
+  };
+  key='mobile_no';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'text',
+    default:item.data[key],
+    mandatory:true
+  };
+  item.inputFields=inputFields;
+}
+const save=async (save_and_new)=>{
+  let formData=new FormData(document.getElementById('formSaveItem'))
+  await axios.post(taskData.api_url+'/save-item',formData).then((res)=>{
+    if (res.data.error == "") {
+      globalVariables.loadListData=true;
+      toastFunctions.showSuccessfullySavedMessage();
+      if(save_and_new){
+        setInputFields();
       }
       else{
-        toastFunctions.showResponseError(res.data)
+        router.push(taskData.api_url)
       }
-    });
-  }
-  const setItemForm=()=>{
-    let itemForm={}
-    let key='id';
-    itemForm[key] = {
-      name: key,
-      label: labels.get('label_'+key),
-      type:'hidden',
-      default:item.id,
-      mandatory:true
-    };
-    key='username';
-    itemForm[key] = {
-      name: 'item[' +key +']',
-      label: labels.get('label_'+key),
-      type:'text',
-      default:item.data[key],
-      mandatory:true
-    };
-    item.form=itemForm;
-  }
-  if(!(taskData.permissions.action_2)){
-    toastFunctions.showAccessDenyMessage();
-  }
-  else{
-    item.id=route.params['item_id'];
-    getItem();
-  }
+    }
+    else{
+      toastFunctions.showResponseError(res.data)
+    }
+  });
+
+}
+const getItem=async ()=>{
+  await axios.get(taskData.api_url+'/get-item/'+ item.id).then((res)=>{
+    if (res.data.error == "") {
+      item.data=res.data.item;
+      setInputFields();
+      item.exists=true;
+    }
+    else{
+      toastFunctions.showResponseError(res.data)
+    }
+  });
+}
+if(!(taskData.permissions.action_2)){
+  toastFunctions.showAccessDenyMessage();
+}
+else{
+  item.id=route.params['item_id'];
+  getItem();
+}
+
 </script>
