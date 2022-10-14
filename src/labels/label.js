@@ -100,6 +100,10 @@ export default {
         en:'CSV',
         bn:'সিএসভি'
     },
+    label_download:{
+        en:'Download',
+        bn:'ডাউনলোড'
+    },
     label_save:{
         en:'Save',
         bn:'সংরক্ষণ'

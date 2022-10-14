@@ -119,4 +119,8 @@ export default{
         hiddenElement.download = filename;
         hiddenElement.click();
     },
+    //handle by browser
+    downloadUrl(url){
+        window.open(url)
+    }
 }

@@ -11,6 +11,10 @@ export default {
         en:"Edit user",
         bn:'সম্পাদনা ব্যবহারকারী'
     },
+    label_details_task:{
+        en:"Details of user",
+        bn:'ব্যবহারকারীর বিবরণ'
+    },
     label_username:{
         en:"Username",
         bn:"ইউজার নেম"

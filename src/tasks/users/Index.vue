@@ -9,7 +9,9 @@
     <div v-if="taskData.method=='edit'">
       <Edit/>
     </div>
-    <!-- <Details/>         -->
+    <div v-if="taskData.method=='details'">
+      <Details/>
+    </div>
   </div>
 </template>
 <script setup>
@@ -24,6 +26,7 @@
   import List from './List.vue'
   import Add from './Add.vue'
   import Edit from './Edit.vue'
+  import Details from './Details.vue'
 
   globalVariables.loadListData=true;
   const route =useRoute()
@@ -62,6 +65,10 @@
       // else{
       //   taskData.method='edit';
       // }
+    }
+    else if(route.path.indexOf(taskData.api_url+'/details/')!=-1)
+    {
+      taskData.method='details';
     }
   }
   watch(route, () => {
