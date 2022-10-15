@@ -27,9 +27,9 @@ export default {
         en:"Logout",
         bn:"লগআউট"
     },
-    label_change_password:{
-        en:"Change Password",
-        bn:"পাসওয়ার্ড পরিবর্তন"
+    label_profile_settings:{
+        en:"Profile Settings",
+        bn:"প্রোফাইল সেটিংস"
     },
     label_action:{
         en:"Action",
