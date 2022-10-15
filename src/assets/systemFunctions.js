@@ -148,4 +148,7 @@ export default{
             return '';
         }
     },
+    getDatePart(timestamp){
+        return timestamp?timestamp.substring(0,10):'';
+    }
 }

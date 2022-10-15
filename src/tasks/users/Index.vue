@@ -42,7 +42,7 @@
     items: {data:[]},   //from Laravel server with pagination and info
     itemsFiltered: [],    //for display
     columns:{all:{},hidden:[],sort:{key:'',dir:''}},
-    pagination: {current_page: 1,per_page_options: [1,2,10,20,50,100,500,1000],per_page:1,show_all_items:true},
+    pagination: {current_page: 1,per_page_options: [1,2,10,20,50,100,500,1000],per_page:10,show_all_items:true},
     user_groups:[],
     users_types:[],
   })

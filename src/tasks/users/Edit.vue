@@ -22,6 +22,7 @@
 <script setup>
 
 import globalVariables from "@/assets/globalVariables";
+import systemFunctions from "@/assets/systemFunctions";
 import toastFunctions from "@/assets/toastFunctions";
 import labels from '@/labels'
 
@@ -116,7 +117,43 @@ const setInputFields=()=>{
     default:item.data[key],
     mandatory:true
   };
+  key='ordering';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'text',
+    default:item.data[key],
+    mandatory:true
+  };
+  key='status';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'dropdown',
+    options:[{label:"Active",value:'Active'},{label:"In-Active",value:'In-Active'}],
+    default:item.data[key],
+    mandatory:true
+  };
+  key='mobile_authentication_off_end';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'date',
+    default:systemFunctions.getDatePart(item.data[key]),
+    mandatory:true
+  };
+  key='max_logged_browser';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'dropdown',
+    options:Array(10).fill(1).map((n, i) =>{ return {value:n+i,label:n+i}}),
+    default:item.data[key],
+    mandatory:true
+  };
   item.inputFields=inputFields;
+
+
 }
 const save=async (save_and_new)=>{
   let formData=new FormData(document.getElementById('formSaveItem'))
@@ -125,7 +162,7 @@ const save=async (save_and_new)=>{
       globalVariables.loadListData=true;
       toastFunctions.showSuccessfullySavedMessage();
       if(save_and_new){
-        setInputFields();
+        router.push(taskData.api_url+"/add")
       }
       else{
         router.push(taskData.api_url)

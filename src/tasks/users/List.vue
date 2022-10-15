@@ -81,6 +81,15 @@
         type:'number',
         filter:{from:'',to:''}
       };
+      key='employee_id';
+      columns[key]={
+        label: labels.get('label_'+key),
+        hideable:false,
+        filterable:true,
+        sortable:true,
+        type:'text',
+        filter:{from:'',to:''}
+      };
       key='username';
       columns[key]={
         label: labels.get('label_'+key),
