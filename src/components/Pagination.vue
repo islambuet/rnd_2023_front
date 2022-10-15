@@ -4,7 +4,7 @@
             <label>{{labels.get('label_per_page')}}</label>
             <select class="select-pagination" v-model="pagination.per_page" @change="pagination.current_page=1;onChangePageOption(pagination)">
                 <option v-for="(option, index) in pagination.per_page_options" :key="index" :value="option">{{ option }}</option>
-                <option v-if="pagination.show_all_items" :value="items.total">{{labels.get('label_all_items')}}</option>
+                <option v-if="pagination.show_all_items" :value="-1">{{labels.get('label_all_items')}}</option>
             </select>
         </div>
         <div class="col" v-if="items.total>0">
