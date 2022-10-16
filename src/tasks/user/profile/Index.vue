@@ -180,6 +180,7 @@
       });
     }
     if(saveData){
+      await systemFunctions.delay(1);//to confirm input is set
       let formData=new FormData(document.getElementById(taskData.formSaveProfilePicture))
       await axios.post(taskData.api_url+'/profile-picture',formData).then((res)=>{
         if (res.data.error == "") {

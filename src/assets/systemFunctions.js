@@ -254,5 +254,8 @@ export default{
             return globalVariables.baseUrl+'theme/images/'+defaultPath;
         }
         return '';
+    },
+    delay: async function(ms){
+        await new Promise(res => setTimeout(res, ms));
     }
 }
