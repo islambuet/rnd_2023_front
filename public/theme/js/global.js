@@ -107,8 +107,8 @@ $(document).ready(function ()
             else if(container)
             {
                 //TODO path of base
-                let path='/vue3test/theme/images/not_an_image.jpg';
-                let img_tag='<img alt="Image" style="max-width: 100%;max-height:200px"  src="'+path+'"/>';
+                let path='/theme/images/not_an_image.jpg';
+                let img_tag='<img alt="Not an Image" style="max-width: 100%;max-height:200px"  src="'+path+'"/>';
                 $(container).html(img_tag);
                 //$(container).html('Not A Picture');
                 //or display Picture showing not a picture

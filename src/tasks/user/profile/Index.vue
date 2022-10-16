@@ -19,7 +19,7 @@
           <div class="card-header p-1">
             <a class="btn btn-sm" data-toggle="collapse" href="#label_change_password">{{labels.get('label_change_password')}} </a>
           </div>
-          <div id="label_change_password" class="collapse show">
+          <div id="label_change_password" class="collapse">
             <form :id="taskData.formSaveChangePassword">
               <div class="card-body">
                 <InputTemplate :inputItems="item.inputFieldsPassword" />
@@ -40,7 +40,7 @@
           <div class="card-header p-1">
             <a class="btn btn-sm" data-toggle="collapse" href="#label_profile_picture">{{labels.get('label_profile_picture')}} </a>
           </div>
-          <div id="label_profile_picture" class="collapse">
+          <div id="label_profile_picture" class="collapse show">
 
             <form :id="taskData.formSaveProfilePicture">
               <div class="card-body">
@@ -87,7 +87,8 @@
       id:0,
       password_old:'',
       password_new:'',
-      profile_picture:globalVariables.user.profile_picture_url
+      //profile_picture:globalVariables.user.profile_picture
+      profile_picture:'a'
     }
   })
   const route =useRoute()
@@ -136,7 +137,7 @@
       name: 'item[' +key +']',
       label: labels.get('label_'+key),
       type:'image',
-      default:'',
+      default:item.data[key],
       mandatory:true
     };
     item.inputFieldsProfilePicture=inputFields;
@@ -147,6 +148,20 @@
       if (res.data.error == "") {
         toastFunctions.showSuccessfullySavedMessage()
         globalVariables.logout();
+      }
+      else{
+        toastFunctions.showResponseError(res.data)
+      }
+    });
+  }
+  const saveProfilePicture=async ()=>{
+    let fileFormData=await systemFunctions.getImageFormData(taskData.formSaveProfilePicture);
+
+    //let formData=new FormData(document.getElementById(taskData.formSaveChangePassword))
+    globalVariables.uploadingFiles=1;
+    await axios.post(globalVariables.baseURLUploadServer+'/upload',fileFormData).then((res)=>{
+      if (res.data.error == "") {
+        console.log(res.data.uploaded_files)
       }
       else{
         toastFunctions.showResponseError(res.data)

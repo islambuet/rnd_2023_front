@@ -150,5 +150,97 @@ export default{
     },
     getDatePart(timestamp){
         return timestamp?timestamp.substring(0,10):'';
+    },
+    getImageFormData:async function(formId){
+        let inputs = document.getElementById(formId).getElementsByTagName('input');
+        let formData=new FormData();
+        for(let i=0;i<inputs.length;i++)
+        {
+            if(inputs[i]['type']=='file')
+            {
+                if(inputs[i]['id'])//id will be treated as input name
+                {
+                    if(inputs[i].files[0])
+                    {
+                        let resizedImage=null;
+                        let file=inputs[i].files[0];
+                        let file_type=file.type;
+                        if(file_type && file_type.substring(0,5)=="image")
+                        {
+                            let minimum_size_to_resize=1372022;//1372022=1.3mb,409600=400KB
+                            if(inputs[i].hasAttribute('data-minimum-size-to-resize'))
+                            {
+                                minimum_size_to_resize=inputs[i].getAttribute('data-minimum-size-to-resize');
+                            }
+                            if(file.size>minimum_size_to_resize)
+                            {
+                                let resize_width = 800;
+                                if(inputs[i].hasAttribute('data-resize-width'))
+                                {
+                                    resize_width=inputs[i].getAttribute('data-resize-width');
+                                }
+                                let resize_height = 600;
+                                if(inputs[i].hasAttribute('data-resize-height'))
+                                {
+                                    resize_height=inputs[i].getAttribute('data-resize-height');
+                                }
+                                let img = new Image();
+                                const imageLoadPromise = new Promise(resolve => {
+                                    img.onload = resolve;
+                                    img.src = img.src=URL.createObjectURL(file);
+                                });
+                                await imageLoadPromise;
+                                let width = img.naturalWidth;
+                                let height = img.naturalHeight;
+                                console.log(width,height);
+                                if((width>resize_width)||(height>resize_height))
+                                {
+                                    if((width/height)>(resize_width/resize_height))
+                                    {
+                                        height *= resize_width / width;
+                                        width = resize_width;
+                                    }
+                                    else
+                                    {
+                                        width *= resize_height / height;
+                                        height = resize_height;
+                                    }
+                                    let canvas = document.createElement("canvas");
+                                    canvas.width = width;
+                                    canvas.height = height;
+                                    let context = canvas.getContext("2d");
+                                    context.drawImage(img, 0, 0, width, height);
+                                    resizedImage=await new Promise(resolve => {
+                                        canvas.toBlob(function(blob)
+                                        {
+                                            resolve(blob);
+                                        });
+                                    });
+                                }
+                                else{
+                                    console.log("error height width")
+                                }
+
+                            }
+                        }
+                        if(resizedImage)
+                        {
+                            console.log("Resized")
+                            formData.set(inputs[i]['id'], resizedImage, file.name+'.png');
+                        }
+                        else
+                        {
+                            console.log("Not resized")
+                            formData.set(inputs[i]['id'], file, file.name);
+                        }
+                    }
+                }
+            }
+        }
+        return  Promise.resolve(formData);
+
+    },
+    isFormDataEmpty(formData){
+        return formData.entries().next().done;
     }
 }

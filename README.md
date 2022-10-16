@@ -22,4 +22,6 @@
         npm install --save vue-toastification@next
     
         npm install axios -save
-    
+## To change main domain and subdomain
+    need to change golbal.js line 110
+    need to add/remove public path at vue.config file
