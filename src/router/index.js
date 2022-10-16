@@ -5,7 +5,7 @@ function getRoutes() {
   let vue_index_files = require.context('@/tasks/',true,/\/Index\.vue$/).keys();
   for(let i=0;i<vue_index_files.length;i++) {
     let index_file=vue_index_files[i];
-    let path=index_file.substr(1,index_file.length-11);
+    let path=index_file.substring(1,index_file.indexOf('/Index.vue'));
     let children=[];
     try{
       let data=require(`@/tasks${path}/routes.children.js`);
@@ -14,6 +14,7 @@ function getRoutes() {
     catch (error) {
       //console.log(error);
     }
+    console.log(index_file,path)
     routes.push({ path: path, component: () => import('@/tasks'+path+'/Index.vue'), children: children});
   }
   routes.push({ path: '/:pathMatch(.*)', component: () => import('@/components/busy-states/404.vue')});
