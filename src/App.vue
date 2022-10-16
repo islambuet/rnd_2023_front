@@ -23,7 +23,7 @@
   const route =useRoute()
   const router =useRouter()
   //global axios setup
-  axios.defaults.baseURL = 'http://192.168.0.109/rnd_2023_back/public/api/';
+  axios.defaults.baseURL = 'http://192.168.0.109/rnd_2023_back/public/api';
   axios.defaults.headers.common['language'] =globalVariables.language;
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + globalVariables.user[globalVariables.localStorageAuthTokenStr];
   axios.interceptors.request.use(function (config) {
