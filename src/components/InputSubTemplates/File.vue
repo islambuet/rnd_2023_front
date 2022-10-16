@@ -23,7 +23,7 @@
       </div>
       <div class="row mb-2">
         <div class="col-12 system_preview_container" :id="inputKey+'_preview_container'">
-          <img style="max-width: 100%;max-height:200px" :src="getImageUrl(inputItem.default)">
+          <img style="max-width: 100%;max-height:200px" :src="systemFunctions.getImageUrl(inputItem.default)">
         </div>
       </div>
     </div>
@@ -64,7 +64,7 @@
           </div>
           <div class="row mb-2">
             <div class="col-12 system_preview_container">
-              <img style="max-width: 100%;max-height:200px" :src="getImageUrl(inputItem.default)">
+              <img style="max-width: 100%;max-height:200px" :src="systemFunctions.getImageUrl(inputItem.default)">
             </div>
           </div>
         </div>
@@ -73,7 +73,7 @@
   </div>
 </template>
 <script setup>
-    import globalVariables from "@/assets/globalVariables";
+    import systemFunctions from "@/assets/systemFunctions";
     import { onMounted } from 'vue'
     import labels from '@/labels'
 
@@ -99,7 +99,7 @@
       let curIndex=current_add_more_index;
       let html=$("#"+props.inputKey+'_system_add_more_input_container .system_add_more_content > div').clone();
       html.find('.system_default_file').html(defaultUrl);
-      html.find('img').attr('src',getImageUrl(defaultUrl));
+      html.find('img').attr('src',systemFunctions.getImageUrl(defaultUrl));
       html.find('input[type=file]').attr('id',props.inputKey+'_'+curIndex);
       html.find('input[type=file]').attr('data-preview-container','#'+props.inputKey+'_'+curIndex+'_preview_container');
       html.find('input[type=hidden]').attr('id',props.inputKey+'_'+curIndex+'_file_input');
@@ -118,12 +118,9 @@
 
       current_add_more_index++;
     }
-    const getImageUrl=(url)=>{
-      return url?url:globalVariables.baseUrl+'theme/images/no_image.jpg';
-    }
     const resetFile=(fileId,defaultUrl)=>{
       $('#'+fileId).val('').trigger('change');
-      $('#'+fileId+'_preview_container img').attr('src',getImageUrl(defaultUrl));
+      $('#'+fileId+'_preview_container img').attr('src',systemFunctions.getImageUrl(defaultUrl));
     }
     const removeMore=(event)=>{
       $(event.target).closest('.system_file_add_more_holder').remove();

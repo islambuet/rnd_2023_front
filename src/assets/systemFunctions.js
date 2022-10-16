@@ -1,5 +1,6 @@
 import globalVariables from "@/assets/globalVariables";
 import axios from "axios";
+import {defineAsyncComponent} from "vue";
 export default{
     changeLanguage(language)
     {
@@ -242,5 +243,16 @@ export default{
     },
     isFormDataEmpty(formData){
         return formData.entries().next().done;
+    },
+    getImageUrl(path,defaultPath='no_image.jpg'){
+        //return url?url:globalVariables.baseUrl+'theme/images/no_image.jpg';
+        if(path){
+            return globalVariables.baseURLUploadedFilesLink+'/'+path;
+        }
+        if(defaultPath){
+            //check if it is url then return url. check by splitting by/ or start with http
+            return globalVariables.baseUrl+'theme/images/'+defaultPath;
+        }
+        return '';
     }
 }

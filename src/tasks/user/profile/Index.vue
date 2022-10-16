@@ -88,7 +88,7 @@
       password_old:'',
       password_new:'',
       //profile_picture:globalVariables.user.profile_picture
-      profile_picture:'a'
+      profile_picture:'files/profile-pictures/3/Screenshot (1).png.png'
     }
   })
   const route =useRoute()
@@ -193,7 +193,7 @@
       await axios.post(taskData.api_url+'/profile-picture',formData).then((res)=>{
         if (res.data.error == "") {
           toastFunctions.showSuccessfullySavedMessage()
-          globalVariables.user.profile_picture_url=$('#profile_picture_file_input').val();
+          globalVariables.user.profile_picture=$('#profile_picture_file_input').val();
         }
         else{
           toastFunctions.showResponseError(res.data)

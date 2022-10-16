@@ -25,8 +25,7 @@
         <!-- Users options -->
         <li>
             <a class="nav-link dropdown-toggle mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                <img v-bind:src="globalVariables.user.profile_picture_url" v-if="globalVariables.user.profile_picture_url" alt="profileImage" class="rounded-circle" style="height: 32px;width: 32px;">
-                <img v-bind:src="globalVariables.baseUrl+'theme/images/guest.png'" v-else alt="Image" class="rounded-circle" style="height: 32px;width: 32px;">
+                <img v-bind:src="systemFunctions.getImageUrl(globalVariables.user.profile_picture,'guest.png')" alt="profileImage" class="rounded-circle" style="height: 32px;width: 32px;">
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-item">
