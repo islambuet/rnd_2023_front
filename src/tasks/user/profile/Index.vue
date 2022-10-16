@@ -68,8 +68,8 @@
   import systemFunctions from "@/assets/systemFunctions";
   import toastFunctions from "@/assets/toastFunctions";
   import labels from '@/labels'
-  import {onMounted, provide, reactive, watch} from 'vue'
-  import {useRoute,useRouter} from 'vue-router';
+  import {onMounted, reactive} from 'vue'
+  import {useRouter} from 'vue-router';
   import axios from 'axios';
   import InputTemplate from '@/components/InputTemplate.vue';
   let taskData=reactive({
@@ -91,7 +91,6 @@
       profile_picture:'files/profile-pictures/3/Screenshot (1).png.png'
     }
   })
-  const route =useRoute()
   const router =useRouter()
 
   const setInputFieldsPassword=()=> {
@@ -140,14 +139,6 @@
       default:item.data[key],
       mandatory:true
     };
-    key='profile_picture1';
-    inputFields[key] = {
-      name: 'item[' +key +']',
-      label: labels.get('label_'+key),
-      type:'image',
-      default:item.data[key],
-      mandatory:true
-    };
     item.inputFieldsProfilePicture=inputFields;
   }
   const savePassword=async ()=>{
@@ -168,7 +159,7 @@
     let fileFormData=await systemFunctions.getImageFormData(taskData.formSaveProfilePicture);
     if(systemFunctions.isFormDataEmpty(fileFormData)){
       //saveData=true;
-      toastFunctions.showErrorMessage(labels.get("Profile Image not atatched"))
+      toastFunctions.showErrorMessage(labels.get("Profile Image not attached"))
     }
     else{
       globalVariables.uploadingFiles=1;
