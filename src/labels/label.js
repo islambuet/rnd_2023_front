@@ -79,6 +79,11 @@ export default {
         en:"Creation Time",
         bn:"তৈরির তারিখ"
     },
+    label_updated_at:{
+        en:"Updated Time",
+        bn:"আপডেটের তারিখ"
+    },
+
     //for action and buttons both
     label_refresh:{
         en:'Refresh',

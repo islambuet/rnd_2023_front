@@ -22,6 +22,7 @@
   import {useRouter} from "vue-router";
   import {inject, reactive} from "vue";
   import axios from "axios";
+  import InputTemplate from '@/components/InputTemplate.vue';
   import DetailTemplate from '@/components/DetailTemplate.vue';
   import {useRoute} from "vue-router/dist/vue-router";
   import systemFunctions from "@/assets/systemFunctions";
@@ -47,13 +48,19 @@
       type:'hidden',
       values:[item.data[key]],
     };
-    key='name';
+    key='purpose';
     detailFields[key] = {
       label: labels.get('label_'+key),
       type:'text',
       values:[item.data[key]],
     };
-    key='prefix';
+    key='config_value';
+    detailFields[key] = {
+      label: labels.get('label_'+key),
+      type:'text',
+      values:[item.data[key]],
+    };
+    key='description';
     detailFields[key] = {
       label: labels.get('label_'+key),
       type:'text',
@@ -65,13 +72,13 @@
       type:'text',
       values:[item.data[key]],
     };
-    key='ordering';
+    key='created_at';
     detailFields[key] = {
       label: labels.get('label_'+key),
-      type:'text',
+      type:'date-time',
       values:[item.data[key]],
     };
-    key='created_at';
+    key='updated_at';
     detailFields[key] = {
       label: labels.get('label_'+key),
       type:'date-time',
