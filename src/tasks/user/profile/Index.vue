@@ -87,8 +87,6 @@
       id:0,
       password_old:'',
       password_new:'',
-      //profile_picture:globalVariables.user.profile_picture
-      profile_picture:'files/profile-pictures/3/Screenshot (1).png.png'
     }
   })
   const router =useRouter()
@@ -121,7 +119,9 @@
     };
     item.inputFieldsPassword=inputFields;
   }
-  const setInputFieldsProfilePicture=()=> {
+  const setInputFieldsProfilePicture=async ()=> {
+    item.inputFieldsProfilePicture= {};
+    await systemFunctions.delay(1)//wait for clear
     let inputFields = {}
     let key = 'save_token';
     inputFields[key] = {
@@ -136,7 +136,7 @@
       name: 'item[' +key +']',
       label: labels.get('label_'+key),
       type:'image',
-      default:item.data[key],
+      default:globalVariables.user.profile_picture,
       mandatory:true
     };
     item.inputFieldsProfilePicture=inputFields;
@@ -186,6 +186,7 @@
         if (res.data.error == "") {
           toastFunctions.showSuccessfullySavedMessage()
           globalVariables.user.profile_picture=$('#profile_picture_file_input').val();
+          setInputFieldsProfilePicture();
         }
         else{
           toastFunctions.showResponseError(res.data)
