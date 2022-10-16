@@ -25,6 +25,7 @@
   import InputTemplate from '@/components/InputTemplate.vue';
   import DetailTemplate from '@/components/DetailTemplate.vue';
   import {useRoute} from "vue-router/dist/vue-router";
+  import systemFunctions from "@/assets/systemFunctions";
 
 
   const route =useRoute()
@@ -37,7 +38,9 @@
     data:{
     }
   })
-  const setDetailFields=()=>{
+  const setDetailFields=async ()=>{
+    item.detailFields= {};
+    await systemFunctions.delay(1);
     let detailFields={}
     let key='id';
     detailFields[key] = {

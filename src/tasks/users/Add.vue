@@ -20,7 +20,7 @@
   </div>
 </template>
 <script setup>
-
+  import systemFunctions from "@/assets/systemFunctions";
   import globalVariables from "@/assets/globalVariables";
   import toastFunctions from "@/assets/toastFunctions";
   import labels from '@/labels'
@@ -49,7 +49,9 @@
       mobile_no:'',
     }
   })
-  const setInputFields=()=>{
+  const setInputFields=async ()=>{
+    item.inputFields= {};
+    await systemFunctions.delay(1);
     let inputFields={}
     let key='save_token';
     inputFields[key] = {

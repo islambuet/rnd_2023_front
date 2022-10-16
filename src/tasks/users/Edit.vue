@@ -42,7 +42,9 @@ let item=reactive({
   inputFields:{},
   data:{}
 })
-const setInputFields=()=>{
+const setInputFields=async ()=>{
+  item.inputFields= {};
+  await systemFunctions.delay(1);
   let inputFields={}
   let key='save_token';
   inputFields[key] = {
