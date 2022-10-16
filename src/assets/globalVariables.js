@@ -14,6 +14,9 @@ function getNotLoggedUser(){
   }    
 }
 export default reactive({
+  baseURLApiServer:'http://192.168.0.109/rnd_2023_back/public/api',
+  baseURLUploadServer:'http://192.168.0.109/uploads/public/api',
+  baseURLUploadedFileLinks:'http://192.168.0.109/uploads/public',
   localStorageAuthTokenStr:localStorageAuthTokenStr,
   localStorageLanguageStr:localStorageLanguageStr,
   baseUrl: process.env.BASE_URL,
