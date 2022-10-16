@@ -140,6 +140,14 @@
       default:item.data[key],
       mandatory:true
     };
+    key='profile_picture1';
+    inputFields[key] = {
+      name: 'item[' +key +']',
+      label: labels.get('label_'+key),
+      type:'image',
+      default:item.data[key],
+      mandatory:true
+    };
     item.inputFieldsProfilePicture=inputFields;
   }
   const savePassword=async ()=>{
@@ -155,18 +163,43 @@
     });
   }
   const saveProfilePicture=async ()=>{
-    let fileFormData=await systemFunctions.getImageFormData(taskData.formSaveProfilePicture);
 
-    //let formData=new FormData(document.getElementById(taskData.formSaveChangePassword))
-    globalVariables.uploadingFiles=1;
-    await axios.post(globalVariables.baseURLUploadServer+'/upload',fileFormData).then((res)=>{
-      if (res.data.error == "") {
-        console.log(res.data.uploaded_files)
-      }
-      else{
-        toastFunctions.showResponseError(res.data)
-      }
-    });
+    let saveData=false;
+    let fileFormData=await systemFunctions.getImageFormData(taskData.formSaveProfilePicture);
+    if(systemFunctions.isFormDataEmpty(fileFormData)){
+      //saveData=true;
+      toastFunctions.showErrorMessage(labels.get("Profile Image not atatched"))
+    }
+    else{
+      globalVariables.uploadingFiles=1;
+      fileFormData.set('upload_dir','profile-pictures/'+globalVariables.user.id)
+      //fileFormData.set('type','file')//if not image
+      //fileFormData.set('max_size','10240')//if needed more than 3mb
+      await axios.post(globalVariables.baseURLUploadServer+'/upload',fileFormData).then((res)=>{
+        if (res.data.error == "") {
+          let uploadData = res.data.uploaded_files;
+          for(let key in uploadData){
+            $('#'+key+'_file_input').val(uploadData[key].path)
+          }
+          saveData=true;
+        }
+        else{
+          toastFunctions.showResponseError(res.data)
+        }
+      });
+    }
+    if(saveData){
+      let formData=new FormData(document.getElementById(taskData.formSaveProfilePicture))
+      await axios.post(taskData.api_url+'/profile-picture',formData).then((res)=>{
+        if (res.data.error == "") {
+          toastFunctions.showSuccessfullySavedMessage()
+          globalVariables.user.profile_picture_url=$('#profile_picture_file_input').val();
+        }
+        else{
+          toastFunctions.showResponseError(res.data)
+        }
+      });
+    }
   }
   if(!(globalVariables.user.id>0)){
     router.push("/login")
