@@ -83,7 +83,7 @@
 
   const login=()=>{
     let formData=new FormData(document.getElementById('formLogin'));
-      axios.post("user/login", formData)
+      axios.post("/user/login", formData)
       .then((res) => {
         if (res.data.error == "") {
           systemFunctions.setUser(res.data.user);

@@ -48,7 +48,7 @@
   //global axios end
   let statusSiteLoaded=ref(0);
   const init=async ()=>{
-    await axios.get('user/initialize').then((res)=>{
+    await axios.get('/user/initialize').then((res)=>{
       if (res.data.error == "") {
         if(res.data.user){
           systemFunctions.setUser(res.data.user);

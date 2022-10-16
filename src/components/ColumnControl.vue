@@ -55,7 +55,7 @@
         for(let i=0;i<props.columns.hidden.length;i++){
             form_data.append ('hidden_columns[]', props.columns.hidden[i]);
         }
-        axios.post('columns-control/save-item',form_data)
+        axios.post('/columns-control/save-item',form_data)
         .then(res => {
             if(res.data.error==''){
                 toastFunctions.showSuccessfullySavedMessage()
