@@ -12,19 +12,23 @@
         </div>
         <div class="row d-flex align-items-center justify-content-center ">
             <div class="col-8 text-center">
-            <div>{{labels.get('msg_access_deny_message')}}</div>
-            <button @click.prevent="reloadPage" class="btn btn-danger">{{labels.get('label_refresh')}}</button>
+              <div>{{labels.get('msg_access_deny_message')}}</div>
+              <button @click.prevent="reloadPage" class="btn btn-danger">{{labels.get('label_refresh')}}</button>
+              <button @click.prevent="goHome" class="btn btn-outline-primary ml-1">Go {{labels.get('label_dashboard')}}</button>
             </div>
         </div>
     </div>    
 </template>
 <script setup>
     import globalVariables from "@/assets/globalVariables";
-    import labels from '@/labels' 
+    import labels from '@/labels'
     const reloadPage=()=>{
         window.location.reload();
-    } 
-    </script>
+    }
+    const goHome=()=>{
+      window.location.replace(globalVariables.baseUrl);
+    }
+  </script>
 
 <style  scoped>
 .card{
