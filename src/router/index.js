@@ -14,7 +14,6 @@ function getRoutes() {
     catch (error) {
       //console.log(error);
     }
-    console.log(index_file,path)
     routes.push({ path: path, component: () => import('@/tasks'+path+'/Index.vue'), children: children});
   }
   routes.push({ path: '/:pathMatch(.*)', component: () => import('@/components/busy-states/404.vue')});
