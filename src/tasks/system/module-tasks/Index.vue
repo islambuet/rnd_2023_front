@@ -87,7 +87,6 @@
     taskData.itemsFiltered=getListItemsFromTree(taskData.items.tasksTree);
   }
   const getListItemsFromTree=(tree)=>{
-    console.log(tree)
     let items=[];
     for(let i=0;i<tree.length;i++)
     {

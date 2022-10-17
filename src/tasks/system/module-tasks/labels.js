@@ -27,4 +27,12 @@ export default {
         en:"Parent",
         bn:'সম্পাদনা ব্যবহারকারী'
     },
+    MODULE:{
+        en:"MODULE",
+        bn:'সম্পাদনা ব্যবহারকারী'
+    },
+    TASK:{
+        en:"TASK",
+        bn:'সম্পাদনা ব্যবহারকারী'
+    },
 }

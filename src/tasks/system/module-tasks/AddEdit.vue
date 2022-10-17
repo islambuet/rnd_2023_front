@@ -4,7 +4,6 @@
       <router-link :to="taskData.api_url" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" ><i class="feather icon-corner-up-left"></i> {{labels.get('label_back')}}</router-link>
       <template v-if="item.exists">
         <button  type="button" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="save(false)"><i class="feather icon-save"></i> {{labels.get('label_save')}}</button>
-        <button  type="button" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="save(true)"><i class="feather icon-plus-square"></i> {{labels.get('label_save_new')}}</button>
       </template>
     </div>
   </div>
@@ -44,11 +43,29 @@ let item=reactive({
   data:{
     id:0,
     name:'',
-    prefix:'',
+    parent:0,
+    url:'',
     ordering:99,
     status:'Active',
   }
 })
+const getParents=(tree)=>{
+  let items=[];
+  for(let i=0;i<tree.length;i++)
+  {
+    let item=tree[i];
+    if(item.type=='MODULE'){
+      items.push({label:item.prefix+item.name,value:item.id});
+      if(item.children){
+        let subItems = getParents(item.children);
+        for (let z = 0; z < subItems.length; z++) {
+          items.push(subItems[z])
+        }
+      }
+    }
+  }
+  return items
+}
 const setInputFields=async ()=>{
   item.inputFields= {};
   await systemFunctions.delay(1);
@@ -77,13 +94,24 @@ const setInputFields=async ()=>{
     default:item.data[key],
     mandatory:true
   };
-  key='prefix';
+  key='type';
   inputFields[key] = {
     name: 'item[' +key +']',
     label: labels.get('label_'+key),
-    type:'text',
+    type:'dropdown',
+    options:[{label:labels.get('MODULE'),value:'MODULE'},{label:labels.get('TASK'),value:'TASK'}],
     default:item.data[key],
-    mandatory:false
+    mandatory:true
+  };
+  key='parent';
+  console.log(taskData.items)
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'dropdown',
+    options:getParents(taskData.items.tasksTree),
+    default:item.data[key],
+    mandatory:true
   };
   key='ordering';
   inputFields[key] = {
@@ -112,17 +140,7 @@ const save=async (save_and_new)=>{
     if (res.data.error == "") {
       globalVariables.loadListData=true;
       toastFunctions.showSuccessfullySavedMessage();
-      if(save_and_new){
-        if(item.id>0){
-          router.push(taskData.api_url+"/add")
-        }
-        else{
-          setInputFields();
-        }
-      }
-      else{
-        router.push(taskData.api_url)
-      }
+      router.push(taskData.api_url)
     }
     else{
       toastFunctions.showResponseError(res.data)
