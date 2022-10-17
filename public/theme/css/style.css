@@ -199,6 +199,13 @@ a:focus {
     }
 
 }
+@media print {
+    #system_content
+    {
+        margin-left: 0 !important;
+        margin-right: 0!important;
+    }
+}
 /* ---------------------------------------------------
     Loading div STYLE
 ----------------------------------------------------- */
