@@ -31,7 +31,7 @@
         </thead>
         <tbody class="table-striped table-hover">
         <tr v-for="item in taskData.itemsFiltered" :key="'item_'+item.id">
-          <td class="col-1 d-print-none">
+          <td class="col_1 d-print-none">
             <button class="btn btn-sm bg-gradient-primary dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{labels.get('label_action')}}</button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0; left: 0; transform: translate3d(0px, 38px, 0px);">
               <router-link v-if="taskData.permissions.action_0"  :to="taskData.api_url+'/details/'+item.id" class="dropdown-item text-info btn-sm" ><i class="feather icon-camera"></i> {{labels.get('label_details')}}</router-link>
@@ -39,7 +39,7 @@
             </div>
           </td>
           <template v-for="(column,key) in taskData.columns.all">
-            <td class="col-1" :class="(['id','ordering'].indexOf(key) != -1)?'text-right':''" v-if="taskData.columns.hidden.indexOf(key)<0" :key="'td_'+key">
+            <td :class="((['id','ordering'].indexOf(key) != -1)?'text-right':'')+(column.class?(' '+column.class):'col_9')" v-if="taskData.columns.hidden.indexOf(key)<0" :key="'td_'+key">
               {{ item[key] }}
             </td>
           </template>
@@ -79,7 +79,8 @@
         filterable:true,
         sortable:true,
         type:'number',
-        filter:{from:'',to:''}
+        filter:{from:'',to:''},
+        class:'col_1'
       };
       key='employee_id';
       columns[key]={
@@ -88,7 +89,8 @@
         filterable:true,
         sortable:true,
         type:'text',
-        filter:{from:'',to:''}
+        filter:{from:'',to:''},
+        class:'col_1'
       };
       key='username';
       columns[key]={
@@ -97,7 +99,8 @@
         filterable:true,
         sortable:true,
         type:'text',
-        filter:{from:'',to:''}
+        filter:{from:'',to:''},
+        class:'col_1'
       };
       key='name';
       columns[key]={
@@ -142,7 +145,8 @@
         sortable:true,
         filterable:true,
         type:'dropdown',
-        filter:{from:'',to:'',options:[{value:'Active',label:'Active'},{value:'In-Active',label:'In-Active'}]}
+        filter:{from:'',to:'',options:[{value:'Active',label:'Active'},{value:'In-Active',label:'In-Active'}]},
+        class:'col_1'
       };
       key='created_at';
       columns[key]={

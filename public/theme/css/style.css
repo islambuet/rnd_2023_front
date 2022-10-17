@@ -238,3 +238,35 @@ a:focus {
     border-color:#2f3642;
     border-bottom-color: #2f3642!important;
 }
+/*Table Column sizing*/
+.table td{
+    padding: .25rem;
+    vertical-align: middle;
+}
+.col_1{
+    width: 1%;
+}
+.col_2{
+    width: 2%;
+}
+.col_3{
+    width: 3%;
+}
+.col_4{
+    width: 4%;
+}
+.col_5{
+    width: 5%;
+}
+.col_6{
+    width: 6%;
+}
+.col_7{
+   width: 7%;
+}
+.col_8{
+    width: 8%;
+}
+.col_9{
+    width: 9%;
+}
