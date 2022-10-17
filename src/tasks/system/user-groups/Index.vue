@@ -83,7 +83,11 @@
     }
   }
   taskData.setFilteredItems=()=>{
-    taskData.itemsFiltered=systemFunctions.getFilteredItems(taskData.items.data,taskData.columns);
+    let filteredItems=systemFunctions.getFilteredItems(taskData.items.data,taskData.columns);
+    for(let i=0;i<filteredItems.length;i++){
+      filteredItems[i]['num_tasks']=filteredItems[i]['action_0'].split(",").length - 2;
+    }
+    taskData.itemsFiltered=filteredItems;
   }
   taskData.reloadItems=(pagination)=>{
     globalVariables.loadListData=true;

@@ -44,7 +44,6 @@ let item=reactive({
   data:{
     id:0,
     name:'',
-    prefix:'',
     ordering:99,
     status:'Active',
   }
@@ -76,14 +75,6 @@ const setInputFields=async ()=>{
     type:'text',
     default:item.data[key],
     mandatory:true
-  };
-  key='prefix';
-  inputFields[key] = {
-    name: 'item[' +key +']',
-    label: labels.get('label_'+key),
-    type:'text',
-    default:item.data[key],
-    mandatory:false
   };
   key='ordering';
   inputFields[key] = {
