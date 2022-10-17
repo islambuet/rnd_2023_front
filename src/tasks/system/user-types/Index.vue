@@ -36,7 +36,6 @@
     method:'list',
 
     permissions:{},
-    itemDefault: {},
     item: {},           //single item
     items: {data:[]},   //from Laravel server with pagination and info
     itemsFiltered: [],    //for display
