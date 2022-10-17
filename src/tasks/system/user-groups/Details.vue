@@ -22,7 +22,6 @@
   import {useRouter} from "vue-router";
   import {inject, reactive} from "vue";
   import axios from "axios";
-  import InputTemplate from '@/components/InputTemplate.vue';
   import DetailTemplate from '@/components/DetailTemplate.vue';
   import {useRoute} from "vue-router/dist/vue-router";
   import systemFunctions from "@/assets/systemFunctions";
@@ -54,25 +53,7 @@
       type:'text',
       values:[item.data[key]],
     };
-    key='type';
-    detailFields[key] = {
-      label: labels.get('label_'+key),
-      type:'text',
-      values:[item.data[key]],
-    };
-    key='parent';
-    detailFields[key] = {
-      label: labels.get('label_'+key),
-      type:'text',
-      values:[item.data[key]],
-    };
-    key='url';
-    detailFields[key] = {
-      label: labels.get('label_'+key),
-      type:'text',
-      values:[item.data[key]],
-    };
-    key='ordering';
+    key='prefix';
     detailFields[key] = {
       label: labels.get('label_'+key),
       type:'text',
@@ -84,13 +65,13 @@
       type:'text',
       values:[item.data[key]],
     };
-    key='created_at';
+    key='ordering';
     detailFields[key] = {
       label: labels.get('label_'+key),
-      type:'date-time',
+      type:'text',
       values:[item.data[key]],
     };
-    key='updated_at';
+    key='created_at';
     detailFields[key] = {
       label: labels.get('label_'+key),
       type:'date-time',
