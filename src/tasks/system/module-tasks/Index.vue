@@ -1,6 +1,6 @@
 <template>
   <div v-if="taskData.permissions.action_0==1">
-    <div v-show="taskData.method=='list'">
+    <div v-show="taskData.method=='list'" v-if="!globalVariables.loadListData">
       <List/>
     </div>
     <div v-if="taskData.method=='add'">
@@ -26,6 +26,7 @@
   import List from './List.vue'
   import AddEdit from './AddEdit.vue'
   import Details from './Details.vue'
+  import SystemFunctions from "@/assets/systemFunctions";
 
   globalVariables.loadListData=true;
   const route =useRoute()
@@ -33,19 +34,19 @@
 
   let taskData=reactive({
     api_url:systemFunctions.getTaskBaseURL(import.meta.url),
-    method:'list',
+    method:'',
 
     permissions:{},
     item: {},           //single item
-    items: {data:[]},   //from Laravel server with pagination and info
+    items: {max_level:1,tasksTree:[]},   //here items==modules_tasks
     itemsFiltered: [],    //for display
     columns:{all:{},hidden:[],sort:{key:'',dir:''}},
-    pagination: {current_page: 1,per_page_options: [10,20,50,100,500,1000],per_page:-1,show_all_items:true},
+    // pagination: {current_page: 1,per_page_options: [10,20,50,100,500,1000],per_page:-1,show_all_items:true},
   })
   labels.add([{language:globalVariables.language,file:'tasks'+taskData.api_url+'/labels.js'}])
 
   const routing=async ()=>{
-    await getItems(taskData.pagination);//Load at least once
+    await getItems();//Load at least once
     if(route.path==taskData.api_url){
       taskData.method='list';
     }
@@ -66,10 +67,10 @@
   })
 
 
-  const getItems=async(pagination)=>{
+  const getItems=async()=>{
     if(globalVariables.loadListData)
     {
-      await axios.get(taskData.api_url+'/get-items?page='+ pagination.current_page+'&perPage='+ pagination.per_page)
+      await axios.get(taskData.api_url+'/get-items')
           .then(res => {
             if(res.data.error==''){
               taskData.items= res.data.items;
@@ -83,11 +84,34 @@
     }
   }
   taskData.setFilteredItems=()=>{
-    taskData.itemsFiltered=systemFunctions.getFilteredItems(taskData.items.data,taskData.columns);
+    taskData.itemsFiltered=getListItemsFromTree(taskData.items.tasksTree);
   }
-  taskData.reloadItems=(pagination)=>{
+  const getListItemsFromTree=(tree)=>{
+    console.log(tree)
+    let items=[];
+    for(let i=0;i<tree.length;i++)
+    {
+      let item=tree[i];
+      for(let level=1;level<=taskData.items.max_level;level++) {
+        if (level == item.level) {
+          item['name_' + level] = item['name'];
+        } else {
+          item['name_' + level] = '';
+        }
+      }
+      items.push(item);
+      if(item.children){
+          let subItems = getListItemsFromTree(item.children);
+          for (let z = 0; z < subItems.length; z++) {
+            items.push(subItems[z])
+          }
+      }
+    }
+    return items
+  }
+  taskData.reloadItems=()=>{
     globalVariables.loadListData=true;
-    getItems(pagination);
+    getItems();
   }
   const init=async ()=>{
     await axios.get(taskData.api_url+'/initialize').then((res)=>{

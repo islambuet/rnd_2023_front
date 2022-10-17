@@ -7,7 +7,6 @@
             <button type="button" v-if="taskData.permissions.action_0" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="taskData.reloadItems(taskData.pagination)"><i class="feather icon-rotate-cw"></i> {{labels.get('label_refresh')}}</button>
         </div>            
     </div>
-  <ColumnControl :url="taskData.api_url.substring(1)" :columns="taskData.columns"  v-if="show_column_controls"/>
   <div class="card mb-2">
     <div class="card-header d-print-none">
       {{labels.get('label_task')}}
@@ -46,7 +45,7 @@
         </tr>
         </tbody>
       </table>
-      <Pagination :items = "taskData.items" :onChangePageOption="taskData.reloadItems" :pagination="taskData.pagination"/>
+
     </div>
   </div>
 </template>
@@ -66,70 +65,62 @@
 
     const router =useRouter()
     let taskData = inject('taskData')
-    let show_column_controls=ref(false)
-
 
     const setColumns=()=>{
       let columns={}
       let key='id';
       columns[key]={
         label: labels.get('label_'+key),
-        hideable:true,
-        filterable:true,
-        sortable:true,
+        hideable:false,
+        filterable:false,
+        sortable:false,
         type:'number',
         filter:{from:'',to:''},
         class:'col_1'
       };
-      key='name';
+      key='type';
       columns[key]={
         label: labels.get('label_'+key),
         hideable:false,
-        filterable:true,
-        sortable:true,
+        filterable:false,
+        sortable:false,
         type:'text',
         filter:{from:'',to:''}
       };
-      key='prefix';
+      for(let level=1;level<=taskData.items.max_level;level++)
+      {
+        key='name_'+level;
+        columns[key]={
+          label: labels.get('label_name'),
+          hideable:false,
+          filterable:false,
+          sortable:false,
+          type:'text',
+          filter:{from:'',to:''}
+        };
+      }
+      key='url';
       columns[key]={
         label: labels.get('label_'+key),
-        hideable:true,
-        filterable:true,
-        sortable:true,
+        hideable:false,
+        filterable:false,
+        sortable:false,
         type:'text',
         filter:{from:'',to:''}
       };
       key='ordering';
       columns[key]={
         label: labels.get('label_'+key),
-        hideable:true,
+        hideable:false,
         filterable:false,
-        sortable:true,
+        sortable:false,
         type:'text',
         filter:{from:'',to:''},
         class:'col_1'
       };
-      key='status';
-      columns[key]={
-        label: labels.get('label_'+key),
-        hideable:true,
-        sortable:true,
-        filterable:true,
-        type:'dropdown',
-        filter:{from:'',to:'',options:[{value:'Active',label:'Active'},{value:'In-Active',label:'In-Active'}]},
-        class:'col_1'
-      };
-      key='created_at';
-      columns[key]={
-        label: labels.get('label_'+key),
-        hideable:true,
-        filterable:true,
-        sortable:true,
-        type:'date',
-        filter:{from:'',to:''}
-      };
       taskData.columns.all=columns
     }
+
     setColumns();
 </script>
 

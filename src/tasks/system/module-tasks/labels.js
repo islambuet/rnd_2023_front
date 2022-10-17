@@ -15,4 +15,16 @@ export default {
         en:"Details of Module/Task",
         bn:'ব্যবহারকারীর বিবরণ'
     },
+    label_type:{
+        en:"Type",
+        bn:'সম্পাদনা ব্যবহারকারী'
+    },
+    label_url:{
+        en:"Url",
+        bn:'সম্পাদনা ব্যবহারকারী'
+    },
+    label_parent:{
+        en:"Parent",
+        bn:'সম্পাদনা ব্যবহারকারী'
+    },
 }
