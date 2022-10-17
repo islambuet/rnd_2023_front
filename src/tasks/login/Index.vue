@@ -22,13 +22,13 @@
                                             <div class="input-group-prepend">
                                               <span class="input-group-text"><i class="feather icon-user"></i></span>
                                             </div>
-                                            <input type="text" class="form-control" id="user-name" :placeholder="labels.get('label_username')" name="item[username]" value="0500456"  />
+                                            <input type="text" class="form-control" id="user-name" :placeholder="labels.get('label_username')" name="item[username]" value=""  />
                                           </div>
                                           <div v-show="!taskData.otp_required" class="input-group mb-3">
                                             <div class="input-group-prepend eye_password">
                                               <span class="input-group-text" ><i class="feather icon-eye"></i></span>
                                             </div>
-                                            <input type="password" class="form-control" :placeholder="labels.get('label_password')" name="item[password]" value="12345678" required="" />
+                                            <input type="password" class="form-control" :placeholder="labels.get('label_password')" name="item[password]" value="" required="" />
                                           </div>
                                           <div v-if="taskData.otp_required">
                                             <div v-html="labels.get('label_verify_otp')"></div>

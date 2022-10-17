@@ -9,10 +9,10 @@
         <i class="bi bi-justify fs-3"></i>
     </button>
     <ul class="list-unstyled float-right mb-0">
-        <li>
+        <li class="d-none">
             <a class="nav-link dropdown-toggle mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                 <span class="ml-1">
-                                    {{labels.get('label_change_language')}} 
+                                    {{labels.get('label_change_language')}}
                                 </span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">

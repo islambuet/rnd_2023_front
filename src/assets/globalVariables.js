@@ -2,7 +2,7 @@ import {reactive } from 'vue';
 
 const localStorageAuthTokenStr = 'authToken';
 const localStorageLanguageStr='language';
-const language = localStorage.getItem(localStorageLanguageStr) ? localStorage.getItem(localStorageLanguageStr) : 'bn';
+const language = localStorage.getItem(localStorageLanguageStr) ? localStorage.getItem(localStorageLanguageStr) : 'en';
 function getNotLoggedUser(){
   return {
     authToken: localStorage.getItem(localStorageAuthTokenStr) ? localStorage.getItem(localStorageAuthTokenStr) : '',
