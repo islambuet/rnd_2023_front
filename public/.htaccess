@@ -1,7 +1,7 @@
   RewriteEngine On
-  RewriteBase /rnd_2023
-  RewriteRule ^rnd_2023/index\.html$ - [L]
+  RewriteBase /rnd.malikseeds.com
+  RewriteRule ^rnd.malikseeds.com/index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /rnd_2023/index.html [L]
+  RewriteRule . /rnd.malikseeds.com/index.html [L]
 
