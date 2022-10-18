@@ -35,15 +35,22 @@
                       <input type="checkbox"
                         :class="'header_action_'+i+' header_action_'+i+'_'+task.id+' '+subTask.parent_class+' '+'parent_'+subTask.id"
                         :checked="item.data['action_'+i].indexOf(','+subTask.id+',')>=0"
+                        :name="'tasks['+subTask.id+'][actions]['+i+']'"
                         value="1"
                       />
                       {{labels.get('action_short_'+i)}}
-                      {{item.data['action_'+i]}}
                     </label>
                   </td>
 
                 </tr>
               </tbody>
+              <tfoot>
+              <tr>
+                <td colspan="15" class="text-center">
+                  <button @click="saveRole('form_save_task_'+task.id)" type="button" class="btn btn-sm bg-gradient-success">{{labels.get('label_save')}}</button>
+                </td>
+              </tr>
+              </tfoot>
             </table>
           </form>
         </div>
@@ -93,23 +100,12 @@ const getSubTasks=(task)=>{
   }
   return items;
 }
-const save=async (save_and_new)=>{
-  let formData=new FormData(document.getElementById('formSaveItem'))
-  await axios.post(taskData.api_url+'/save-item',formData).then((res)=>{
+const saveRole=async (form_id)=>{
+  let formData=new FormData(document.getElementById(form_id))
+  await axios.post(taskData.api_url+'/save-role/'+item.id,formData).then((res)=>{
     if (res.data.error == "") {
       globalVariables.loadListData=true;
       toastFunctions.showSuccessfullySavedMessage();
-      if(save_and_new){
-        if(item.id>0){
-          router.push(taskData.api_url+"/add")
-        }
-        else{
-          setInputFields();
-        }
-      }
-      else{
-        router.push(taskData.api_url)
-      }
     }
     else{
       toastFunctions.showResponseError(res.data)
