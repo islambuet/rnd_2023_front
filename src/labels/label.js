@@ -83,6 +83,11 @@ export default {
         en:"Updated Time",
         bn:"আপডেটের তারিখ"
     },
+    label_address:{
+        en:"Address",
+        bn:"Address"
+    },
+
 
     //for action and buttons both
     label_refresh:{
