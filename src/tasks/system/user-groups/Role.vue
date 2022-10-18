@@ -34,10 +34,11 @@
                     <label v-if="subTask.type=='TASK'">
                       <input type="checkbox"
                         :class="'header_action_'+i+' header_action_'+i+'_'+task.id+' '+subTask.parent_class+' '+'parent_'+subTask.id"
+                        :checked="item.data['action_'+i].indexOf(','+subTask.id+',')>=0"
                         value="1"
-                        :title="labels.get('action_'+i)"
                       />
                       {{labels.get('action_short_'+i)}}
+                      {{item.data['action_'+i]}}
                     </label>
                   </td>
 
