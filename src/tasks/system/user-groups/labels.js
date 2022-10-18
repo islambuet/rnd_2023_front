@@ -19,4 +19,12 @@ export default {
         en:"Number of tasks",
         bn:'ব্যবহারকারীর বিবরণ'
     },
+    label_assign_role:{
+        en:"Assign Role",
+        bn:'ব্যবহারকারীর বিবরণ'
+    },
+    label_task_name:{
+        en:"Assign Role",
+        bn:'ব্যবহারকারীর বিবরণ'
+    },
 }
