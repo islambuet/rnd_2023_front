@@ -53,25 +53,19 @@
       type:'text',
       values:[item.data[key]],
     };
-    key='season_start_date';
+    key='expected_delivery_at';
     detailFields[key] = {
       label: labels.get('label_'+key),
       type:'date',
       values:[item.data[key]],
     };
-    key='expected_sowing_start';
+    key='expected_sowing_at';
     detailFields[key] = {
       label: labels.get('label_'+key),
       type:'date',
       values:[item.data[key]],
     };
-    key='expected_sowing_end';
-    detailFields[key] = {
-      label: labels.get('label_'+key),
-      type:'date',
-      values:[item.data[key]],
-    };
-    key='estimated_delivery_date';
+    key='expected_reporting_at';
     detailFields[key] = {
       label: labels.get('label_'+key),
       type:'date',

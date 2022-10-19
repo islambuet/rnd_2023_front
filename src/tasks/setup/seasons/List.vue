@@ -111,40 +111,31 @@
         filter:{from:'',to:'',options:[{value:'Active',label:'Active'},{value:'In-Active',label:'In-Active'}]},
         class:'col_1'
       };
-      key='season_start_date';
+      key='expected_delivery_at';
       columns[key]={
         label: labels.get('label_'+key),
         hideable:true,
         filterable:true,
         sortable:true,
-        type:'date',
+        type:'text',
         filter:{from:'',to:''}
       };
-      key='expected_sowing_start';
+      key='expected_sowing_at';
       columns[key]={
         label: labels.get('label_'+key),
         hideable:true,
         filterable:true,
         sortable:true,
-        type:'date',
+        type:'text',
         filter:{from:'',to:''}
       };
-      key='expected_sowing_end';
+      key='expected_reporting_at';
       columns[key]={
         label: labels.get('label_'+key),
         hideable:true,
         filterable:true,
         sortable:true,
-        type:'date',
-        filter:{from:'',to:''}
-      };
-      key='estimated_delivery_date';
-      columns[key]={
-        label: labels.get('label_'+key),
-        hideable:true,
-        filterable:true,
-        sortable:true,
-        type:'date',
+        type:'text',
         filter:{from:'',to:''}
       };
       key='created_at';

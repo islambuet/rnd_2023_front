@@ -45,10 +45,9 @@ let item=reactive({
     id:0,
     name:'',
     ordering:99,
-    season_start_date:'',
-    expected_sowing_start:'',
-    expected_sowing_end:'',
-    estimated_delivery_date:'',
+    expected_delivery_at:'',
+    expected_sowing_at:'',
+    expected_reporting_at:'',
     status:'Active',
   }
 })
@@ -80,7 +79,7 @@ const setInputFields=async ()=>{
     default:item.data[key],
     mandatory:true
   };
-  key='season_start_date';
+  key='expected_delivery_at';
   inputFields[key] = {
     name: 'item[' +key +']',
     label: labels.get('label_'+key),
@@ -88,7 +87,7 @@ const setInputFields=async ()=>{
     default:systemFunctions.getDatePart(item.data[key]),
     mandatory:false
   };
-  key='expected_sowing_start';
+  key='expected_sowing_at';
   inputFields[key] = {
     name: 'item[' +key +']',
     label: labels.get('label_'+key),
@@ -96,7 +95,7 @@ const setInputFields=async ()=>{
     default:systemFunctions.getDatePart(item.data[key]),
     mandatory:false
   };
-  key='expected_sowing_end';
+  key='expected_reporting_at';
   inputFields[key] = {
     name: 'item[' +key +']',
     label: labels.get('label_'+key),
@@ -104,14 +103,7 @@ const setInputFields=async ()=>{
     default:systemFunctions.getDatePart(item.data[key]),
     mandatory:false
   };
-  key='estimated_delivery_date';
-  inputFields[key] = {
-    name: 'item[' +key +']',
-    label: labels.get('label_'+key),
-    type:'date',
-    default:systemFunctions.getDatePart(item.data[key]),
-    mandatory:false
-  };
+
   key='ordering';
   inputFields[key] = {
     name: 'item[' +key +']',

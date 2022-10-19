@@ -15,20 +15,16 @@ export default {
         en:"Details of Season",
         bn:'ব্যবহারকারীর বিবরণ'
     },
-    label_season_start_date:{
-        en:"Season Start date",
+    label_expected_delivery_at:{
+        en:"Expected Delivery Date",
         bn:"প্রিফিক্স"
     },
-    label_expected_sowing_start :{
-        en:"Expected Sowing date Start",
+    label_expected_sowing_at :{
+        en:"Expected Sowing date",
         bn:"কর্মচারী আইডি"
     },
-    label_expected_sowing_end:{
-        en:"Expected Sowing date End",
+    label_expected_reporting_at:{
+        en:"Expected Reporting date",
         bn:"পাসওয়ার্ড"
-    },
-    label_estimated_delivery_date :{
-        en:"Expected Delivery date",
-        bn:"ব্যবহারকারী দল"
     },
 }

@@ -26,6 +26,7 @@
   import List from './List.vue'
   import AddEdit from './AddEdit.vue'
   import Details from './Details.vue'
+  import SystemFunctions from "@/assets/systemFunctions";
 
   globalVariables.loadListData=true;
   const route =useRoute()
@@ -83,7 +84,16 @@
     }
   }
   taskData.setFilteredItems=()=>{
-    taskData.itemsFiltered=systemFunctions.getFilteredItems(taskData.items.data,taskData.columns);
+    let filteredItems=systemFunctions.getFilteredItems(taskData.items.data,taskData.columns);
+    for(let i=0;i<filteredItems.length;i++){
+      let date=systemFunctions.displayDate(filteredItems[i]['expected_delivery_at']).slice(0,-4);
+      filteredItems[i]['expected_delivery_at']= date;
+      date=systemFunctions.displayDate(filteredItems[i]['expected_sowing_at']).slice(0,-4);
+      filteredItems[i]['expected_sowing_at']= date;
+      date=systemFunctions.displayDate(filteredItems[i]['expected_reporting_at']).slice(0,-4);
+      filteredItems[i]['expected_reporting_at']= date;
+    }
+    taskData.itemsFiltered=filteredItems
   }
   taskData.reloadItems=(pagination)=>{
     globalVariables.loadListData=true;
