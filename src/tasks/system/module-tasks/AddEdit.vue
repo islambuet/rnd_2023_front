@@ -103,6 +103,14 @@ const setInputFields=async ()=>{
     default:item.data[key],
     mandatory:true
   };
+  key='url';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'text',
+    default:item.data[key],
+    mandatory:true
+  };
   key='parent';
   console.log(taskData.items)
   inputFields[key] = {
