@@ -7,6 +7,7 @@
     -> File->settings->version control->directory mapping: remove files
 # Editor help
     ->Ctrl+Alt+Shift+J: to select all case-sensitively matching words or text ranges in the document.Mar 17, 2022
+    ->Alt+j for next matching word
     ->Alt+Shift+click: to multiple cursor
     ->Ctrl+Shift+U: upper/lowercase
     ->Ctrl+Alt+J: For Template
