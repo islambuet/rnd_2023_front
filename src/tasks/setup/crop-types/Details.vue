@@ -58,7 +58,7 @@
       label: labels.get('label_'+key),
       type:'text',
       values:[item.data[key]],
-    };  
+    };
 
     key='status';
     detailFields[key] = {
