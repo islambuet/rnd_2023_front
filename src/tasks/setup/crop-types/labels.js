@@ -1,18 +1,18 @@
 export default {
     label_task:{
-        en:"Crops",
+        en:"Crop Types",
         bn:'ব্যবহারকারীরা'
     },
     label_new_task:{
-        en:"New Crop",
+        en:"New Type",
         bn:'নতুন ব্যবহারকারী'
     },
     label_edit_task:{
-        en:"Edit Crop",
+        en:"Edit Type",
         bn:'সম্পাদনা ব্যবহারকারী'
     },
     label_details_task:{
-        en:"Details of Crop",
+        en:"Details of Type",
         bn:'ব্যবহারকারীর বিবরণ'
     },
     label_crop_id:{
