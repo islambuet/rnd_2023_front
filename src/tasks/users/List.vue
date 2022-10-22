@@ -118,7 +118,7 @@
         sortable:true,
         filterable:true,
         type:'dropdown',
-        filter:{from:'',to:'',options:taskData.user_groups.map((item)=>{return{label:item.name,name:item.name}})}
+        filter:{from:'',to:'',options:taskData.user_groups.map((item)=>{return{label:item.name,value:item.name}})}
       };
       key='email';
       columns[key]={
