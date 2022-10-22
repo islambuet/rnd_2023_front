@@ -39,7 +39,7 @@ export default{
                         }
                     }
                     else if(column.type=='text'){
-                        if(column.filter.from.length>0){
+                        if(column.filter.from.toString().length>0){
                             if(item[key].toLowerCase().indexOf(column.filter.from.toLowerCase())==-1)
                             {
                                 return false;
@@ -47,7 +47,7 @@ export default{
                         }
                     }
                     else if(column.type=='dropdown'){
-                        if(column.filter.from.length>0){
+                        if(column.filter.from.toString().length>0){
                             if(item[key]!=column.filter.from)
                             {
                                 return false;
@@ -55,13 +55,13 @@ export default{
                         }
                     }
                     else if(column.type=='date'){
-                        if(column.filter.from.length>0){
+                        if(column.filter.from.toString().length>0){
                             if(new Date(item[key])<new Date(column.filter.from+" 00:00:00"))
                             {
                                 return false;
                             }
                         }
-                        if(column.filter.to.length>0){
+                        if(column.filter.to.toString().length>0){
                             if(new Date(item[key])>new Date(column.filter.to+" 00:00:00"))
                             {
                                 return false;
