@@ -1,6 +1,6 @@
 <template>
   <div v-if="taskData.permissions.action_0==1">
-    <div v-show="taskData.method=='list-form'" v-if="taskData.renderedListForm">
+    <div v-show="taskData.method=='list-form'" v-if="taskData.renderedForm">
       <ListForm/>
     </div>
     <div v-if="taskData.method=='add-form'">
@@ -48,7 +48,7 @@ let taskData=reactive({
   itemsFilteredForm: [],    //for display
   columnsForm:{all:{},hidden:[],sort:{key:'',dir:''}},
   paginationForm: {current_page: 1,per_page_options: [50,100,500,1000],per_page:-1,show_all_items:true},
-  renderedListForm:false,
+  renderedForm:false,
   loadListDataForm:true,
 
   itemsInput: {data:[]},
@@ -74,14 +74,14 @@ const routing=async ()=>{
   if(taskData.crop_id!=crop_id){
     taskData.crop_id=crop_id;
     taskData.loadListDataForm=true;
-    taskData.renderedListForm=false;
+    taskData.renderedForm=false;
     await init();
-    taskData.renderedListForm=true;
+    taskData.renderedForm=true;
   }
   taskData.form_id=form_id;
   taskData.input_id=input_id;
   await getItemsForm(taskData.paginationForm);//Load at least once
-  console.log(route.path)
+  //console.log(route.path)
   if(route.path.indexOf(taskData.api_url+'/'+taskData.crop_id+'/inputs')!=-1)
   {
     taskData.renderedInputs=true
@@ -117,9 +117,6 @@ const routing=async ()=>{
       console.log('edit-form')
     }
   }
-
-
-
   console.log(crop_id," ",form_id," ",input_id)
 }
 watch(route, () => {
@@ -167,9 +164,11 @@ taskData.reloadItemsForm=(pagination)=>{
 const getItemsInput=async(pagination)=>{
   if(taskData.loadListDataInput)
   {
+
     await axios.get(taskData.api_url+'/'+taskData.crop_id+'/inputs/'+taskData.form_id+'/get-items?page='+ pagination.current_page+'&perPage='+ pagination.per_page)
         .then(res => {
           if(res.data.error==''){
+            taskData.formInfo= res.data.formInfo;
             taskData.itemsInput= res.data.items;
             taskData.setFilteredItemsInput();
           }

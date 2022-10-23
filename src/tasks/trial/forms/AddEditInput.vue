@@ -10,7 +10,7 @@
   </div>
   <div class="card d-print-none mb-2" v-if="item.exists">
     <div class="card-header">
-      {{taskData.cropInfo.name}}-&nbsp;{{taskData.form_id}}
+      {{taskData.cropInfo.name}}-&nbsp;{{taskData.formInfo.name}}
       <div v-if="item.id>0">{{labels.get('label_edit_input')}}({{item.id}})</div>
       <div v-else>{{labels.get('label_new_input')}}</div>
     </div>

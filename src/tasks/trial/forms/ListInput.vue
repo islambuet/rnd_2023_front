@@ -12,7 +12,7 @@
   <ColumnControl :url="taskData.api_url.substring(1)" :method="'list-from'" :columns="taskData.columnsInput"  v-if="show_column_controls"/>
   <div class="card mb-2">
     <div class="card-header d-print-none">
-      {{taskData.cropInfo.name}}-&nbsp;{{taskData.form_id}}
+      {{taskData.cropInfo.name}}-&nbsp;{{taskData.formInfo.name}}
       <div>{{labels.get('label_task_input')}}</div>
     </div>
     <div class="card-body" style='overflow-x:auto;min-height:250px;'>
