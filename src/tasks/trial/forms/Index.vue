@@ -118,7 +118,6 @@ const routing=async ()=>{
       taskData.method='edit-form';
     }
   }
-  console.log(crop_id," ",form_id," ",input_id)
 }
 watch(route, () => {
   routing();
