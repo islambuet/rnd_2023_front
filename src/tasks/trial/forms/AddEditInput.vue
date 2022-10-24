@@ -45,13 +45,18 @@ let item=reactive({
   data:{
     id:0,
     name:'',
-    entry_count:1,
+    type:'text',
+    options:'',
+    default:'',
+    mandatory:'No',
+    class:'',
     ordering:99,
     status:'Active',
   }
 })
 const setInputFields=async ()=>{
   item.inputFields= {};
+  item.exists=false;
   await systemFunctions.delay(1);
   let inputFields={}
   let key='save_token';
@@ -82,7 +87,15 @@ const setInputFields=async ()=>{
   inputFields[key] = {
     name: 'item[' +key +']',
     label: labels.get('label_'+key),
-    type:'text',
+    type:'dropdown',
+    options:[
+        {label:"Text",value:'text'},
+        {label:"TextArea",value:'textarea'},
+        {label:"Image",value:'image'},
+        {label:"Date",value:'date'},
+        {label:"DropDown",value:'dropdown'},
+        {label:"CheckBox",value:'checkbox'},
+    ],
     default:item.data[key],
     mandatory:true
   };
@@ -94,11 +107,19 @@ const setInputFields=async ()=>{
     default:item.data[key],
     mandatory:true
   };
+  key='options_hint';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: '',
+    type:'hint',
+    default:'Write each option in each line',
+    mandatory:true
+  };
   key='default';
   inputFields[key] = {
     name: 'item[' +key +']',
     label: labels.get('label_'+key),
-    type:'textarea',
+    type:'text',
     default:item.data[key],
     mandatory:true
   };
@@ -107,8 +128,8 @@ const setInputFields=async ()=>{
   inputFields[key] = {
     name: 'item[' +key +']',
     label: labels.get('label_'+key),
-    type:'text',
-    default:item.data[key],
+    type:'dropdown',
+    options:[{label:"Yes",value:'Yes'},{label:"No",value:'No'}],
     mandatory:true
   };
   key='class';
@@ -117,6 +138,14 @@ const setInputFields=async ()=>{
     label: labels.get('label_'+key),
     type:'text',
     default:item.data[key],
+    mandatory:true
+  };
+  key='class_hint';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: '',
+    type:'hint',
+    default:'float_positive=Only Positive floating number<br>integer_positive=Only Positive Integer number<br>float_all=Positive and negetive floating number<br>integer_all=Positive and negetive Integer number',
     mandatory:true
   };
   key='ordering';
@@ -137,6 +166,23 @@ const setInputFields=async ()=>{
     mandatory:true
   };
   item.inputFields=inputFields;
+  //TODO exits should be here
+  item.exists=true;
+  $(document).off('change','#type');
+  $(document).on("change", "#type", function(event){
+    console.log($('#type').val())
+    if(['checkbox','dropdown'].includes($('#type').val())){
+      $('#options').closest('.row').show();
+      $('#options_hint').closest('.row').show();
+    }
+    else{
+      $('#options').closest('.row').hide();
+      $('#options_hint').closest('.row').hide();
+    }
+  });
+  await systemFunctions.delay(1)//for change options
+  $('#type').trigger('change');//for first time
+
 }
 const save=async (save_and_new)=>{
   let formData=new FormData(document.getElementById('formSaveItem'))
@@ -171,7 +217,6 @@ const getItem=async ()=>{
     if (res.data.error == "") {
       item.data=res.data.item;
       setInputFields();
-      item.exists=true;
     }
     else{
       toastFunctions.showResponseError(res.data)
@@ -192,8 +237,7 @@ const getItem=async ()=>{
       toastFunctions.showAccessDenyMessage();
     }
     else{
-      setInputFields();
-      item.exists=true;
+      setInputFields()
     }
   }
 </script>

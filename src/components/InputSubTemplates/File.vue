@@ -1,7 +1,7 @@
 <template>
   <div class="row mb-2" v-if="!inputItem.more_values">
     <div class="col-4">
-      <label class="font-weight-bold float-right">{{labels.get(inputItem.label)}} <span class="text-danger" v-if="inputItem.mandatory">*</span></label>
+      <label class="font-weight-bold float-right">{{inputItem.label}} <span class="text-danger" v-if="inputItem.mandatory">*</span></label>
     </div>
     <div class="col-lg-4 col-8">
       <div class="row mb-2">
@@ -30,7 +30,7 @@
   </div>
   <div class="row mb-2" :id="inputKey+'_system_add_more_input_container'" v-else>
     <div class="col-4">
-      <label class="font-weight-bold float-right">{{labels.get(inputItem.label)}} <span class="text-danger" v-if="inputItem.mandatory">*</span></label>
+      <label class="font-weight-bold float-right">{{inputItem.label}} <span class="text-danger" v-if="inputItem.mandatory">*</span></label>
     </div>
     <div class="col-lg-4 col-8">
       <div class="row mb-2">

@@ -31,8 +31,24 @@ export default {
         en:"Type",
         bn:"প্রিফিক্স"
     },
+    label_options:{
+        en:"Options",
+        bn:"প্রিফিক্স"
+    },
+    label_default:{
+        en:"Default value",
+        bn:"প্রিফিক্স"
+    },
+    label_mandatory:{
+        en:"Mandatory",
+        bn:"প্রিফিক্স"
+    },
     label_task_input:{
         en:"Inputs Setup",
+        bn:'ব্যবহারকারীরা'
+    },
+    label_class:{
+        en:"Class",
         bn:'ব্যবহারকারীরা'
     },
     label_new_task_input:{
