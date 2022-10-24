@@ -40,7 +40,7 @@ export default{
                     }
                     else if(column.type=='text'){
                         if(column.filter.from.toString().length>0){
-                            if(item[key].toLowerCase().indexOf(column.filter.from.toLowerCase())==-1)
+                            if((!item[key])||(item[key].toLowerCase().indexOf(column.filter.from.toLowerCase())==-1))
                             {
                                 return false;
                             }

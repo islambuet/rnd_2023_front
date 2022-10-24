@@ -4,9 +4,9 @@
       <router-link :to="taskData.api_url+'/'+taskData.crop_id" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" ><i class="feather icon-corner-up-left"></i> {{labels.get('label_back')}}</router-link>
       <router-link v-if="taskData.permissions.action_1"  :to="taskData.api_url+'/'+taskData.crop_id+'/inputs/'+taskData.form_id+'/add'" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" ><i class="feather icon-plus-circle"></i> {{labels.get('action_1')}}</router-link>
       <button type="button" v-if="taskData.permissions.action_4" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" onclick="window.print();"><i class="feather icon-printer"></i> {{labels.get('action_4')}}</button>
-<!--      <button type="button" v-if="taskData.permissions.action_5" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="systemFunctions.exportCsv(taskData.columnsInput,taskData.itemsFilteredInput,taskData.api_url.substring(1)+'_'+taskData.cropInfo.name+'.csv')"><i class="feather icon-download"></i> {{labels.get('action_5')}}</button>-->
+      <button type="button" v-if="taskData.permissions.action_5" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="systemFunctions.exportCsv(taskData.columnsInput,taskData.itemsFilteredInput,taskData.api_url.substring(1)+'_'+taskData.cropInfo.name+'_'+taskData.formInfo.name+'.csv')"><i class="feather icon-download"></i> {{labels.get('action_5')}}</button>
       <button type="button" v-if="taskData.permissions.action_8" class="mr-2 mb-2 btn btn-sm" :class="[show_column_controls?'bg-gradient-success':'bg-gradient-primary']" @click="show_column_controls = !show_column_controls"><i class="feather icon-command"></i> {{labels.get('action_8')}}</button>
-<!--      <button type="button" v-if="taskData.permissions.action_0" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="taskData.reloadItemsInput(taskData.paginationInput)"><i class="feather icon-rotate-cw"></i> {{labels.get('label_refresh')}}</button>-->
+      <button type="button" v-if="taskData.permissions.action_0" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="taskData.reloadItemsInput(taskData.paginationInput)"><i class="feather icon-rotate-cw"></i> {{labels.get('label_refresh')}}</button>
     </div>
   </div>
   <ColumnControl :url="taskData.api_url.substring(1)" :method="'list-from'" :columns="taskData.columnsInput"  v-if="show_column_controls"/>
@@ -42,7 +42,10 @@
           </td>
           <template v-for="(column,key) in taskData.columnsInput.all">
             <td :class="((['id','ordering'].indexOf(key) != -1)?'text-right':'')+(column.class?(' '+column.class):'col_9')" v-if="taskData.columnsInput.hidden.indexOf(key)<0" :key="'td_'+key">
-              {{ (key=='entry_count' && item[key]==-1)?'Unknown': item[key] }}
+              <template v-if="key=='options'" v-for="option in (item[key]?item[key].split('\r\n'):[])">
+                  {{option}}<br>
+                </template>
+              <template v-else>{{item[key]}}</template>
             </td>
           </template>
 
@@ -88,8 +91,15 @@
         hideable:true,
         filterable:true,
         sortable:true,
-        type:'text',
-        filter:{from:'',to:''},
+        type:'dropdown',
+        filter:{from:'',to:'',options:[
+            {label:"Text",value:'text'},
+            {label:"TextArea",value:'textarea'},
+            {label:"Image",value:'image'},
+            {label:"Date",value:'date'},
+            {label:"DropDown",value:'dropdown'},
+            {label:"CheckBox",value:'checkbox'},
+          ],},
         class:'col_1'
       };
       key='name';
@@ -100,6 +110,25 @@
         sortable:true,
         type:'text',
         filter:{from:'',to:''}
+      };
+      key='options';
+      columns[key]={
+        label: labels.get('label_'+key),
+        hideable:false,
+        filterable:true,
+        sortable:true,
+        type:'text',
+        filter:{from:'',to:''}
+      };
+      key='mandatory';
+      columns[key]={
+        label: labels.get('label_'+key),
+        hideable:true,
+        sortable:true,
+        filterable:true,
+        type:'dropdown',
+        filter:{from:'',to:'',options:[{label:"Yes",value:'Yes'},{label:"No",value:'No'}]},
+        class:'col_1'
       };
       key='ordering';
       columns[key]={

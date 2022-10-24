@@ -19,6 +19,9 @@
       <div v-if="taskData.method=='edit-input'">
         <AddEditInput/>
       </div>
+      <div v-if="taskData.method=='details-input'">
+        <DetailsInput/>
+      </div>
     </template>
   </div>
 </template>
@@ -35,6 +38,7 @@ import ListForm from './ListForm.vue'
 import AddEditForm from './AddEditForm.vue'
 import ListInput from './ListInput.vue'
 import AddEditInput from "@/tasks/trial/forms/AddEditInput";
+import DetailsInput from "@/tasks/trial/forms/DetailsInput";
 
 globalVariables.loadListData=true;
 const route =useRoute()
@@ -90,15 +94,15 @@ const routing=async ()=>{
     //getitems
     if(route.path==(taskData.api_url+'/'+taskData.crop_id+'/inputs/'+form_id)){
       taskData.method='list-input';
-      console.log('list-input')
     }
     else if(route.path==(taskData.api_url+'/'+taskData.crop_id+'/inputs/'+form_id+'/add')){
       taskData.method='add-input';
-      console.log('add-input')
     }
     else if(route.path==(taskData.api_url+'/'+taskData.crop_id+'/inputs/'+form_id+'/edit/'+input_id)){
       taskData.method='edit-input';
-      console.log('edit-input')
+    }
+    else if(route.path==(taskData.api_url+'/'+taskData.crop_id+'/inputs/'+form_id+'/details/'+input_id)){
+      taskData.method='details-input';
     }
   }
   else{
@@ -106,15 +110,12 @@ const routing=async ()=>{
     taskData.loadListDataInput=true
     if(route.path==(taskData.api_url+'/'+taskData.crop_id)){
       taskData.method='list-form';
-      console.log('list-form')
     }
     else if(route.path==(taskData.api_url+'/'+taskData.crop_id+'/add')){
       taskData.method='add-form';
-      console.log('add-form')
     }
     else if(route.path==(taskData.api_url+'/'+taskData.crop_id+'/edit/'+form_id)){
       taskData.method='edit-form';
-      console.log('edit-form')
     }
   }
   console.log(crop_id," ",form_id," ",input_id)

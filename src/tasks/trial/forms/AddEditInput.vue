@@ -130,6 +130,7 @@ const setInputFields=async ()=>{
     label: labels.get('label_'+key),
     type:'dropdown',
     options:[{label:"Yes",value:'Yes'},{label:"No",value:'No'}],
+    default:item.data[key],
     mandatory:true
   };
   key='class';

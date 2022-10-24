@@ -40,7 +40,7 @@
             </div>
           </td>
           <template v-for="(column,key) in taskData.columnsForm.all">
-            <td :class="((['id','ordering'].indexOf(key) != -1)?'text-right':'')+(column.class?(' '+column.class):'col_9')" v-if="taskData.columnsForm.hidden.indexOf(key)<0" :key="'td_'+key">
+            <td :class="((['id','ordering','entry_count'].indexOf(key) != -1)?'text-right':'')+(column.class?(' '+column.class):'col_9')" v-if="taskData.columnsForm.hidden.indexOf(key)<0" :key="'td_'+key">
               {{ (key=='entry_count' && item[key]==-1)?'Unknown': item[key] }}
             </td>
           </template>
