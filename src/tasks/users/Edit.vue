@@ -123,7 +123,7 @@ const setInputFields=async ()=>{
   inputFields[key] = {
     name: 'item[' +key +']',
     label: labels.get('label_'+key),
-    type:'text',
+    type:'number',
     default:item.data[key],
     mandatory:true
   };

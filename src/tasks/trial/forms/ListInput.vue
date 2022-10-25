@@ -136,7 +136,7 @@
         hideable:true,
         filterable:false,
         sortable:true,
-        type:'text',
+        type:'number',
         filter:{from:'',to:''},
         class:'col_1'
       };
