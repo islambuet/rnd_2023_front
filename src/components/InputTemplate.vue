@@ -9,6 +9,9 @@
       <template v-else-if="inputItem.type=='dropdown'">
         <input-template-dropdown :input-item="inputItem" :input-key="key"/>
       </template>
+      <template v-else-if="inputItem.type=='checkbox'">
+        <input-template-checkbox :input-item="inputItem" :input-key="key"/>
+      </template>
       <template v-else-if="['image','file'].includes(inputItem.type)">
         <input-template-file :input-item="inputItem" :input-key="key"/>
       </template>
@@ -29,6 +32,7 @@
     import InputTemplateDefault from '@/components/InputSubTemplates/Default.vue';
     import InputTemplateTextarea from '@/components/InputSubTemplates/Textarea.vue';
     import InputTemplateDropdown from '@/components/InputSubTemplates/Dropdown.vue';
+    import InputTemplateCheckbox from '@/components/InputSubTemplates/Checkbox.vue';
     import InputTemplateFile from '@/components/InputSubTemplates/File.vue';
     import InputTemplateHint from '@/components/InputSubTemplates/Hint.vue';
 
