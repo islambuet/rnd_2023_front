@@ -23,4 +23,8 @@ export default {
         en:"Replica",
         bn:"কর্মচারী আইডি"
     },
+    label_initial_plants :{
+        en:"Initial Plants",
+        bn:"কর্মচারী আইডি"
+    },
 }

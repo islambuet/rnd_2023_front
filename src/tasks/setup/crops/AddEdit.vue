@@ -47,6 +47,7 @@ let item=reactive({
     code:'',
     ordering:99,
     replica:'No',
+    initial_plants:0,
     status:'Active',
   }
 })
@@ -96,6 +97,14 @@ const setInputFields=async ()=>{
     mandatory:true
   };
   key='ordering';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'number',
+    default:item.data[key],
+    mandatory:false
+  };
+  key='initial_plants';
   inputFields[key] = {
     name: 'item[' +key +']',
     label: labels.get('label_'+key),
