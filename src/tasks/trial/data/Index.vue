@@ -57,11 +57,52 @@
             </div>
           </div>
           <div v-else class="input-group" >
-            <input :id="'item_'+inputItem.id" :type="inputItem.type" class="form-control" :name="'item[normal]['+inputItem.id+']'" :value="inputItem.default"/>
+            <input :id="'item_'+inputItem.id" :type="inputItem.type" class="form-control" :class="inputItem.class? inputItem.class:null" :name="'item[normal]['+inputItem.id+']'" :value="inputItem.default"/>
           </div>
         </div>
         <div class="col-4" v-if="taskData.cropInfo.replica=='Yes'">
-          {{inputItem}}
+          <textarea v-if="inputItem.type=='textarea'" :id="'item_'+inputItem.id" class="form-control" :name="'item[normal]['+inputItem.id+']'">{{inputItem.default}}</textarea>
+          <div v-if="inputItem.type=='image'">
+            <div class="row mb-2">
+              <div class="col-12">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-prepend">
+                    <label class="btn btn-sm bg-gradient-primary" style="cursor: pointer;">
+                      <input :id="'item_'+inputItem.id" type="file" class="d-none" :data-preview-container="'#item_'+inputItem.id+'_preview_container'">
+                      <i class="bi bi-upload"></i> {{labels.get('label_upload_file')}}
+                    </label>
+                  </div>
+                  <label class="form-control custom-file-name"></label>
+                  <div class="input-group-append clear_file" @click="resetFile('item_'+inputItem.id,inputItem.default)">
+                    <label class="btn btn-sm bg-gradient-info" style="cursor: pointer;">{{labels.get('clear')}}</label>
+                  </div>
+                  <input :id="'#item_'+inputItem.id+'_file_input'" type="hidden" :name="'item[normal]['+inputItem.id+']'" :value="inputItem.default" />
+                </div>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-12 system_preview_container" :id="'item_'+inputItem.id+'_preview_container'">
+                <img style="max-width: 100%;max-height:200px" :src="systemFunctions.getImageUrl(inputItem.default)">
+              </div>
+            </div>
+          </div>
+          <div v-else-if="inputItem.type=='dropdown'" class="input-group" >
+            <select :id="'item_'+inputItem.id" class="form-control" :name="'item[normal]['+inputItem.id+']'">
+              <option value="">{{labels.get('label_select')}}</option>
+              <option v-for="option in (inputItem.options?inputItem.options.split('\r\n'):[])" :value="option" :selected="inputItem.default==option">
+                {{option}}
+              </option>
+            </select>
+          </div>
+          <div v-else-if="inputItem.type=='checkbox'" class="input-group" >
+            <div class="form-check form-check-inline" v-for="(option,index) in (inputItem.options?inputItem.options.split('\r\n'):[])">
+              <input class="form-check-input" type="checkbox" :id="'item_'+inputItem.id+'_'+index" :value="option" :name="'item[normal]['+inputItem.id+'][]'" :checked="true">
+              <label class="form-check-label" :for="'item_'+inputItem.id+'_'+index">{{option}}</label>
+            </div>
+          </div>
+          <div v-else class="input-group" >
+            <input :id="'item_'+inputItem.id" :type="inputItem.type" class="form-control" :class="inputItem.class? inputItem.class:null" :name="'item[normal]['+inputItem.id+']'" :value="inputItem.default"/>
+          </div>
         </div>
       </div>
     </template>
