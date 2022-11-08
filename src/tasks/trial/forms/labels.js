@@ -19,6 +19,10 @@ export default {
         en:"Number of Entry",
         bn:"প্রিফিক্স"
     },
+    label_entry_interval:{
+        en:"Interval",
+        bn:"প্রিফিক্স"
+    },
     label_entry_count_unknown:{
         en:"UnKnown",
         bn:"প্রিফিক্স"

@@ -46,6 +46,7 @@ let item=reactive({
     id:0,
     name:'',
     entry_count:1,
+    entry_interval:0,
     ordering:99,
     status:'Active',
   }
@@ -86,6 +87,14 @@ const setInputFields=async ()=>{
     label: labels.get('label_'+key),
     type:'dropdown',
     options:entry_count_options,
+    default:item.data[key],
+    mandatory:false
+  };
+  key='entry_interval';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'number',
     default:item.data[key],
     mandatory:false
   };

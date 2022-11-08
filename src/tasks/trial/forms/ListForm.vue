@@ -103,6 +103,16 @@
         filter:{from:'',to:'',options:entry_count_options},
         class:'col_1'
       };
+      key='entry_interval';
+      columns[key]={
+        label: labels.get('label_'+key),
+        hideable:true,
+        filterable:true,
+        sortable:true,
+        type:'number',
+        filter:{from:'',to:''},
+        class:'col_1'
+      };
       key='ordering';
       columns[key]={
         label: labels.get('label_'+key),
