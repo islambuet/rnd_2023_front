@@ -23,4 +23,8 @@ export default {
         en:"Crop",
         bn:"কর্মচারী আইডি"
     },
+    label_code:{
+        en:"Code",
+        bn:"প্রিফিক্স"
+    },
 }

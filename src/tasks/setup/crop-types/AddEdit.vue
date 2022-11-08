@@ -44,6 +44,7 @@ let item=reactive({
   data:{
     id:0,
     name:'',
+    code:'',
     crop_id:'',
     ordering:99,
     status:'Active',
@@ -70,6 +71,14 @@ const setInputFields=async ()=>{
     mandatory:true
   };
   key='name';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'text',
+    default:item.data[key],
+    mandatory:true
+  };
+  key='code';
   inputFields[key] = {
     name: 'item[' +key +']',
     label: labels.get('label_'+key),

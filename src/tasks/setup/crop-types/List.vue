@@ -91,6 +91,15 @@
         type:'text',
         filter:{from:'',to:''}
       };
+      key='code';
+      columns[key]={
+        label: labels.get('label_'+key),
+        hideable:true,
+        filterable:true,
+        sortable:true,
+        type:'text',
+        filter:{from:'',to:''}
+      };
       key='crop_name';
       columns[key]={
         label: labels.get('label_'+key),

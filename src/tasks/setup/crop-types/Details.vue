@@ -53,6 +53,12 @@
       type:'text',
       values:[item.data[key]],
     };
+    key='code';
+    detailFields[key] = {
+      label: labels.get('label_'+key),
+      type:'text',
+      values:[item.data[key]],
+    };
     key='crop_name';
     detailFields[key] = {
       label: labels.get('label_'+key),
