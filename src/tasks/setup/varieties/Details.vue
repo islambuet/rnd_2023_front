@@ -59,18 +59,24 @@
       type:'text',
       values:[item.data[key]],
     };
-    key='crop_type_ids';
-    let crop_type_ids=item.data[key].split(",");
-    let crop_type_names=[];
-    for(let i=0;i<taskData.crop_types.length;i++){
-      if(crop_type_ids.includes(taskData.crop_types[i].id.toString())){
-        crop_type_names.push(taskData.crop_types[i].name)
+    key='crop_type_name';
+    detailFields[key] = {
+      label: labels.get('label_'+key),
+      type:'text',
+      values:[item.data[key]],
+    };
+    key='crop_feature_ids';
+    let crop_features_ids=item.data[key].split(",");
+    let crop_features_names=[];
+    for(let i=0;i<taskData.crop_features.length;i++){
+      if(crop_features_ids.includes(taskData.crop_features[i].id.toString())){
+        crop_features_names.push(taskData.crop_features[i].name)
       }
     }
     detailFields[key] = {
       label: labels.get('label_'+key),
       type:'text',
-      values:crop_type_names
+      values:crop_features_names
     };
     key='whose';
     detailFields[key] = {

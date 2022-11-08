@@ -47,8 +47,17 @@ export default {
         en:"Retrial",
         bn:"কর্মচারী আইডি"
     },
-    label_crop_type_ids   :{
-        en:"Types",
+    label_crop_feature_ids:{
+        en:"Features",
         bn:"কর্মচারী আইডি"
     },
+    label_crop_type_id:{
+        en:"Type",
+        bn:"কর্মচারী আইডি"
+    },
+    label_crop_type_name:{
+        en:"Type",
+        bn:"কর্মচারী আইডি"
+    },
+
 }

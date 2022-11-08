@@ -100,6 +100,15 @@
         type:'dropdown',
         filter:{from:'',to:'',options:taskData.crops.map((item)=>{ return {value:item.name,label:item.name}}),}
       };
+      key='crop_type_name';
+      columns[key]={
+        label: labels.get('label_'+key),
+        hideable:true,
+        filterable:true,
+        sortable:true,
+        type:'text',
+        filter:{from:'',to:''}
+      };
       key='ordering';
       columns[key]={
         label: labels.get('label_'+key),
