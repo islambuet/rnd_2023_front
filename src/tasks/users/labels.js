@@ -55,4 +55,8 @@ export default {
         en:"Mobile authentication off",
         bn:"মোবাইল যাচাইকরণ বন্ধ"
     },
+    label_trial_station_ids  :{
+        en:"Trial Station",
+        bn:"মোবাইল যাচাইকরণ বন্ধ"
+    },
 }
