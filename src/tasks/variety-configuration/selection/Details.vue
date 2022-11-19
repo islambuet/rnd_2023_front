@@ -77,7 +77,7 @@ const setDetailFields=async ()=> {
     values:[item.data[key]],
   };
   key='season_ids';
-  let season_ids=item.data[key].split(",");
+  let season_ids=item.data[key]?item.data[key].split(","):[];
   let season_names=[];
   for(let i=0;i<taskData.seasons.length;i++){
     if(season_ids.includes(taskData.seasons[i].id.toString())){
