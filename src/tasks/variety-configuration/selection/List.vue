@@ -57,7 +57,7 @@
             </div>
           </td>
           <template v-for="(column,key) in taskData.columns.all">
-            <td :class="((['id','ordering'].indexOf(key) != -1)?'text-right':'')+(column.class?(' '+column.class):'col_9')" v-if="taskData.columns.hidden.indexOf(key)<0" :key="'td_'+key">
+            <td :class="((['id','ordering','num_seasons','rnd_ordering'].indexOf(key) != -1)?'text-right':'')+(column.class?(' '+column.class):' col_9')" v-if="taskData.columns.hidden.indexOf(key)<0" :key="'td_'+key">
               {{ item[key] }}
             </td>
           </template>
@@ -117,14 +117,15 @@
         type:'dropdown',
         filter:{from:'',to:'',options:taskData.crop_types.map((item)=>{ return {value:item.name,label:item.name}}),}
       };
-      key='seasons';
+      key='num_seasons';
       columns[key]={
         label: labels.get('label_'+key),
         hideable:true,
         filterable:true,
         sortable:true,
-        type:'text',
-        filter:{from:'',to:''}
+        type:'number',
+        filter:{from:'',to:''},
+        class:'col_1'
       };
       key='rnd_code';
       columns[key]={
@@ -142,46 +143,8 @@
         filterable:true,
         sortable:true,
         type:'number',
-        filter:{from:'',to:''}
-      };
-      // key='ordering';
-      // columns[key]={
-      //   label: labels.get('label_'+key),
-      //   hideable:true,
-      //   filterable:false,
-      //   sortable:true,
-      //   type:'number',
-      //   filter:{from:'',to:''},
-      //   class:'col_1'
-      // };
-      // key='status';
-      // columns[key]={
-      //   label: labels.get('label_'+key),
-      //   hideable:true,
-      //   sortable:true,
-      //   filterable:true,
-      //   type:'dropdown',
-      //   filter:{from:'',to:'',options:[{value:'Active',label:'Active'},{value:'In-Active',label:'In-Active'}]},
-      //   class:'col_1'
-      // };
-      key='retrial';
-      columns[key]={
-        label: labels.get('label_'+key),
-        hideable:true,
-        sortable:true,
-        filterable:true,
-        type:'dropdown',
-        filter:{from:'',to:'',options:[{label:"Yes",value:'Yes'},{label:"No",value:'No'}]},
+        filter:{from:'',to:''},
         class:'col_1'
-      };
-      key='created_at';
-      columns[key]={
-        label: labels.get('label_'+key),
-        hideable:true,
-        filterable:true,
-        sortable:true,
-        type:'date',
-        filter:{from:'',to:''}
       };
       taskData.columns.all=columns
     }

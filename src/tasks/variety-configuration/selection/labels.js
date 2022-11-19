@@ -23,6 +23,14 @@ export default {
         en:"Retrial",
         bn:"কর্মচারী আইডি"
     },
+    label_num_seasons:{
+        en:"#Seasons",
+        bn:"কর্মচারী আইডি"
+    },
+    label_rnd_ordering:{
+        en:"ordering",
+        bn:"কর্মচারী আইডি"
+    },
     label_seasons:{
         en:"Seasons",
         bn:"কর্মচারী আইডি"
