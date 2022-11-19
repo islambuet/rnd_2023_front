@@ -125,7 +125,8 @@ a:focus {
     padding-left: 60px !important;
 
 }
-.sidebar .router-link-exact-active
+/*.sidebar .router-link-exact-active*/
+.sidebar .router-link-active
 {
     color: #fff;
     background: linear-gradient(118deg,#7367f0,rgba(115,103,240,.7));
