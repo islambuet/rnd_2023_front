@@ -7,7 +7,7 @@
       <AddEdit/>
     </div>
     <div v-if="taskData.method=='details'">
-<!--      <Details/>-->
+      <Details/>
     </div>
   </div>
 </template>
@@ -21,6 +21,7 @@ import {useRoute,useRouter} from 'vue-router';
 import axios from 'axios';
 import List from './List.vue'
 import AddEdit from './AddEdit.vue'
+import Details from './Details.vue'
 
 globalVariables.loadListData=true;
 const route =useRoute()
@@ -40,6 +41,8 @@ let taskData=reactive({
   year:0,
   cropInfo:{},
   crop_types:[],
+  seasons:[],
+
 
 })
 labels.add([{language:globalVariables.language,file:'tasks'+taskData.api_url+'/labels.js'}])
@@ -65,6 +68,10 @@ const routing=async ()=>{
   {
     taskData.method='edit';
   }
+  else if(route.path.indexOf(taskData.api_url+'/'+taskData.crop_id+'/'+taskData.year+'/details/')!=-1)
+  {
+    taskData.method='details';
+  }
 
 
 }
@@ -77,6 +84,7 @@ const init=async ()=>{
       taskData.permissions=res.data.permissions;
       taskData.cropInfo=res.data.cropInfo;
       taskData.crop_types=res.data.crop_types;
+      taskData.seasons=res.data.seasons;
       if(res.data.hidden_columns){
         taskData.columns.hidden=res.data.hidden_columns;
       }

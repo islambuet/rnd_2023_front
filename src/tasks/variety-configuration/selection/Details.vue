@@ -2,14 +2,11 @@
   <div class="card d-print-none mb-2">
     <div class="card-body">
       <router-link :to="taskData.api_url+'/'+taskData.crop_id+'/'+taskData.year" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" ><i class="feather icon-corner-up-left"></i> {{labels.get('label_back')}}</router-link>
-      <template v-if="item.exists">
-        <button  type="button" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="save(false)"><i class="feather icon-save"></i> {{labels.get('label_save')}}</button>
-      </template>
     </div>
   </div>
   <div class="card d-print-none mb-2" v-if="item.exists">
     <div class="card-header">
-      <div>{{labels.get('label_edit_task')}}</div>
+      <div>{{labels.get('label_details_task')}}</div>
     </div>
     <div class="card-body">
       <DetailTemplate :detailFields="item.detailFields" />
@@ -40,7 +37,6 @@ let taskData = inject('taskData')
 let item=reactive({
   variety_id:0,
   exists:false,
-  inputFields:{},
   detailFields:{},
   data:{
 
@@ -80,53 +76,22 @@ const setDetailFields=async ()=> {
     type:'text',
     values:[item.data[key]],
   };
+  key='season_ids';
+  let season_ids=item.data[key].split(",");
+  let season_names=[];
+  for(let i=0;i<taskData.seasons.length;i++){
+    if(season_ids.includes(taskData.seasons[i].id.toString())){
+      season_names.push(taskData.seasons[i].name)
+    }
+  }
+  detailFields[key] = {
+    label: labels.get('label_'+key),
+    type:'text',
+    values:season_names
+  };
+
   item.detailFields=detailFields;
 };
-const setInputFields=async ()=>{
-  item.inputFields= {};
-  await systemFunctions.delay(1);
-  let inputFields={}
-  let key='save_token';
-  inputFields[key] = {
-    name: key,
-    label: labels.get('label_'+key),
-    type:'hidden',
-    default:new Date().getTime(),
-    mandatory:true
-  };
-  key='variety_id';
-  inputFields[key] = {
-    name: key,
-    label: labels.get('label_'+key),
-    type:'hidden',
-    default:item.data['id'],
-    mandatory:true
-  };
-  key='season_ids';
-  inputFields[key] = {
-    name: 'item[' +key +']',
-    label: labels.get('label_'+key),
-    type:'checkbox',
-    options:taskData.seasons.filter((item)=>{ {item.value=item.id.toString();item.label=item.name;return true}}),
-    default:item.data[key]?item.data[key].split(','):[],
-    //default:[2,3],
-    mandatory:true
-  };
-  item.inputFields=inputFields;
-}
-const save=async (save_and_new)=>{
-  let formData=new FormData(document.getElementById('formSaveItem'))
-  await axios.post(taskData.api_url+'/'+taskData.crop_id+'/'+taskData.year+'/save-item',formData).then((res)=>{
-    if (res.data.error == "") {
-      globalVariables.loadListData=true;
-      toastFunctions.showSuccessfullySavedMessage();
-      router.push(taskData.api_url+'/'+taskData.crop_id+'/'+taskData.year)
-    }
-    else{
-      toastFunctions.showResponseError(res.data)
-    }
-  });
-}
 const getItem=async ()=>{
   item.variety_id=route.params['variety_id'];
   for(let i=0;i<taskData.items.data.length;i++){
@@ -134,7 +99,6 @@ const getItem=async ()=>{
     if(variety.id==item.variety_id){
       item.data=variety;
       await setDetailFields();
-      await setInputFields();
       item.exists=true;
     }
   }

@@ -31,6 +31,10 @@ export default {
         en:"ordering",
         bn:"কর্মচারী আইডি"
     },
+    label_season_ids:{
+        en:"Seasons",
+        bn:"কর্মচারী আইডি"
+    },
     label_seasons:{
         en:"Seasons",
         bn:"কর্মচারী আইডি"
