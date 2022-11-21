@@ -202,5 +202,13 @@ export default {
         bn:"দেখাচ্ছে"
     },
     //Pagination end
+    label_year:{
+        en:"Year",
+        bn:"কর্মচারী আইডি"
+    },
+    label_trial_station :{
+        en:"Trial Station",
+        bn:"কর্মচারী আইডি"
+    },
 
 }
