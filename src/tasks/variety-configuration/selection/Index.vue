@@ -101,6 +101,13 @@ const getItems=async(pagination)=>{
         .then(res => {
           if(res.data.error==''){
             taskData.items= res.data.items;
+            for(let i=0;i<taskData.items.data.length;i++){
+              let len=0;
+              if(taskData.items.data[i].season_ids){
+                len=taskData.items.data[i].season_ids.split(',').length-2;
+              }
+              taskData.items.data[i].num_seasons=len;
+            }
             taskData.setFilteredItems();
           }
           else{
