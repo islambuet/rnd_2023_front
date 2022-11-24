@@ -10,9 +10,8 @@
         </li>
       </ul>
       <div class="tab-content" id="myTabContent">
-        <div class="tab-pane show active" id="pending-delivery" role="tabpanel" aria-labelledby="home-tab">
-<!--          <div class="card" v-if="Object.keys(taskData.itemsPending).length>0">-->
-          <div class="card">
+        <div class="tab-pane show active" id="pending-delivery" role="tabpanel" aria-labelledby="pending-delivery-tab">
+          <div class="card" v-if="Object.keys(taskData.itemsPending).length>0">
             <form id="formSavePending">
               <input type="hidden" name="save_token" :value="new Date().getTime()">
               <div class="card-body">
@@ -40,6 +39,7 @@
                         <thead class="table-active">
                           <tr>
                             <th><input type="checkbox" :data-type="'select_crop_'+crop.crop_id" class="select_all">Variety Name</th>
+                            <th>RND code</th>
                             <th>Replica</th>
                           </tr>
                         </thead>
@@ -50,6 +50,7 @@
                               <input type="hidden" :name="'varieties['+variety.variety_id+'][rnd_ordering]'" :value="variety.rnd_ordering">
                               <input type="hidden" :name="'varieties['+variety.variety_id+'][rnd_code]'" :value="variety.rnd_code">
                             </td>
+                            <td>{{variety.rnd_code}}</td>
                             <td>
                               <select :name="'varieties['+variety.variety_id+'][replica]'" class="form-control">
                                 <option value="Yes" :selected="variety.replica=='Yes'">Yes</option>
@@ -68,16 +69,67 @@
             </div>
             </form>
           </div>
-<!--          <div class="card" v-else>-->
-<!--            <div class="card-body">-->
-<!--              Select variety/ All variety has been delivered-->
-<!--            </div>-->
-<!--          </div>-->
+          <div class="card" v-else>
+            <div class="card-body">
+              All variety has been delivered<br>
+              Or No variety Configured for this year
+            </div>
+          </div>
         </div>
-        <div class="tab-pane" id="delivered" role="tabpanel" aria-labelledby="profile-tab">
-          <form id="formSaveDelivered">
-            <input type="hidden" name="save_token" :value="new Date().getTime()">
-          </form>
+        <div class="tab-pane" id="delivered" role="tabpanel" aria-labelledby="delivered-tab">
+          <div class="card" v-if="Object.keys(taskData.itemsDelivered).length>0">
+            <form id="formSaveDelivered">
+              <input type="hidden" name="save_token" :value="new Date().getTime()">
+              <div class="card-body">
+                <div class="row mb-2" >
+                  <div class="col-4">
+                  </div>
+                  <div class="col-4">
+                    <button  type="button" class="btn btn-sm bg-gradient-primary" @click="saveDelivered"><i class="feather icon-save"></i> Save (Return to Pending List)</button>
+                  </div>
+                  <div class="col-4">
+                  </div>
+                </div>
+                <div class="accordion_delivered mb-2">
+                  <div class="card" v-for="crop in taskData.itemsDelivered">
+                    <div class="card-header p-1">
+                      <a class="btn btn-sm" data-toggle="collapse" :href="'#accordion_header_delivered_'+crop.crop_id">{{crop.crop_name}}</a>
+                    </div>
+                    <div :id="'accordion_header_delivered_'+crop.crop_id" class="collapse">
+                      <div class="card-body" style='overflow-x:auto'>
+                        <table class="table table-sm table-bordered">
+                          <thead class="table-active">
+                          <tr>
+                            <th><input type="checkbox" :data-type="'select_crop_delivered_'+crop.crop_id" class="select_all">Variety Name</th>
+                            <th>RND code</th>
+                            <th>Replica</th>
+                            <th>Delivered Date</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr v-for="variety in crop.varieties">
+                            <td class="col-3">
+                              <input type="checkbox" :class="'select_crop_delivered_'+crop.crop_id" name="variety_ids[]" :value="variety.variety_id"> {{variety.variety_name}}
+                            </td>
+                            <td>{{variety.rnd_code}}</td>
+                            <td>{{variety.replica}}</td>
+                            <td>{{variety.delivered_date}}</td>
+                          </tr>
+                          </tbody>
+                        </table>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="card" v-else>
+            <div class="card-body">
+              Nothing was delivered
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -113,6 +165,18 @@ let item=reactive({
 const savePending=async ()=>{
   let formData=new FormData(document.getElementById('formSavePending'))
   await axios.post(taskData.api_url+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/save-pending',formData).then((res)=>{
+    if (res.data.error == "") {
+      toastFunctions.showSuccessfullySavedMessage();
+      taskData.reloadItems();
+    }
+    else{
+      toastFunctions.showResponseError(res.data)
+    }
+  });
+}
+const saveDelivered=async ()=>{
+  let formData=new FormData(document.getElementById('formSaveDelivered'))
+  await axios.post(taskData.api_url+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/save-delivered',formData).then((res)=>{
     if (res.data.error == "") {
       toastFunctions.showSuccessfullySavedMessage();
       taskData.reloadItems();
