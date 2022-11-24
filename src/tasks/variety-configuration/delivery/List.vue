@@ -71,6 +71,7 @@
       let trial_station_id=$('#trial_station_id').val();
       let season_id=$('#season_id').val();
       globalVariables.loadListData=true;
+      taskData.itemsPending={}
       router.push(taskData.api_url+'/'+trial_station_id+'/'+year+'/'+season_id)
     }
     $(document).ready(function()

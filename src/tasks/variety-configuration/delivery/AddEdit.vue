@@ -11,16 +11,22 @@
       </ul>
       <div class="tab-content" id="myTabContent">
         <div class="tab-pane show active" id="pending-delivery" role="tabpanel" aria-labelledby="home-tab">
+<!--          <div class="card" v-if="Object.keys(taskData.itemsPending).length>0">-->
           <div class="card">
-            <div class="card-body">
+            <form id="formSavePending">
+              <input type="hidden" name="save_token" :value="new Date().getTime()">
+              <div class="card-body">
               <div class="row mb-2" >
                 <div class="col-4">
                   <label class="font-weight-bold float-right">Delivery Date <span class="text-danger">*</span></label>
                 </div>
-                <div class="col-lg-4 col-8">
+                <div class="col-4">
                   <div class="input-group" >
-                    <input type="date" class="form-control" name="delivery_date" value=""/>
+                    <input type="date" class="form-control" name="delivered_date" value=""/>
                   </div>
+                </div>
+                <div class="col-4">
+                  <button  type="button" class="btn btn-sm bg-gradient-primary" @click="savePending"><i class="feather icon-save"></i> {{labels.get('label_save')}}</button>
                 </div>
               </div>
               <div class="accordion mb-2">
@@ -39,7 +45,11 @@
                         </thead>
                         <tbody>
                           <tr v-for="variety in crop.varieties">
-                            <td class="col-3"><input type="checkbox" :class="'select_crop_'+crop.crop_id" :name="'varieties['+variety.variety_id+'][variety_id]'" :value="variety.variety_id"> {{variety.variety_name}}</td>
+                            <td class="col-3">
+                              <input type="checkbox" :class="'select_crop_'+crop.crop_id" :name="'varieties['+variety.variety_id+'][variety_id]'" :value="variety.variety_id"> {{variety.variety_name}}
+                              <input type="hidden" :name="'varieties['+variety.variety_id+'][rnd_ordering]'" :value="variety.rnd_ordering">
+                              <input type="hidden" :name="'varieties['+variety.variety_id+'][rnd_code]'" :value="variety.rnd_code">
+                            </td>
                             <td>
                               <select :name="'varieties['+variety.variety_id+'][replica]'" class="form-control">
                                 <option value="Yes" :selected="variety.replica=='Yes'">Yes</option>
@@ -55,11 +65,20 @@
                   </div>
                 </div>
               </div>
-
             </div>
+            </form>
           </div>
+<!--          <div class="card" v-else>-->
+<!--            <div class="card-body">-->
+<!--              Select variety/ All variety has been delivered-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
-        <div class="tab-pane" id="delivered" role="tabpanel" aria-labelledby="profile-tab">Profile</div>
+        <div class="tab-pane" id="delivered" role="tabpanel" aria-labelledby="profile-tab">
+          <form id="formSaveDelivered">
+            <input type="hidden" name="save_token" :value="new Date().getTime()">
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -91,5 +110,16 @@ let item=reactive({
 
   }
 })
-
+const savePending=async ()=>{
+  let formData=new FormData(document.getElementById('formSavePending'))
+  await axios.post(taskData.api_url+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/save-pending',formData).then((res)=>{
+    if (res.data.error == "") {
+      toastFunctions.showSuccessfullySavedMessage();
+      taskData.reloadItems();
+    }
+    else{
+      toastFunctions.showResponseError(res.data)
+    }
+  });
+}
 </script>

@@ -79,15 +79,14 @@ const init=async ()=>{
     }
   });
 }
-const getItems=async(pagination)=>{
+const getItems=async()=>{
   if(globalVariables.loadListData)
   {
-    await axios.get(taskData.api_url+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/get-items?page='+ pagination.current_page+'&perPage='+ pagination.per_page)
+    await axios.get(taskData.api_url+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/get-items')
         .then(res => {
           if(res.data.error==''){
             taskData.itemsPending= res.data.itemsPending;
             taskData.itemsDelivered= res.data.itemsDelivered;
-            //taskData.setFilteredItems();
           }
           else{
             toastFunctions.showResponseError(res.data)
@@ -96,12 +95,9 @@ const getItems=async(pagination)=>{
         })
   }
 }
-taskData.setFilteredItems=()=>{
-  taskData.itemsFiltered=systemFunctions.getFilteredItems(taskData.items.data,taskData.columns);
-}
-taskData.reloadItems=(pagination)=>{
+taskData.reloadItems=()=>{
   globalVariables.loadListData=true;
-  getItems(pagination);
+  getItems();
 }
 provide('taskData',taskData)
 if(!(globalVariables.user.id>0)){
