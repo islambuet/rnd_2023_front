@@ -25,8 +25,8 @@ let taskData=reactive({
   current_year:new Date().getFullYear(),
 
   permissions:{},
-  items: {data:[]},   //from Laravel server with pagination and info
-  itemsFiltered: [],    //for display
+  itemsPending: {},
+  itemsDelivered: [],
   columns:{all:{},hidden:[],sort:{key:'',dir:''}},
   pagination: {current_page: 1,per_page_options: [10,20,50,100,500,1000],per_page:-1,show_all_items:true},
   trial_station_id:0,
@@ -57,7 +57,7 @@ const routing=async ()=>{
   taskData.season_id=season_id
   console.log(taskData.trial_station_id,taskData.year,taskData.season_id)
   if(taskData.trial_station_id>0 && taskData.year>0 && taskData.season_id>0){
-    //await getItems(taskData.pagination);
+    await getItems(taskData.pagination);
   }
 }
 watch(route, () => {
@@ -82,11 +82,12 @@ const init=async ()=>{
 const getItems=async(pagination)=>{
   if(globalVariables.loadListData)
   {
-    await axios.get(taskData.api_url+'/'+taskData.crop_id+'/'+taskData.year+'/get-items?page='+ pagination.current_page+'&perPage='+ pagination.per_page)
+    await axios.get(taskData.api_url+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/get-items?page='+ pagination.current_page+'&perPage='+ pagination.per_page)
         .then(res => {
           if(res.data.error==''){
-            taskData.items= res.data.items;
-            taskData.setFilteredItems();
+            taskData.itemsPending= res.data.itemsPending;
+            taskData.itemsDelivered= res.data.itemsDelivered;
+            //taskData.setFilteredItems();
           }
           else{
             toastFunctions.showResponseError(res.data)
