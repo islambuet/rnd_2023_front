@@ -48,7 +48,7 @@
     </div>
   <div class="card mb-2">
     <div class="card-header d-print-none">
-      {{taskData.cropInfo.name}}-{{taskData.year}}-{{taskData.formInfo.name}}
+      {{taskData.cropInfo.name}}-{{taskData.formInfo.name}}
     </div>
     <div class="card-body" style='overflow-x:auto;min-height:250px;'>
       <table class="table table-bordered">
@@ -69,12 +69,21 @@
           <td class="col_1 d-print-none">
             <button class="btn btn-sm bg-gradient-primary dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{labels.get('label_action')}}</button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0; left: 0; transform: translate3d(0px, 38px, 0px);">
-              <router-link v-if="taskData.permissions.action_0"  :to="taskData.api_url+'/'+taskData.crop_id+'/'+taskData.year+'/details/'+item.id" class="dropdown-item text-info btn-sm" ><i class="feather icon-camera"></i> {{labels.get('label_details')}}</router-link>
-              <router-link v-if="taskData.permissions.action_2"  :to="taskData.api_url+'/'+taskData.crop_id+'/'+taskData.year+'/edit/'+item.id" class="dropdown-item text-info btn-sm" ><i class="feather icon-edit"></i> {{item.rnd_ordering>0?labels.get('label_edit'):labels.get('action_1')}}</router-link>
+              <template v-if="taskData.formInfo.entry_count==1">
+                <router-link v-if="item.num_data>0"  :to="taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/edit/'+item.variety_id+'/1'" class="dropdown-item text-info btn-sm" ><i class="feather icon-edit"></i> {{labels.get('label_edit')}}</router-link>
+                <router-link v-else :to="taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/edit/'+item.variety_id+'/0'" class="dropdown-item text-info btn-sm" ><i class="feather icon-plus-circle"></i> {{labels.get('label_new')}}</router-link>
+              </template>
+              <template v-else-if="taskData.formInfo.entry_count==-1">
+                <router-link v-for="edit_count in item.num_data"  :to="taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/edit/'+item.variety_id+'/'+edit_count" class="dropdown-item text-info btn-sm" ><i class="feather icon-edit"></i> {{labels.get('label_edit')+'-'+edit_count}}</router-link>
+                <router-link :to="taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/edit/'+item.variety_id+'/0'" class="dropdown-item text-info btn-sm" ><i class="feather icon-plus-circle"></i> {{labels.get('label_add_more')}}</router-link>
+              </template>
+              <template v-else>
+                <router-link v-for="edit_count in item.num_data"  :to="taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/edit/'+item.variety_id+'/'+edit_count" class="dropdown-item text-info btn-sm" ><i class="feather icon-edit"></i> {{labels.get('label_edit')+'-'+edit_count}}</router-link>
+              </template>
             </div>
           </td>
           <template v-for="(column,key) in taskData.columns.all">
-            <td :class="((['id','ordering','num_seasons','rnd_ordering'].indexOf(key) != -1)?'text-right':'')+(column.class?(' '+column.class):' col_9')" v-if="taskData.columns.hidden.indexOf(key)<0" :key="'td_'+key">
+            <td :class="((['num_data'].indexOf(key) != -1)?'text-right':'')+(column.class?(' '+column.class):' col_9')" v-if="taskData.columns.hidden.indexOf(key)<0" :key="'td_'+key">
               {{ item[key] }}
             </td>
           </template>
