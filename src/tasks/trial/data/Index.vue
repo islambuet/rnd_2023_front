@@ -125,13 +125,12 @@ const router =useRouter()
 
 let taskData=reactive({
   api_url:systemFunctions.getTaskBaseURL(import.meta.url),
-  current_year:new Date().getFullYear(),
   permissions:{},
   crop_id:0,
   form_id:0,
   trial_station_id:0,
   year:0,
-  season_id:0,
+  season_id:globalVariables.current_season_id,
   trial_stations:[],
   seasons:[],
   cropInfo:{},
@@ -166,6 +165,7 @@ const routing=async ()=>{
   //others initial value
   taskData.year=new Date().getFullYear();
   taskData.trial_station_id=taskData.trial_stations[0].id;
+  taskData.season_id=globalVariables.current_season_id;
 
   console.log(crop_id+' '+form_id)
 }

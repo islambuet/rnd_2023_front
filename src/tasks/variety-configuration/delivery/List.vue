@@ -8,7 +8,7 @@
             <div class="col-lg-4 col-8">
               <div class="input-group" >
                 <select id="year" class="form-control">
-                  <option v-for="i in (taskData.current_year+2-globalVariables.starting_year)" :value="i+globalVariables.starting_year-1" :selected="(i+globalVariables.starting_year-1)==taskData.year">
+                  <option v-for="i in (globalVariables.current_year+2-globalVariables.starting_year)" :value="i+globalVariables.starting_year-1" :selected="(i+globalVariables.starting_year-1)==taskData.year">
                     {{i+globalVariables.starting_year-1}}
                   </option>
                 </select>
@@ -79,7 +79,6 @@
       $(document).off("change", "#year,#trial_station_id,#season_id");
       $(document).on("change",'#year,#trial_station_id,#season_id',function()
       {
-        console.log("changing")
         changeUrl();
       })
     });

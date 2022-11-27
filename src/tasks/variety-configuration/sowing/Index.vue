@@ -22,8 +22,6 @@ const router =useRouter()
 let taskData=reactive({
   api_url:systemFunctions.getTaskBaseURL(import.meta.url),
   method:'list',
-  current_year:new Date().getFullYear(),
-
   permissions:{},
   itemsPending: {},
   itemsSowed: [],
@@ -31,7 +29,7 @@ let taskData=reactive({
   pagination: {current_page: 1,per_page_options: [10,20,50,100,500,1000],per_page:-1,show_all_items:true},
   trial_station_id:0,
   year:0,
-  season_id:0,
+  season_id:globalVariables.current_season_id,
   trial_stations:[],
   seasons:[],
 
@@ -41,7 +39,7 @@ const routing=async ()=>{
 
   let trial_station_id=route.params['trial_station_id']?route.params['trial_station_id']:0;
   let year=route.params['year']?route.params['year']:0;
-  let season_id=route.params['season_id']?route.params['season_id']:0;
+  let season_id=route.params['season_id']?route.params['season_id']:globalVariables.current_season_id;
   if(taskData.trial_stations.length==0){
     toastFunctions.showErrorMessage("Setup Trial Station first");
     return;

@@ -30,7 +30,7 @@ const router =useRouter()
 let taskData=reactive({
   api_url:systemFunctions.getTaskBaseURL(import.meta.url),
   method:'',
-  current_year:new Date().getFullYear(),
+
 
   permissions:{},
   items: {data:[]},   //from Laravel server with pagination and info
@@ -49,7 +49,7 @@ labels.add([{language:globalVariables.language,file:'tasks'+taskData.api_url+'/l
 const routing=async ()=>{
   let crop_id=route.params['crop_id']?route.params['crop_id']:0;
   let year=route.params['year']?route.params['year']:0;
-  if((year<taskData.current_year)||(year>(taskData.current_year+1))){
+  if((year<globalVariables.current_year)||(year>(globalVariables.current_year+1))){
     toastFunctions.showErrorMessage("Invalid year in url");
     return;
   }
