@@ -214,4 +214,8 @@ export default {
         en:"Season",
         bn:"কর্মচারী আইডি"
     },
+    label_rnd_code:{
+        en:"RND Code",
+        bn:"কর্মচারী আইডি"
+    },
 }

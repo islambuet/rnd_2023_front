@@ -1,6 +1,9 @@
 <template>
   <div v-if="taskData.permissions.action_0==1">
-    <Search/>
+    <div v-show="taskData.method=='list'">
+      <List/>
+    </div>
+
     <div class="row mb-2"  v-if="taskData.cropInfo.replica=='Yes'">
       <div class="col-4">
       </div>
@@ -117,7 +120,7 @@ import labels from '@/labels'
 import {provide, reactive, watch} from 'vue'
 import {useRoute,useRouter} from 'vue-router';
 import axios from 'axios';
-import Search from './Search.vue'
+import List from './List.vue'
 
 globalVariables.loadListData=true;
 const route =useRoute()
@@ -125,7 +128,10 @@ const router =useRouter()
 
 let taskData=reactive({
   api_url:systemFunctions.getTaskBaseURL(import.meta.url),
+  method:'list',
   permissions:{},
+  items: {},
+  columns:{all:{},hidden:[],sort:{key:'',dir:''}},
   crop_id:0,
   form_id:0,
   trial_station_id:0,
@@ -144,44 +150,41 @@ const routing=async ()=>{
   let crop_id=route.params['crop_id']?route.params['crop_id']:0;
   let form_id=route.params['form_id']?route.params['form_id']:0;
 
-
   if((taskData.crop_id!=crop_id)||(taskData.form_id!=form_id)){
+    taskData.permissions={};//resetting permission to rerender
+    globalVariables.loadListData=true;
     taskData.crop_id=crop_id;
     taskData.form_id=form_id;
     await init();
   }
-  if(taskData.crop_id==0){
-    toastFunctions.showErrorMessage("Invalid Url CropId");
+  let trial_station_id=route.params['trial_station_id']?route.params['trial_station_id']:0;
+  let year=route.params['year']?route.params['year']:0;
+  let season_id=route.params['season_id']?route.params['season_id']:globalVariables.current_season_id;
+  if(trial_station_id==0 || year==0){
+    trial_station_id=taskData.trial_stations[0].id;
+    year=new Date().getFullYear();
+    await router.push(taskData.api_url+'/'+crop_id+'/'+form_id+'/'+trial_station_id+'/'+year+'/'+season_id)
+    console.log(taskData.api_url)
     return;
   }
-  if(taskData.form_id==0){
-    toastFunctions.showErrorMessage("Invalid From FormId");
-    return;
+  taskData.trial_station_id=trial_station_id
+  taskData.year=year
+  taskData.season_id=season_id
+  if(taskData.trial_station_id>0 && taskData.year>0 && taskData.season_id>0){
+    await getItems();
   }
-  if(taskData.trial_stations.length==0){
-    toastFunctions.showErrorMessage("Setup Trial Station first");
-    return;
-  }
-  //others initial value
-  taskData.year=new Date().getFullYear();
-  taskData.trial_station_id=taskData.trial_stations[0].id;
-  taskData.season_id=globalVariables.current_season_id;
-
-  console.log(crop_id+' '+form_id)
+   console.log(crop_id+' '+form_id)
 }
 watch(route, () => {
   routing();
 })
-
-
-const getItems=async(pagination)=>{
+const getItems=async()=>{
   if(globalVariables.loadListData)
   {
-    await axios.get(taskData.api_url+'/get-items?page='+ pagination.current_page+'&perPage='+ pagination.per_page)
+    await axios.get(taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/get-items')
         .then(res => {
           if(res.data.error==''){
             taskData.items= res.data.items;
-            taskData.setFilteredItems();
           }
           else{
             toastFunctions.showResponseError(res.data)
@@ -191,7 +194,6 @@ const getItems=async(pagination)=>{
   }
 }
 const init=async ()=>{
-  taskData.permissions={};
   await axios.get(taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/initialize').then((res)=>{
     if (res.data.error == "") {
       taskData.permissions=res.data.permissions;
@@ -210,6 +212,10 @@ provide('taskData',taskData)
 const resetFile=(fileId,defaultUrl)=>{
   $('#'+fileId).val('').trigger('change');
   $('#'+fileId+'_preview_container img').attr('src',systemFunctions.getImageUrl(defaultUrl));
+}
+taskData.reloadItems=()=>{
+  globalVariables.loadListData=true;
+  getItems();
 }
 if(!(globalVariables.user.id>0)){
   router.push("/login")

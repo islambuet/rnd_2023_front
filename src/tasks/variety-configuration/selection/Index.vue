@@ -49,7 +49,7 @@ labels.add([{language:globalVariables.language,file:'tasks'+taskData.api_url+'/l
 const routing=async ()=>{
   let crop_id=route.params['crop_id']?route.params['crop_id']:0;
   let year=route.params['year']?route.params['year']:0;
-  if((year<globalVariables.current_year)||(year>(globalVariables.current_year+1))){
+  if((year<globalVariables.starting_year)||(year>(globalVariables.current_year+1))){
     toastFunctions.showErrorMessage("Invalid year in url");
     return;
   }
