@@ -210,5 +210,8 @@ export default {
         en:"Trial Station",
         bn:"কর্মচারী আইডি"
     },
-
+    label_season:{
+        en:"Season",
+        bn:"কর্মচারী আইডি"
+    },
 }

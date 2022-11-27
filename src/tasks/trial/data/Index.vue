@@ -1,5 +1,6 @@
 <template>
   <div v-if="taskData.permissions.action_0==1">
+    <Search/>
     <div class="row mb-2"  v-if="taskData.cropInfo.replica=='Yes'">
       <div class="col-4">
       </div>
@@ -116,7 +117,7 @@ import labels from '@/labels'
 import {provide, reactive, watch} from 'vue'
 import {useRoute,useRouter} from 'vue-router';
 import axios from 'axios';
-
+import Search from './Search.vue'
 
 globalVariables.loadListData=true;
 const route =useRoute()
@@ -124,29 +125,47 @@ const router =useRouter()
 
 let taskData=reactive({
   api_url:systemFunctions.getTaskBaseURL(import.meta.url),
-  method:'list',
+  current_year:new Date().getFullYear(),
   permissions:{},
   crop_id:0,
   form_id:0,
+  trial_station_id:0,
+  year:0,
+  season_id:0,
+  trial_stations:[],
+  seasons:[],
   cropInfo:{},
   formInfo:{},
-  itemsInput:[],
-  seasons:[],
+  inputFields:[],
+
 })
 labels.add([{language:globalVariables.language,file:'tasks'+taskData.api_url+'/labels.js'}])
 
 const routing=async ()=>{
   let crop_id=route.params['crop_id']?route.params['crop_id']:0;
   let form_id=route.params['form_id']?route.params['form_id']:0;
-  if(taskData.crop_id!=crop_id){
+
+
+  if((taskData.crop_id!=crop_id)||(taskData.form_id!=form_id)){
     taskData.crop_id=crop_id;
     taskData.form_id=form_id;
     await init();
-    // taskData.loadListDataForm=true;
-    // taskData.renderedForm=false;
-    // await init();
-    // taskData.renderedForm=true;
   }
+  if(taskData.crop_id==0){
+    toastFunctions.showErrorMessage("Invalid Url CropId");
+    return;
+  }
+  if(taskData.form_id==0){
+    toastFunctions.showErrorMessage("Invalid From FormId");
+    return;
+  }
+  if(taskData.trial_stations.length==0){
+    toastFunctions.showErrorMessage("Setup Trial Station first");
+    return;
+  }
+  //others initial value
+  taskData.year=new Date().getFullYear();
+  taskData.trial_station_id=taskData.trial_stations[0].id;
 
   console.log(crop_id+' '+form_id)
 }
@@ -172,12 +191,14 @@ const getItems=async(pagination)=>{
   }
 }
 const init=async ()=>{
+  taskData.permissions={};
   await axios.get(taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/initialize').then((res)=>{
     if (res.data.error == "") {
       taskData.permissions=res.data.permissions;
       taskData.cropInfo=res.data.cropInfo;
       taskData.formInfo=res.data.formInfo;
-      taskData.itemsInput=res.data.itemsInput;
+      taskData.inputFields=res.data.inputFields;
+      taskData.trial_stations=res.data.trial_stations;
       taskData.seasons=res.data.seasons;
     }
     else{
