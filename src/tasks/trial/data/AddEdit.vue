@@ -52,7 +52,7 @@
                   </div>
                   <div class="row mb-2">
                     <div class="col-12 system_preview_container" :id="'item_'+i+'_'+inputField.id+'_preview_container'">
-                      <img style="max-width: 100%;max-height:200px" :src="systemFunctions.getImageUrl(inputField.default)">
+                      <img style="max-width: 100%;max-height:200px" :src="systemFunctions.getImageUrl(item['data_'+i][inputField.id])">
                     </div>
                   </div>
                 </div>
@@ -66,7 +66,7 @@
                 </div>
                 <div v-else-if="inputField.type=='checkbox'" class="input-group" >
                   <div class="form-check form-check-inline" v-for="(option,index) in (inputField.options?inputField.options.split('\r\n'):[])">
-                    <input class="form-check-input" type="checkbox" :id="'item_'+i+'_'+inputField.id+'_'+index" :value="option" :name="'item[data_'+i+']['+inputField.id+'][]'" :checked="true">
+                    <input class="form-check-input" type="checkbox" :id="'item_'+i+'_'+inputField.id+'_'+index" :value="option" :name="'item[data_'+i+']['+inputField.id+'][]'" :checked="item['data_'+i][inputField.id].includes(option)">
                     <label class="form-check-label" :for="'item_'+inputField.id+'_'+index">{{option}}</label>
                   </div>
                 </div>
@@ -170,7 +170,16 @@ const getItem=async ()=>{
       item.season_name=season.name;
     }
   }
-  item.exists=true;
+  await axios.get(taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/get-item/'+item.variety_id+'/'+item.entry_no).then((res)=>{
+    if (res.data.error == "") {
+      item.data_1=res.data.data_1;
+      item.data_2=res.data.data_2;
+      item.exists=true;
+    }
+    else{
+      toastFunctions.showResponseError(res.data)
+    }
+  });
 }
 getItem();
 </script>
