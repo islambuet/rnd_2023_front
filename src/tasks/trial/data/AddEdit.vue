@@ -46,7 +46,7 @@
                         <div class="input-group-append clear_file" @click="resetFile('item_'+i+'_'+inputField.id,item['data_'+i][inputField.id])">
                           <label class="btn btn-sm bg-gradient-info" style="cursor: pointer;">{{labels.get('clear')}}</label>
                         </div>
-                        <input :id="'#item_'+i+'_'+inputField.id+'_file_input'" type="hidden" :name="'item[data_'+i+']['+inputField.id+']'" :value="item['data_'+i][inputField.id]" />
+                        <input :id="'item_'+i+'_'+inputField.id+'_file_input'" type="hidden" :name="'item[data_'+i+']['+inputField.id+']'" :value="item['data_'+i][inputField.id]" />
                       </div>
                     </div>
                   </div>
@@ -57,7 +57,7 @@
                   </div>
                 </div>
                 <div v-else-if="inputField.type=='dropdown'" class="input-group" >
-                  <select :id="'item_'+inputField.id" class="form-control" :name="'item[data_'+i+']['+inputField.id+']'">
+                  <select :id="'item_'+i+'_'+inputField.id" class="form-control" :name="'item[data_'+i+']['+inputField.id+']'">
                     <option value="">{{labels.get('label_select')}}</option>
                     <option v-for="option in (inputField.options?inputField.options.split('\r\n'):[])" :value="option" :selected="item['data_'+i][inputField.id]==option">
                       {{option}}
@@ -66,12 +66,12 @@
                 </div>
                 <div v-else-if="inputField.type=='checkbox'" class="input-group" >
                   <div class="form-check form-check-inline" v-for="(option,index) in (inputField.options?inputField.options.split('\r\n'):[])">
-                    <input class="form-check-input" type="checkbox" :id="'item_'+inputField.id+'_'+index" :value="option" :name="'item[data_'+i+']['+inputField.id+'][]'" :checked="true">
+                    <input class="form-check-input" type="checkbox" :id="'item_'+i+'_'+inputField.id+'_'+index" :value="option" :name="'item[data_'+i+']['+inputField.id+'][]'" :checked="true">
                     <label class="form-check-label" :for="'item_'+inputField.id+'_'+index">{{option}}</label>
                   </div>
                 </div>
                 <div v-else class="input-group" >
-                  <input :id="'item_'+inputField.id" :type="inputField.type" class="form-control" :class="inputField.class? inputField.class:null" :name="'item[data_'+i+']['+inputField.id+']'" :value="item['data_'+i][inputField.id]"/>
+                  <input :id="'item_'+i+'_'+inputField.id" :type="inputField.type" class="form-control" :class="inputField.class? inputField.class:null" :name="'item[data_'+i+']['+inputField.id+']'" :value="item['data_'+i][inputField.id]"/>
                 </div>
               </div>
             </template>
@@ -110,20 +110,46 @@ let item=reactive({
 })
 const save=async ()=>{
   console.log('save');
-  let formData=new FormData(document.getElementById('formSaveItem'));
-  formData.append('item[year]',taskData.year);
-  formData.append('item[trial_station_id]',taskData.trial_station_id);
-  formData.append('item[season_id]',taskData.season_id);
-  formData.append('item[variety_id]',item.variety_id);
-  formData.append('item[entry_no]',item.entry_no);
-  await axios.post(taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/save-item',formData).then((res)=>{
-    if (res.data.error == "") {
-      globalVariables.loadListData=true;
-      router.push(taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id)
-    }
-    else{
-      toastFunctions.showResponseError(res.data)    }
-  });
+  let saveData=false;
+  let fileFormData=await systemFunctions.getImageFormData('formSaveItem');
+  if(systemFunctions.isFormDataEmpty(fileFormData)){
+    saveData=true;
+  }
+  else{
+    globalVariables.uploadingFiles=1;
+    fileFormData.set('upload_dir','trial-data/'+taskData.year+'/'+taskData.trial_station_id+'/'+taskData.season_id+'/'+taskData.crop_id+'/'+taskData.form_id)
+    //fileFormData.set('type','file')//if not image
+    //fileFormData.set('max_size','10240')//if needed more than 3mb
+    await axios.post(globalVariables.baseURLUploadServer+'/upload',fileFormData).then((res)=>{
+      if (res.data.error == "") {
+        let uploadData = res.data.uploaded_files;
+        for(let key in uploadData){
+          $('#'+key+'_file_input').val(uploadData[key].path)
+        }
+        saveData=true;
+      }
+      else{
+        toastFunctions.showResponseError(res.data)
+      }
+    });
+  }
+  if(saveData){
+    console.log("Ready to save")
+    let formData=new FormData(document.getElementById('formSaveItem'));
+    formData.append('item[year]',taskData.year);
+    formData.append('item[trial_station_id]',taskData.trial_station_id);
+    formData.append('item[season_id]',taskData.season_id);
+    formData.append('item[variety_id]',item.variety_id);
+    formData.append('item[entry_no]',item.entry_no);
+    await axios.post(taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/save-item',formData).then((res)=>{
+      if (res.data.error == "") {
+        globalVariables.loadListData=true;
+        router.push(taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id)
+      }
+      else{
+        toastFunctions.showResponseError(res.data)    }
+    })
+  }
 }
 const resetFile=(fileId,defaultUrl)=>{
   $('#'+fileId).val('').trigger('change');
