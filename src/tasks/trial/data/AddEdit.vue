@@ -32,7 +32,7 @@
             <template v-for="i in (item.variety.replica=='Yes'?2:1)">
               <div :class="item.variety.replica=='Yes'?'col-4':'col-lg-4 col-8'">
                 <textarea v-if="inputField.type=='textarea'" :id="'item_'+i+'_'+inputField.id" class="form-control" :name="'item[data_'+i+']['+inputField.id+']'">{{item['data_'+i][inputField.id]}}</textarea>
-                <div v-if="inputField.type=='image'">
+                <div v-else-if="inputField.type=='image'">
                   <div class="row mb-2">
                     <div class="col-12">
                       <div class="input-group input-group-sm">
