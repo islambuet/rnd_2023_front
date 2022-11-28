@@ -115,10 +115,7 @@ const init=async ()=>{
   });
 }
 provide('taskData',taskData)
-const resetFile=(fileId,defaultUrl)=>{
-  $('#'+fileId).val('').trigger('change');
-  $('#'+fileId+'_preview_container img').attr('src',systemFunctions.getImageUrl(defaultUrl));
-}
+
 taskData.reloadItems=()=>{
   globalVariables.loadListData=true;
   getItems();
