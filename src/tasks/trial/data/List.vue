@@ -70,15 +70,29 @@
             <button class="btn btn-sm bg-gradient-primary dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{labels.get('label_action')}}</button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0; left: 0; transform: translate3d(0px, 38px, 0px);">
               <template v-if="taskData.formInfo.entry_count==1">
-                <router-link v-if="item.num_data>0"  :to="taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/edit/'+item.variety_id+'/1'" class="dropdown-item text-info btn-sm" ><i class="feather icon-edit"></i> {{labels.get('label_edit')}}</router-link>
-                <router-link v-else :to="taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/edit/'+item.variety_id+'/0'" class="dropdown-item text-info btn-sm" ><i class="feather icon-plus-circle"></i> {{labels.get('label_new')}}</router-link>
+                <router-link :to="taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/edit/'+item.variety_id+'/1'" class="dropdown-item text-info btn-sm" >
+                  <template v-if="item.num_entry>0">
+                    <i class="feather icon-edit"></i> {{labels.get('label_edit')}}
+                  </template>
+                  <template v-else>
+                    <i class="feather icon-plus-circle"></i> {{labels.get('label_new')}}
+                  </template>
+                </router-link>
               </template>
               <template v-else-if="taskData.formInfo.entry_count==-1">
-                <router-link v-for="edit_count in item.num_data"  :to="taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/edit/'+item.variety_id+'/'+edit_count" class="dropdown-item text-info btn-sm" ><i class="feather icon-edit"></i> {{labels.get('label_edit')+'-'+edit_count}}</router-link>
-                <router-link :to="taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/edit/'+item.variety_id+'/0'" class="dropdown-item text-info btn-sm" ><i class="feather icon-plus-circle"></i> {{labels.get('label_add_more')}}</router-link>
+                <router-link v-for="edit_no in item.num_entry"  :to="taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/edit/'+item.variety_id+'/'+edit_no" class="dropdown-item text-info btn-sm" ><i class="feather icon-edit"></i> {{labels.get('label_edit')+'-'+edit_no}}</router-link>
+                <router-link :to="taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/edit/'+item.variety_id+'/'+(item.num_entry+1)" class="dropdown-item text-info btn-sm" ><i class="feather icon-plus-circle"></i> {{labels.get('label_add_more')}}</router-link>
               </template>
               <template v-else>
-                <router-link v-for="edit_count in item.num_data"  :to="taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/edit/'+item.variety_id+'/'+edit_count" class="dropdown-item text-info btn-sm" ><i class="feather icon-edit"></i> {{labels.get('label_edit')+'-'+edit_count}}</router-link>
+                <router-link v-for="edit_no in taskData.formInfo.entry_count"  :to="taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/edit/'+item.variety_id+'/'+edit_no" class="dropdown-item text-info btn-sm" >
+                  <template v-if="item.entries.includes(edit_no.toString())">
+                    <i class="feather icon-edit"></i> {{labels.get('label_edit')+'-'+edit_no}}
+                  </template>
+                  <template v-else>
+                    <i class="feather icon-plus-circle"></i> {{labels.get('label_new')+'-'+edit_no}}
+                  </template>
+
+                </router-link>
               </template>
             </div>
           </td>
@@ -121,7 +135,7 @@
         type:'text',
         filter:{from:'',to:''}
       };
-      key='num_data';
+      key='num_entry';
       columns[key]={
         label: labels.get('label_'+key),
         hideable:true,

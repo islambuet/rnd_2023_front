@@ -111,18 +111,18 @@ let item=reactive({
 const save=async ()=>{
   console.log('save');
   let formData=new FormData(document.getElementById('formSaveItem'));
-  formData.append('year',taskData.year);
-  formData.append('trial_station_id',taskData.trial_station_id);
-  formData.append('season_id',taskData.season_id);
-  formData.append('variety_id',item.variety_id);
-  formData.append('entry_no',item.entry_no);
+  formData.append('item[year]',taskData.year);
+  formData.append('item[trial_station_id]',taskData.trial_station_id);
+  formData.append('item[season_id]',taskData.season_id);
+  formData.append('item[variety_id]',item.variety_id);
+  formData.append('item[entry_no]',item.entry_no);
   await axios.post(taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/save-item',formData).then((res)=>{
     if (res.data.error == "") {
+      globalVariables.loadListData=true;
       router.push(taskData.api_url+'/'+taskData.crop_id+'/'+taskData.form_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id)
     }
     else{
-      toastFunctions.showResponseError(res.data)
-    }
+      toastFunctions.showResponseError(res.data)    }
   });
 }
 const resetFile=(fileId,defaultUrl)=>{
