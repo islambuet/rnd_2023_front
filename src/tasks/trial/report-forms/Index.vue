@@ -37,8 +37,8 @@ import axios from 'axios';
 import ListForm from './ListForm.vue'
 import AddEditForm from './AddEditForm.vue'
 import ListInput from './ListInput.vue'
-import AddEditInput from "@/tasks/trial/forms/AddEditInput";
-import DetailsInput from "@/tasks/trial/forms/DetailsInput";
+import AddEditInput from "./AddEditInput";
+import DetailsInput from "./DetailsInput";
 
 globalVariables.loadListData=true;
 const route =useRoute()

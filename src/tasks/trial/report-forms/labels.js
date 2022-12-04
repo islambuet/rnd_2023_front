@@ -1,18 +1,18 @@
 export default {
     label_task:{
-        en:"Report Form Setup",
+        en:"Report Setup",
         bn:'ব্যবহারকারীরা'
     },
     label_new_task:{
-        en:"New Report Form",
+        en:"New Report",
         bn:'নতুন ব্যবহারকারী'
     },
     label_edit_task:{
-        en:"Edit Report Form",
+        en:"Edit Report",
         bn:'সম্পাদনা ব্যবহারকারী'
     },
     label_details_task:{
-        en:"Details of Report Form",
+        en:"Details of Report",
         bn:'ব্যবহারকারীর বিবরণ'
     },
     label_entry_count:{
@@ -28,7 +28,7 @@ export default {
         bn:"প্রিফিক্স"
     },
     label_show_inputs:{
-        en:"Input Fields",
+        en:"Report Fields",
         bn:"প্রিফিক্স"
     },
     label_type:{
@@ -43,12 +43,12 @@ export default {
         en:"Default value",
         bn:"প্রিফিক্স"
     },
-    label_mandatory:{
-        en:"Mandatory",
+    label_hidden:{
+        en:"Hidden",
         bn:"প্রিফিক্স"
     },
     label_task_input:{
-        en:"Inputs Setup",
+        en:"Report Fields Setup",
         bn:'ব্যবহারকারীরা'
     },
     label_class:{
@@ -56,23 +56,23 @@ export default {
         bn:'ব্যবহারকারীরা'
     },
     label_new_task_input:{
-        en:"New Input",
+        en:"New Report Field",
         bn:'নতুন ব্যবহারকারী'
     },
     label_edit_task_inupt:{
-        en:"Edit Input",
+        en:"Edit Report Field",
         bn:'সম্পাদনা ব্যবহারকারী'
     },
     label_details_task_input:{
-        en:"Details of Input",
+        en:"Details of Report Field",
         bn:'ব্যবহারকারীর বিবরণ'
     },
     label_new_input:{
-        en:"New Input",
+        en:"New Report Field",
         bn:"প্রিফিক্স"
     },
     label_edit_input:{
-        en:"Edit Input",
+        en:"Edit Report Field",
         bn:"প্রিফিক্স"
     },
 }

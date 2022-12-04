@@ -45,11 +45,11 @@ let item=reactive({
   data:{
     id:0,
     name:'',
-    type:'text',
-    options:'',
-    default:'',
-    mandatory:'No',
-    class:'',
+    type:'default',
+    // options:'',
+    // default:'',
+    hidden:'No',
+    // class:'',
     ordering:99,
     status:'Active',
   }
@@ -89,42 +89,14 @@ const setInputFields=async ()=>{
     label: labels.get('label_'+key),
     type:'dropdown',
     options:[
-        {label:"Text",value:'text'},
-        {label:"TextArea",value:'textarea'},
-        {label:"Image",value:'image'},
-        {label:"Date",value:'date'},
-        {label:"DropDown",value:'dropdown'},
-        {label:"CheckBox",value:'checkbox'},
+        {label:"Default",value:'default'},
+        {label:"Total",value:'total'},
+        {label:"Average",value:'average'},
     ],
     default:item.data[key],
     mandatory:true
   };
-  key='options';
-  inputFields[key] = {
-    name: 'item[' +key +']',
-    label: labels.get('label_'+key),
-    type:'textarea',
-    default:item.data[key],
-    mandatory:true
-  };
-  key='options_hint';
-  inputFields[key] = {
-    name: 'item[' +key +']',
-    label: '',
-    type:'hint',
-    default:'Write each option in each line',
-    mandatory:true
-  };
-  key='default';
-  inputFields[key] = {
-    name: 'item[' +key +']',
-    label: labels.get('label_'+key),
-    type:'text',
-    default:item.data[key],
-    mandatory:true
-  };
-
-  key='mandatory';
+  key='hidden';
   inputFields[key] = {
     name: 'item[' +key +']',
     label: labels.get('label_'+key),
@@ -133,22 +105,56 @@ const setInputFields=async ()=>{
     default:item.data[key],
     mandatory:true
   };
-  key='class';
-  inputFields[key] = {
-    name: 'item[' +key +']',
-    label: labels.get('label_'+key),
-    type:'text',
-    default:item.data[key],
-    mandatory:true
-  };
-  key='class_hint';
-  inputFields[key] = {
-    name: 'item[' +key +']',
-    label: '',
-    type:'hint',
-    default:'float_positive=Only Positive floating number<br>integer_positive=Only Positive Integer number<br>float_all=Positive and negetive floating number<br>integer_all=Positive and negetive Integer number',
-    mandatory:true
-  };
+  // key='options';
+  // inputFields[key] = {
+  //   name: 'item[' +key +']',
+  //   label: labels.get('label_'+key),
+  //   type:'textarea',
+  //   default:item.data[key],
+  //   mandatory:true
+  // };
+  // key='options_hint';
+  // inputFields[key] = {
+  //   name: 'item[' +key +']',
+  //   label: '',
+  //   type:'hint',
+  //   default:'Write each option in each line',
+  //   mandatory:true
+  // };
+  // key='default';
+  // inputFields[key] = {
+  //   name: 'item[' +key +']',
+  //   label: labels.get('label_'+key),
+  //   type:'text',
+  //   default:item.data[key],
+  //   mandatory:true
+  // };
+  //
+  // key='mandatory';
+  // inputFields[key] = {
+  //   name: 'item[' +key +']',
+  //   label: labels.get('label_'+key),
+  //   type:'dropdown',
+  //   options:[{label:"Yes",value:'Yes'},{label:"No",value:'No'}],
+  //   default:item.data[key],
+  //   mandatory:true
+  // };
+  // key='class';
+  // inputFields[key] = {
+  //   name: 'item[' +key +']',
+  //   label: labels.get('label_'+key),
+  //   type:'text',
+  //   default:item.data[key],
+  //   mandatory:true
+  // };
+  // key='class_hint';
+  // inputFields[key] = {
+  //   name: 'item[' +key +']',
+  //   label: '',
+  //   type:'hint',
+  //   default:'float_positive=Only Positive floating number<br>integer_positive=Only Positive Integer number<br>float_all=Positive and negetive floating number<br>integer_all=Positive and negetive Integer number',
+  //   mandatory:true
+  // };
   key='ordering';
   inputFields[key] = {
     name: 'item[' +key +']',
