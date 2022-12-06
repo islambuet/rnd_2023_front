@@ -102,7 +102,7 @@ const save=async (save_and_new)=>{
   let formData=new FormData(document.getElementById('formSaveItem'))
   await axios.post(taskData.api_url+'/'+taskData.crop_id+'/save-item',formData).then((res)=>{
     if (res.data.error == "") {
-      taskData.loadListDataForm=true
+      globalVariables.loadListData=true;
       toastFunctions.showSuccessfullySavedMessage();
       if(save_and_new){
         if(item.id>0){
@@ -118,10 +118,6 @@ const save=async (save_and_new)=>{
     }
     else{
       toastFunctions.showResponseError(res.data)
-      if(globalVariables.loadListData){
-        globalVariables.loadListData=false;
-        taskData.loadListDataForm=true
-      }
     }
   });
 
@@ -138,7 +134,7 @@ const getItem=async ()=>{
     }
   });
 }
-  item.id=taskData.form_id;
+  item.id=route.params['form_id']?route.params['form_id']:0;
   if(item.id>0){
     if(!(taskData.permissions.action_2)){
       toastFunctions.showAccessDenyMessage();

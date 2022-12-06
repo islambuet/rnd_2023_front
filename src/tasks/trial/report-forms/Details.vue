@@ -1,12 +1,11 @@
 <template>
   <div class="card d-print-none mb-2">
     <div class="card-body">
-      <router-link :to="taskData.api_url+'/'+taskData.crop_id+'/inputs/'+taskData.form_id" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" ><i class="feather icon-corner-up-left"></i> {{labels.get('label_back')}}</router-link>
+      <router-link :to="taskData.api_url+'/'+taskData.crop_id" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" ><i class="feather icon-corner-up-left"></i> {{labels.get('label_back')}}</router-link>
     </div>
   </div>
   <div class="card d-print-none mb-2" v-if="item.exists">
     <div class="card-header">
-      {{taskData.cropInfo.name}}-&nbsp;{{taskData.formInfo.name}}
       <div>{{labels.get('label_details_task')}} ({{item.id}})</div>
     </div>
     <div class="card-body">
@@ -23,7 +22,6 @@
   import {useRouter} from "vue-router";
   import {inject, reactive} from "vue";
   import axios from "axios";
-  import InputTemplate from '@/components/InputTemplate.vue';
   import DetailTemplate from '@/components/DetailTemplate.vue';
   import {useRoute} from "vue-router/dist/vue-router";
   import systemFunctions from "@/assets/systemFunctions";
@@ -41,7 +39,6 @@
   })
   const setDetailFields=async ()=>{
     item.detailFields= {};
-    item.exists=false;
     await systemFunctions.delay(1);
     let detailFields={}
     let key='id';
@@ -56,34 +53,16 @@
       type:'text',
       values:[item.data[key]],
     };
-    key='type';
+    key='status';
     detailFields[key] = {
       label: labels.get('label_'+key),
       type:'text',
       values:[item.data[key]],
     };
-    key='options';
+    key='ordering';
     detailFields[key] = {
       label: labels.get('label_'+key),
-      type:'text',
-      values:item.data[key]?item.data[key].split("\r\n"):[]
-    };
-    key='default';
-    detailFields[key] = {
-      label: labels.get('label_'+key),
-      type:'text',
-      values:[item.data[key]],
-    };
-    key='mandatory';
-    detailFields[key] = {
-      label: labels.get('label_'+key),
-      type:'text',
-      values:[item.data[key]],
-    };
-    key='class';
-    detailFields[key] = {
-      label: labels.get('label_'+key),
-      type:'text',
+      type:'number',
       values:[item.data[key]],
     };
     key='created_at';
@@ -92,27 +71,21 @@
       type:'date-time',
       values:[item.data[key]],
     };
-    key='updated_at';
-    detailFields[key] = {
-      label: labels.get('label_'+key),
-      type:'date-time',
-      values:[item.data[key]],
-    };
     item.detailFields=detailFields;
-    item.exists=true;
   }
   const getItem=async ()=>{
-    await axios.get(taskData.api_url+'/'+taskData.crop_id+'/inputs/'+taskData.form_id+'/get-item/'+ item.id).then((res)=>{
+    await axios.get(taskData.api_url+'/'+taskData.crop_id+'/get-item/'+ item.id).then((res)=>{
       if (res.data.error == "") {
         item.data=res.data.item;
         setDetailFields();
+        item.exists=true;
       }
       else{
         toastFunctions.showResponseError(res.data)
       }
     });
   }
-  item.id=taskData.input_id;
+  item.id=route.params['form_id']?route.params['form_id']:0;
   getItem();
 
 </script>

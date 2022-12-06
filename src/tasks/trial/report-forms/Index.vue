@@ -1,196 +1,130 @@
 <template>
   <div v-if="taskData.permissions.action_0==1">
-    <div v-show="taskData.method=='list-form'" v-if="taskData.renderedForm">
-      <ListForm/>
+    <div v-show="taskData.method=='list'">
+      <List/>
     </div>
-    <div v-if="taskData.method=='add-form'">
-      <AddEditForm/>
+    <div v-if="taskData.method=='add'">
+      <AddEdit/>
     </div>
-    <div v-if="taskData.method=='edit-form'">
-      <AddEditForm/>
+    <div v-if="taskData.method=='edit'">
+      <AddEdit/>
     </div>
-    <template v-if="taskData.renderedInputs">
-      <div v-show="taskData.method=='list-input'">
-        <ListInput/>
-      </div>
-      <div v-if="taskData.method=='add-input'">
-        <AddEditInput/>
-      </div>
-      <div v-if="taskData.method=='edit-input'">
-        <AddEditInput/>
-      </div>
-      <div v-if="taskData.method=='details-input'">
-        <DetailsInput/>
-      </div>
-    </template>
+    <div v-if="taskData.method=='details'">
+      <Details/>
+    </div>
+    <div v-if="taskData.method=='fields'">
+      <Fields/>
+    </div>
   </div>
 </template>
 <script setup>
-import globalVariables from "@/assets/globalVariables";
-import systemFunctions from "@/assets/systemFunctions";
-import toastFunctions from "@/assets/toastFunctions";
-import labels from '@/labels'
-import {provide, reactive, watch} from 'vue'
-import {useRoute,useRouter} from 'vue-router';
-import axios from 'axios';
+  import globalVariables from "@/assets/globalVariables";
+  import systemFunctions from "@/assets/systemFunctions";
+  import toastFunctions from "@/assets/toastFunctions";
+  import labels from '@/labels'
+  import {provide, reactive, watch} from 'vue'
+  import {useRoute,useRouter} from 'vue-router';
+  import axios from 'axios';
 
-import ListForm from './ListForm.vue'
-import AddEditForm from './AddEditForm.vue'
-import ListInput from './ListInput.vue'
-import AddEditInput from "./AddEditInput";
-import DetailsInput from "./DetailsInput";
+  import List from './List.vue'
+  import AddEdit from './AddEdit.vue'
+  import Details from './Details.vue'
+  import Fields from './Fields.vue'
 
-globalVariables.loadListData=true;
-const route =useRoute()
-const router =useRouter()
+  globalVariables.loadListData=true;
+  const route =useRoute()
+  const router =useRouter()
 
-let taskData=reactive({
-  api_url:systemFunctions.getTaskBaseURL(import.meta.url),
-  method:'list-from',
-  permissions:{},
-  itemsForm: {data:[]},
-  itemsFilteredForm: [],    //for display
-  columnsForm:{all:{},hidden:[],sort:{key:'',dir:''}},
-  paginationForm: {current_page: 1,per_page_options: [50,100,500,1000],per_page:-1,show_all_items:true},
-  renderedForm:false,
-  loadListDataForm:true,
+  let taskData=reactive({
+    api_url:systemFunctions.getTaskBaseURL(import.meta.url),
+    method:'',
+    permissions:{},
+    items: {data:[]},   //from Laravel server with pagination and info
+    itemsFiltered: [],    //for display
+    columns:{all:{},hidden:[],sort:{key:'',dir:''}},
+    pagination: {current_page: 1,per_page_options: [10,20,50,100,500,1000],per_page:-1,show_all_items:true},
 
-  itemsInput: {data:[]},
-  itemsFilteredInput: [],    //for display
-  columnsInput:{all:{},hidden:[],sort:{key:'',dir:''}},
-  paginationInput: {current_page: 1,per_page_options: [50,100,500,1000],per_page:-1,show_all_items:true},
-  renderedInputs:false,
-  loadListDataInput:true,
+    crop_id:0,
+    cropInfo:{},
+    trialInputFields:{}
+  })
+  labels.add([{language:globalVariables.language,file:'tasks'+taskData.api_url+'/labels.js'}])
 
-  crop_id:0,
-  form_id:0,
-  cropInfo:{},
-  formInfo:{},
-
-
-})
-labels.add([{language:globalVariables.language,file:'tasks'+taskData.api_url+'/labels.js'}])
-
-const routing=async ()=>{
-  let crop_id=route.params['crop_id']?route.params['crop_id']:0;
-  let form_id=route.params['form_id']?route.params['form_id']:0;
-  let input_id=route.params['input_id']?route.params['input_id']:0;
-  if(taskData.crop_id!=crop_id){
-    taskData.crop_id=crop_id;
-    taskData.loadListDataForm=true;
-    taskData.renderedForm=false;
-    await init();
-    taskData.renderedForm=true;
-  }
-  taskData.form_id=form_id;
-  taskData.input_id=input_id;
-  await getItemsForm(taskData.paginationForm);//Load at least once
-  //console.log(route.path)
-  if(route.path.indexOf(taskData.api_url+'/'+taskData.crop_id+'/inputs')!=-1)
-  {
-    taskData.renderedInputs=true
-    await getItemsInput(taskData.paginationInput);//Load at least once
-    //taskData.renderedInput=true
-    //getitems
-    if(route.path==(taskData.api_url+'/'+taskData.crop_id+'/inputs/'+form_id)){
-      taskData.method='list-input';
+  const routing=async ()=>{
+    let crop_id=route.params['crop_id']?route.params['crop_id']:0;
+    if(taskData.crop_id!=crop_id){
+      taskData.permissions={};//resetting permission to rerender
+      globalVariables.loadListData=true;
+      taskData.crop_id=crop_id;
+      await init();
     }
-    else if(route.path==(taskData.api_url+'/'+taskData.crop_id+'/inputs/'+form_id+'/add')){
-      taskData.method='add-input';
-    }
-    else if(route.path==(taskData.api_url+'/'+taskData.crop_id+'/inputs/'+form_id+'/edit/'+input_id)){
-      taskData.method='edit-input';
-    }
-    else if(route.path==(taskData.api_url+'/'+taskData.crop_id+'/inputs/'+form_id+'/details/'+input_id)){
-      taskData.method='details-input';
-    }
-  }
-  else{
-    taskData.renderedInputs=false
-    taskData.loadListDataInput=true
+    await getItems(taskData.pagination);//Load at least once
     if(route.path==(taskData.api_url+'/'+taskData.crop_id)){
-      taskData.method='list-form';
+      taskData.method='list';
     }
     else if(route.path==(taskData.api_url+'/'+taskData.crop_id+'/add')){
-      taskData.method='add-form';
+      taskData.method='add';
     }
-    else if(route.path==(taskData.api_url+'/'+taskData.crop_id+'/edit/'+form_id)){
-      taskData.method='edit-form';
+    else if(route.path.indexOf(taskData.api_url+'/'+taskData.crop_id+'/edit/')!=-1)
+    {
+      taskData.method='edit';
+    }
+    else if(route.path.indexOf(taskData.api_url+'/'+taskData.crop_id+'/details/')!=-1)
+    {
+      taskData.method='details';
+    }
+    else if(route.path.indexOf(taskData.api_url+'/'+taskData.crop_id+'/fields/')!=-1)
+    {
+      taskData.method='fields';
     }
   }
-}
-watch(route, () => {
-  routing();
-})
-
-const init=async ()=>{
-  await axios.get(taskData.api_url+'/'+taskData.crop_id+'/initialize').then((res)=>{
-    if (res.data.error == "") {
-      taskData.permissions=res.data.permissions;
-      taskData.cropInfo=res.data.cropInfo;
-      if(res.data.hidden_columns_form){
-        taskData.columnsForm.hidden=res.data.hidden_columns_form;
+  watch(route, () => {
+    routing();
+  })
+  const init=async ()=>{
+    await axios.get(taskData.api_url+'/'+taskData.crop_id+'/initialize').then((res)=>{
+      if (res.data.error == "") {
+        taskData.permissions=res.data.permissions;
+        taskData.cropInfo=res.data.cropInfo;
+        if(res.data.hidden_columns){
+          taskData.columns.hidden=res.data.hidden_columns;
+        }
       }
-    }
-    else{
-      toastFunctions.showResponseError(res.data)
-    }
-  });
-}
-const getItemsForm=async(pagination)=>{
-  if(taskData.loadListDataForm)
-  {
-    await axios.get(taskData.api_url+'/'+taskData.crop_id+'/get-items?page='+ pagination.current_page+'&perPage='+ pagination.per_page)
+      else{
+        toastFunctions.showResponseError(res.data)
+      }
+    });
+  }
+
+  const getItems=async(pagination)=>{
+    if(globalVariables.loadListData)
+    {
+      await axios.get(taskData.api_url+'/'+taskData.crop_id+'/get-items?page='+ pagination.current_page+'&perPage='+ pagination.per_page)
         .then(res => {
           if(res.data.error==''){
-            taskData.itemsForm= res.data.items;
-            taskData.setFilteredItemsForm();
+            taskData.items= res.data.items;
+            taskData.setFilteredItems();
           }
           else{
             toastFunctions.showResponseError(res.data)
           }
-          taskData.loadListDataForm=false;
+          globalVariables.loadListData=false;
         })
+    }
   }
-}
-taskData.setFilteredItemsForm=()=>{
-  taskData.itemsFilteredForm=systemFunctions.getFilteredItems(taskData.itemsForm.data,taskData.columnsForm);
-}
-taskData.reloadItemsForm=(pagination)=>{
-  taskData.loadListDataForm=true;
-  getItemsForm(pagination);
-}
-
-const getItemsInput=async(pagination)=>{
-  if(taskData.loadListDataInput)
-  {
-
-    await axios.get(taskData.api_url+'/'+taskData.crop_id+'/inputs/'+taskData.form_id+'/get-items?page='+ pagination.current_page+'&perPage='+ pagination.per_page)
-        .then(res => {
-          if(res.data.error==''){
-            taskData.formInfo= res.data.formInfo;
-            taskData.itemsInput= res.data.items;
-            taskData.setFilteredItemsInput();
-          }
-          else{
-            toastFunctions.showResponseError(res.data)
-          }
-          taskData.loadListDataInput=false;
-        })
+  taskData.setFilteredItems=()=>{
+    taskData.itemsFiltered=systemFunctions.getFilteredItems(taskData.items.data,taskData.columns);
   }
-}
-taskData.setFilteredItemsInput=()=>{
-  taskData.itemsFilteredInput=systemFunctions.getFilteredItems(taskData.itemsInput.data,taskData.columnsInput);
-}
-taskData.reloadItemsInput=(pagination)=>{
-  taskData.loadListDataInput=true;
-  getItemsInput(pagination);
-}
-provide('taskData',taskData)
-if(!(globalVariables.user.id>0)){
-  router.push("/login")
-}
-else{
-  routing();
-}
+  taskData.reloadItems=(pagination)=>{
+    globalVariables.loadListData=true;
+    getItems(pagination);
+  }
+
+  provide('taskData',taskData)
+  if(!(globalVariables.user.id>0)){
+    router.push("/login")
+  }
+  else{
+    routing();
+  }
 </script>
