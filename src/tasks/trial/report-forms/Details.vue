@@ -6,10 +6,29 @@
   </div>
   <div class="card d-print-none mb-2" v-if="item.exists">
     <div class="card-header">
+      {{taskData.cropInfo.name}}
       <div>{{labels.get('label_details_task')}} ({{item.id}})</div>
     </div>
     <div class="card-body">
         <DetailTemplate :detailFields="item.detailFields" />
+      <table id="tableReportItems" class="table table-sm table-bordered">
+        <thead class="table-active">
+        <tr>
+          <th>{{labels.get('label_report_column_name')}}</th>
+          <th>{{labels.get('label_formula')}}</th>
+          <th>{{labels.get('label_equation')}}</th>
+          <th>{{labels.get('label_ordering')}}</th>
+        </tr>
+        </thead>
+        <tbody class="table-striped table-hover">
+        <tr v-for="(field,index) in item.data.fields">
+          <td>{{field.name}}</td>
+          <td>{{field.formula}}</td>
+          <td>{{field.equation}}</td>
+          <td>{{field.ordering}}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>

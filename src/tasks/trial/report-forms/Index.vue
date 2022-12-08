@@ -46,11 +46,12 @@
 
     crop_id:0,
     cropInfo:{},
-    trialInputFields:{}
+    trialFormInputs:{}
   })
   labels.add([{language:globalVariables.language,file:'tasks'+taskData.api_url+'/labels.js'}])
 
   const routing=async ()=>{
+    taskData.method='';//to avoid other calls
     let crop_id=route.params['crop_id']?route.params['crop_id']:0;
     if(taskData.crop_id!=crop_id){
       taskData.permissions={};//resetting permission to rerender
@@ -86,6 +87,7 @@
       if (res.data.error == "") {
         taskData.permissions=res.data.permissions;
         taskData.cropInfo=res.data.cropInfo;
+        taskData.trialFormInputs=res.data.trialFormInputs;
         if(res.data.hidden_columns){
           taskData.columns.hidden=res.data.hidden_columns;
         }

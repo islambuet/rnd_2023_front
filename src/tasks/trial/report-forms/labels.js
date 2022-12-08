@@ -15,64 +15,24 @@ export default {
         en:"Details of Report",
         bn:'ব্যবহারকারীর বিবরণ'
     },
-    label_entry_count:{
-        en:"Number of Entry",
-        bn:"প্রিফিক্স"
-    },
-    label_entry_interval:{
-        en:"Interval",
-        bn:"প্রিফিক্স"
-    },
-    label_entry_count_unknown:{
-        en:"UnKnown",
-        bn:"প্রিফিক্স"
-    },
     label_show_inputs:{
         en:"Report Fields",
         bn:"প্রিফিক্স"
     },
-    label_type:{
-        en:"Type",
+    label_report_column_name:{
+        en:"Report Column Name",
         bn:"প্রিফিক্স"
     },
-    label_options:{
-        en:"Options",
+    label_equation:{
+        en:"Equation",
         bn:"প্রিফিক্স"
     },
-    label_default:{
-        en:"Default value",
+    label_formula:{
+        en:"Formula",
         bn:"প্রিফিক্স"
     },
-    label_hidden:{
-        en:"Hidden",
-        bn:"প্রিফিক্স"
-    },
-    label_task_input:{
-        en:"Report Fields Setup",
-        bn:'ব্যবহারকারীরা'
-    },
-    label_class:{
-        en:"Class",
-        bn:'ব্যবহারকারীরা'
-    },
-    label_new_task_input:{
-        en:"New Report Field",
-        bn:'নতুন ব্যবহারকারী'
-    },
-    label_edit_task_inupt:{
-        en:"Edit Report Field",
-        bn:'সম্পাদনা ব্যবহারকারী'
-    },
-    label_details_task_input:{
-        en:"Details of Report Field",
-        bn:'ব্যবহারকারীর বিবরণ'
-    },
-    label_new_input:{
-        en:"New Report Field",
-        bn:"প্রিফিক্স"
-    },
-    label_edit_input:{
-        en:"Edit Report Field",
+    label_visible:{
+        en:"visible",
         bn:"প্রিফিক্স"
     },
 }
