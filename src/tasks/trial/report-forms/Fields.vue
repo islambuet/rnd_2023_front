@@ -37,8 +37,7 @@
                 <input type="hidden" :name="'items['+index+'][formula]'" :value="field.formula"/>
                 <input type="hidden" :name="'items['+index+'][ordering]'" :value="field.ordering"/>
                 <input type="hidden" :name="'items['+index+'][equation]'" :value="field.equation"/>
-<!--                <input type="hidden" :name="'items['+index+'][inputId]'" :value="field.inputId"/>-->
-
+                <input type="hidden" :name="'items['+index+'][inputId]'" :value="field.inputId"/>
                 <button type="button" class="remove_field_button mr-2 mb-2 btn btn-sm bg-gradient-warning"><i class="bi bi-plus-circle"></i> Remove</button>
 
               </td>
