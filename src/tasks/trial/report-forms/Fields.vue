@@ -37,6 +37,8 @@
                 <input type="hidden" :name="'items['+index+'][formula]'" :value="field.formula"/>
                 <input type="hidden" :name="'items['+index+'][ordering]'" :value="field.ordering"/>
                 <input type="hidden" :name="'items['+index+'][equation]'" :value="field.equation"/>
+<!--                <input type="hidden" :name="'items['+index+'][inputId]'" :value="field.inputId"/>-->
+
                 <button type="button" class="remove_field_button mr-2 mb-2 btn btn-sm bg-gradient-warning"><i class="bi bi-plus-circle"></i> Remove</button>
 
               </td>
@@ -130,7 +132,7 @@ const addField=async (inputId)=>{
   input_hidden+='<input type="hidden" name="items['+item.column_count+'][name]" value="'+name+'"/>';
   input_hidden+='<input type="hidden" name="items['+item.column_count+'][formula]" value="'+formula+'"/>';
   input_hidden+='<input type="hidden" name="items['+item.column_count+'][ordering]" value="'+ordering+'"/>';
-
+  input_hidden+='<input type="hidden" name="items['+item.column_count+'][inputId]" value="'+inputId+'"/>';
   let row='<tr>';
   row+='<td>'+name+'</td>';
   row+='<td>'+formula+'</td>';
