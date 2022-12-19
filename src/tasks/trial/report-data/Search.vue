@@ -74,6 +74,10 @@
     </div>
   </div>
   <div class="card" v-if="show_report">
+    <div class="card-body pb-0 d-print-none">
+      <button type="button" v-if="taskData.permissions.action_4" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" onclick="window.print();"><i class="feather icon-printer"></i> {{labels.get('action_4')}}</button>
+      <button type="button" v-if="taskData.permissions.action_5" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="exportCsv"><i class="feather icon-download"></i> {{labels.get('action_5')}}</button>
+    </div>
     <div class="card-body" style="overflow-x: auto; min-height: 250px;">
       <table class="table table-bordered">
         <thead class="table-active">
@@ -94,11 +98,10 @@
             <td>{{item.rnd_code}}</td>
             <template v-for="field in taskData.reportFields" >
               <td v-for="index in field.max_entry_no" :class="((['number'].indexOf(field.type) != -1)?'text-right':'')" >
-                <template v-if="item[field.index+'_'+index]">
-                  <div>{{item[field.index+'_'+index]}}</div>
-                </template>
-                <div v-else>No Data</div>
-
+                <div style="max-width: 200px;max-height:200px" v-if="(['image'].indexOf(field.type) != -1)">
+                  <img style="max-width: 100%;max-height:200px" :src="systemFunctions.getImageUrl(item[field.index+'_'+index])">
+                </div>
+                <div v-else>{{item[field.index+'_'+index]}}</div>
               </td>
             </template>
           </tr>
@@ -118,44 +121,55 @@
     import axios from "axios";
     import toastFunctions from "@/assets/toastFunctions";
 
-
-    // import AddEdit from './AddEdit.vue'
-
-
     const router =useRouter()
     let taskData = inject('taskData')
     let show_report=ref(false)
+    const exportCsv=async ()=>{
+      let csvStr="";
+      csvStr=csvStr+'"Rnd Code",';
+      for(let  key in taskData.reportFields){
+        let field=taskData.reportFields[key];
 
-    const setColumns=()=>{
-      let columns={}
-      let key='rnd_code';
-      columns[key]={
-        label: labels.get('label_'+key),
-        hideable:true,
-        filterable:true,
-        sortable:true,
-        type:'text',
-        filter:{from:'',to:''}
-      };
-      key='num_entry';
-      columns[key]={
-        label: labels.get('label_'+key),
-        hideable:true,
-        filterable:true,
-        sortable:true,
-        type:'number',
-        filter:{from:'',to:''},
-        class:'col_1'
-      };
-      taskData.columns.all=columns
+        for(let  k=1;k<=field.max_entry_no;k++){
+          if(field.max_entry_no>1){
+            csvStr=csvStr+'"'+field['label']+'('+k+')'+'",';
+          }
+          else {
+            csvStr=csvStr+'"'+field['label']+'",';
+          }
+        }
+      }
+      csvStr+="\n";
+      for (let j=0;j<taskData.itemsFiltered.length;j++)
+      {
+        let item=taskData.itemsFiltered[j];
+        csvStr=csvStr+'"'+item['rnd_code']+'",';
+        for(let  key in taskData.reportFields){
+          let field=taskData.reportFields[key];
+          for(let  k=1;k<=field.max_entry_no;k++){
+            if(item[key+'_'+k]){
+              csvStr=csvStr+'"'+item[key+'_'+k]+'",';
+            }
+            else{
+              csvStr=csvStr+'" ",';
+            }
+          }
+        }
+        csvStr+="\n";
+      }
+
+      let hiddenElement = document.createElement('a');
+      hiddenElement.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURI(csvStr);
+      hiddenElement.target = '_blank';
+      hiddenElement.download = taskData.cropInfo.name+"-"+taskData.reportInfo.name
+      hiddenElement.click();
     }
+
     const search=async ()=>{
       show_report.value=false;
       let formData=new FormData(document.getElementById('formSearch'))
       await axios.post(taskData.api_url+'/'+taskData.crop_id+'/'+taskData.report_id+'/'+taskData.trial_station_id+'/'+taskData.year+'/'+taskData.season_id+'/get-items',formData).then((res)=>{
         if (res.data.error == "") {
-          //console.log("hi")
-          //setColumns();
           taskData.reportFields=res.data.reportFields;
           taskData.itemsFiltered=res.data.data;
           show_report.value=true;
