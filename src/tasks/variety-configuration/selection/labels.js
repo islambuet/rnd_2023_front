@@ -51,5 +51,9 @@ export default {
         en:"R&D Code",
         bn:"কর্মচারী আইডি"
     },
+    label_whose :{
+        en:"Whose Variety",
+        bn:"কর্মচারী আইডি"
+    },
 
 }

@@ -91,6 +91,16 @@
         type:'text',
         filter:{from:'',to:''}
       };
+      key='whose';
+      columns[key]={
+        label: labels.get('label_'+key),
+        hideable:true,
+        sortable:true,
+        filterable:true,
+        type:'dropdown',
+        filter:{from:'',to:'',options:[{value:'ARM',label:'ARM'},{value:'Principal',label:'Principal'},{value:'Competitor',label:'Competitor'}]},
+
+      };
       key='crop_name';
       columns[key]={
         label: labels.get('label_'+key),

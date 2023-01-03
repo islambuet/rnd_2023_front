@@ -14,7 +14,7 @@ function getNotLoggedUser(){
   }    
 }
 export default reactive({
-  baseURLApiServer:(process.env.NODE_ENV=='production')?'https://rnd.api.malikseedsbd.com/api':'http://192.168.0.109/rnd_2023_back/public/api',
+  baseURLApiServer:(process.env.NODE_ENV=='production')?'https://rnd.api.malikseedsbd.com/api':'http://192.168.0.110/rnd_2023_back/public/api',
   baseURLUploadServer:'https://rnd.files.malikseedsbd.com/api',
   baseURLUploadedFilesLink:'https://rnd.files.malikseedsbd.com',
   localStorageAuthTokenStr:localStorageAuthTokenStr,
@@ -30,7 +30,7 @@ export default reactive({
     this.user = getNotLoggedUser();
   },
   loadListData:true,
-  starting_year:2021, //TODO change it to 2023
+  starting_year:2023, //TODO change it to 2023
   current_year:new Date().getFullYear(),
   current_season_id:1
 })
