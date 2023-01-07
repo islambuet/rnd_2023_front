@@ -38,6 +38,7 @@ let taskData=reactive({
   trial_stations:[],
   seasons:[],
   cropInfo:{},
+  crop_features:{},
   reportInfo:{},
   // inputFields:[],
 
@@ -95,6 +96,7 @@ const init=async ()=>{
     if (res.data.error == "") {
       taskData.permissions=res.data.permissions;
       taskData.cropInfo=res.data.cropInfo;
+      taskData.crop_features=res.data.crop_features;
       taskData.reportInfo=res.data.reportInfo;
       taskData.trial_stations=res.data.trial_stations;
       taskData.seasons=res.data.seasons;
