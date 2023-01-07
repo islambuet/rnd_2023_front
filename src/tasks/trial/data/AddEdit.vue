@@ -65,9 +65,15 @@
                     </option>
                   </select>
                 </div>
+                <div v-else-if="inputField.type=='features'" class="input-group" >
+                  <div class="form-check form-check-inline" v-for="option in (item.variety.crop_features)">
+                    <input class="form-check-input" type="checkbox" :id="'item_'+i+'_'+inputField.id+'_'+option.id" :value="option.id" :name="'item[data_'+i+']['+inputField.id+'][]'" :checked="item['data_'+i][inputField.id]?item['data_'+i][inputField.id].includes(option.id.toString()):false">
+                    <label class="form-check-label" :for="'item_'+inputField.id+'_'+option.id">{{option.name}}</label>
+                  </div>
+                </div>
                 <div v-else-if="inputField.type=='checkbox'" class="input-group" >
                   <div class="form-check form-check-inline" v-for="(option,index) in (inputField.options?inputField.options.split('\r\n'):[])">
-                    <input class="form-check-input" type="checkbox" :id="'item_'+i+'_'+inputField.id+'_'+index" :value="option" :name="'item[data_'+i+']['+inputField.id+'][]'" :checked="item['data_'+i][inputField.id].includes(option)">
+                    <input class="form-check-input" type="checkbox" :id="'item_'+i+'_'+inputField.id+'_'+index" :value="option" :name="'item[data_'+i+']['+inputField.id+'][]'" :checked="item['data_'+i][inputField.id]?item['data_'+i][inputField.id].includes(option):false">
                     <label class="form-check-label" :for="'item_'+inputField.id+'_'+index">{{option}}</label>
                   </div>
                 </div>
@@ -162,6 +168,13 @@ const getItem=async ()=>{
   for(let i in taskData.items){
     let variety=taskData.items[i];
     if(variety.variety_id==item.variety_id){
+      variety.crop_features={};
+      let crop_feature_ids=variety.crop_feature_ids.split(",");
+      for(let i=0;i<crop_feature_ids.length;i++){
+        if(taskData.crop_features[crop_feature_ids[i]]){
+          variety.crop_features[crop_feature_ids[i]]=taskData.crop_features[crop_feature_ids[i]];
+        }
+      }
       item.variety=variety;
     }
   }
