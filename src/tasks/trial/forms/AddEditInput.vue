@@ -146,7 +146,12 @@ const setInputFields=async ()=>{
     name: 'item[' +key +']',
     label: '',
     type:'hint',
-    default:'float_positive=Only Positive floating number<br>integer_positive=Only Positive Integer number<br>float_all=Positive and negetive floating number<br>integer_all=Positive and negetive Integer number',
+    default:'float_positive=Only Positive floating number<br>' +
+        'integer_positive=Only Positive Integer number<br>' +
+        'float_all=Positive and negetive floating number<br>' +
+        'integer_all=Positive and negetive Integer number<br>' +
+        'For Image default resize size is 1.3MB<br>' +
+        'Use differnt value in MB(only numeric) if you want differnt size to resize',
     mandatory:true
   };
   key='ordering';

@@ -38,7 +38,8 @@
                       <div class="input-group input-group-sm">
                         <div class="input-group-prepend">
                           <label class="btn btn-sm bg-gradient-primary" style="cursor: pointer;">
-                            <input :id="'item_'+i+'_'+inputField.id" type="file" class="d-none" :data-preview-container="'#item_'+i+'_'+inputField.id+'_preview_container'">
+                            <input v-if="inputField.class>1" :data-minimum-size-to-resize="inputField.class*1024*1024" :id="'item_'+i+'_'+inputField.id" type="file" class="d-none" :data-preview-container="'#item_'+i+'_'+inputField.id+'_preview_container'">
+                            <input v-else :id="'item_'+i+'_'+inputField.id" type="file" class="d-none" :data-preview-container="'#item_'+i+'_'+inputField.id+'_preview_container'">
                             <i class="bi bi-upload"></i> {{labels.get('label_upload_file')}}
                           </label>
                         </div>
