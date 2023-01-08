@@ -28,6 +28,28 @@ $(document).ready(function ()
             input.attr('type','password');
         }
     });
+    $(document).on("input", ".input_url", function(event)
+    {
+        let atag=$(this).siblings('a');
+        let url=$(this).val();
+        if(!(url.startsWith("http://")||(url.startsWith("https://")))){
+            url="http://"+url;
+        }
+        atag.attr("href",url);
+        console.log(atag)
+        //console.log("Video url clicked")
+        // let input=$(this).siblings('input');
+        // if(input.attr('type')=='password')
+        // {
+        //     $(this).find('i').removeClass('icon-eye').addClass('icon-eye-off');
+        //     input.attr('type','text');
+        // }
+        // else
+        // {
+        //     $(this).find('i').removeClass('icon-eye-off').addClass('icon-eye');
+        //     input.attr('type','password');
+        // }
+    });
     /*number format input box*/
     $(document).on("input", ".float_positive", function(event)
     {

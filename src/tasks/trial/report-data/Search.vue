@@ -111,6 +111,9 @@
                     <div v-for="feature_id in item[field.index+'_'+index]"><i class="bi bi-cursor-fill"></i>{{ taskData.crop_features[feature_id]?taskData.crop_features[feature_id].name:'' }}</div>
                   </template>
                 </div>
+                <div v-else-if="(['url'].indexOf(field.type) != -1)">
+                  <a class="btn btn-sm bg-gradient-primary" target="_blank" v-if="item[field.index+'_'+index]" :href="(((item[field.index+'_'+index].startsWith('https://'))||(item[field.index+'_'+index].startsWith('http://')))?'':'http://')+item[field.index+'_'+index]">Visit URL</a>
+                </div>
                 <div v-else>{{item[field.index+'_'+index]}}</div>
               </td>
             </template>

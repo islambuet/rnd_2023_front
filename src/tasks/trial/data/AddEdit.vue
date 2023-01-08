@@ -77,6 +77,10 @@
                     <label class="form-check-label" :for="'item_'+inputField.id+'_'+index">{{option}}</label>
                   </div>
                 </div>
+                <div v-else-if="inputField.type=='url'" class="input-group" >
+                  <input :id="'item_'+i+'_'+inputField.id" :type="inputField.type" class="form-control input_url" :class="inputField.class? inputField.class:null" :name="'item[data_'+i+']['+inputField.id+']'" :value="item['data_'+i][inputField.id]"/>
+                  <a href="http://" target="_blank" class="input-group-text">Visit URL</a>
+                </div>
                 <div v-else class="input-group" >
                   <input :id="'item_'+i+'_'+inputField.id" :type="inputField.type" class="form-control" :class="inputField.class? inputField.class:null" :name="'item[data_'+i+']['+inputField.id+']'" :value="item['data_'+i][inputField.id]"/>
                 </div>

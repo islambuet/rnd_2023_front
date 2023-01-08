@@ -96,7 +96,7 @@ const setInputFields=async ()=>{
         {label:"DropDown",value:'dropdown'},
         {label:"CheckBox",value:'checkbox'},
         {label:"Features",value:'features'},
-        {label:"Video Url",value:'video_url'},
+        {label:"URL",value:'url'},
     ],
     default:item.data[key],
     mandatory:true
