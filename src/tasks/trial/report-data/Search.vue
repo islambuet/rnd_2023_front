@@ -161,7 +161,22 @@
           let field=taskData.reportFields[key];
           for(let  k=1;k<=field.max_entry_no;k++){
             if(item[key+'_'+k]){
-              csvStr=csvStr+'"'+item[key+'_'+k]+'",';
+              if(['image'].indexOf(field.type) != -1){
+                csvStr=csvStr+'"'+systemFunctions.getImageUrl(item[key+'_'+k])+'",';
+              }
+              else if(['features'].indexOf(field.type) != -1){
+                let feature_text='';
+                for(let feature_id in item[key+'_'+k]){
+                  if(taskData.crop_features[item[key+'_'+k][feature_id]]){
+                    feature_text+=taskData.crop_features[item[key+'_'+k][feature_id]].name+','
+                  }
+                }
+                csvStr=csvStr+'"'+feature_text+'",';
+              }
+              else{
+                csvStr=csvStr+'"'+item[key+'_'+k]+'",';
+              }
+
             }
             else{
               csvStr=csvStr+'" ",';
