@@ -14,7 +14,7 @@ function getNotLoggedUser(){
   }    
 }
 export default reactive({
-  baseURLApiServer:(process.env.NODE_ENV=='production')?'https://rnd.api.malikseedsbd.com/api':'http://192.168.0.110/rnd_2023_back/public/api',
+  baseURLApiServer:(process.env.NODE_ENV=='production')?'https://rnd.api.malikseedsbd.com/api':'http://192.168.179.1/rnd_2023_back/public/api',
   baseURLUploadServer:'https://rnd.files.malikseedsbd.com/api',
   baseURLUploadedFilesLink:'https://rnd.files.malikseedsbd.com',
   localStorageAuthTokenStr:localStorageAuthTokenStr,
