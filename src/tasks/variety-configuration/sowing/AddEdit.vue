@@ -164,6 +164,7 @@ const savePending=async ()=>{
     if (res.data.error == "") {
       toastFunctions.showSuccessfullySavedMessage();
       taskData.reloadItems();
+      $("#pending-delivery input:checkbox").prop('checked', false);
     }
     else{
       toastFunctions.showResponseError(res.data)
@@ -176,6 +177,7 @@ const saveDelivered=async ()=>{
     if (res.data.error == "") {
       toastFunctions.showSuccessfullySavedMessage();
       taskData.reloadItems();
+      $("#sowed input:checkbox").prop('checked', false);
     }
     else{
       toastFunctions.showResponseError(res.data)
