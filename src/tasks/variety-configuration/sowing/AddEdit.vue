@@ -164,7 +164,7 @@ const savePending=async ()=>{
     if (res.data.error == "") {
       toastFunctions.showSuccessfullySavedMessage();
       taskData.reloadItems();
-      $("#pending-delivery input:checkbox").prop('checked', false);
+      $("#pending-sowing input:checkbox").prop('checked', false);
     }
     else{
       toastFunctions.showResponseError(res.data)
