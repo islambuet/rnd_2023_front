@@ -78,7 +78,7 @@
       <button type="button" v-if="taskData.permissions.action_4" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" onclick="window.print();"><i class="feather icon-printer"></i> {{labels.get('action_4')}}</button>
       <button type="button" v-if="taskData.permissions.action_5" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="exportCsv"><i class="feather icon-download"></i> {{labels.get('action_5')}}</button>
     </div>
-    <div class="card-body" style="overflow-x: auto; min-height: 250px;">
+    <div class="card-body" style="overflow-x: auto; height: 600px;">
       <table class="table table-bordered">
         <thead class="table-active">
         <tr>
