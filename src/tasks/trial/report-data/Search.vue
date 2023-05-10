@@ -95,26 +95,26 @@
         </thead>
         <tbody class="table-striped table-hover">
           <tr v-for="item in taskData.itemsFiltered">
-            <td>{{item.rnd_code}}</td>
+            <td><div style="min-width: 110px;">{{item.rnd_code}}</div></td>
             <template v-for="field in taskData.reportFields" >
               <td v-for="index in field.max_entry_no" :class="((['number'].indexOf(field.type) != -1)?'text-right':'')" >
-                <div style="max-width: 200px;max-height:200px" v-if="(['image'].indexOf(field.type) != -1)">
+                <div style="width: 200px;max-height:200px" v-if="(['image'].indexOf(field.type) != -1)">
                   <img v-if="item[field.index+'_'+index]" style="max-width: 100%;max-height:200px" :src="systemFunctions.getImageUrl(item[field.index+'_'+index])">
                 </div>
-                <div v-else-if="(['checkbox'].indexOf(field.type) != -1)">
+                <div style="min-width: 110px;" v-else-if="(['checkbox'].indexOf(field.type) != -1)">
                   <template v-if="typeof item[field.index+'_'+index]=='object'">
                     <div v-for="option in item[field.index+'_'+index]"><i class="bi bi-cursor-fill"></i>{{ option }}</div>
                   </template>
                 </div>
-                <div v-else-if="(['features'].indexOf(field.type) != -1)">
+                <div style="min-width: 110px;" v-else-if="(['features'].indexOf(field.type) != -1)">
                   <template v-if="typeof item[field.index+'_'+index]=='object'">
                     <div v-for="feature_id in item[field.index+'_'+index]"><i class="bi bi-cursor-fill"></i>{{ taskData.crop_features[feature_id]?taskData.crop_features[feature_id].name:'' }}</div>
                   </template>
                 </div>
-                <div v-else-if="(['url'].indexOf(field.type) != -1)">
+                <div style="min-width: 110px;" v-else-if="(['url'].indexOf(field.type) != -1)">
                   <a class="btn btn-sm bg-gradient-primary" target="_blank" v-if="item[field.index+'_'+index]" :href="(((item[field.index+'_'+index].startsWith('https://'))||(item[field.index+'_'+index].startsWith('http://')))?'':'http://')+item[field.index+'_'+index]">Visit URL</a>
                 </div>
-                <div v-else>{{item[field.index+'_'+index]}}</div>
+                <div style="min-width: 110px;" v-else>{{item[field.index+'_'+index]}}</div>
               </td>
             </template>
           </tr>
