@@ -90,4 +90,8 @@ export default {
         en: 'You don\'t have permission to this page. Contact with your Admin.',
         bn: '',
     },
+    msg_invalid_data: {
+        en: 'Invalid Data. Contact with your Admin.',
+        bn: '',
+    },
 }

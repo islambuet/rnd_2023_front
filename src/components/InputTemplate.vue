@@ -18,6 +18,9 @@
       <template v-else-if="inputItem.type=='hint'">
         <input-template-hint :input-item="inputItem" :input-key="key"/>
       </template>
+      <template v-else-if="inputItem.type=='textonly'">
+        <input-template-textonly :input-item="inputItem" :input-key="key"/>
+      </template>
       <template v-else>
         <input-template-default :input-item="inputItem" :input-key="key"/>
       </template>
@@ -35,6 +38,7 @@
     import InputTemplateCheckbox from '@/components/InputSubTemplates/Checkbox.vue';
     import InputTemplateFile from '@/components/InputSubTemplates/File.vue';
     import InputTemplateHint from '@/components/InputSubTemplates/Hint.vue';
+    import InputTemplateTextonly from '@/components/InputSubTemplates/Textonly.vue';
 
     const props=defineProps({
         inputItems: {
