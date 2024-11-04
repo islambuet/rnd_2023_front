@@ -118,6 +118,34 @@ const setInputFields=async ()=>{
     default:item.data[key].split(','),
     mandatory:true
   };
+
+  key='part_id';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'dropdown',
+    default:item.data[key],
+    options:taskData.location_parts.map((item)=>{ return {value:item.id,label:item.name}}),
+    mandatory:false
+  };
+  key='area_id';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'dropdown',
+    options:(item.data.part_id>0?taskData.location_areas.filter((elem)=>{ if(elem.part_id==item.data.part_id){elem.value=elem.id.toString();elem.label=elem.name;return true}}):[]),
+    default:item.data[key],
+    mandatory:true
+  };
+  key='territory_id';
+  inputFields[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'dropdown',
+    options:(item.data.area_id>0?taskData.location_territories.filter((elem)=>{ if(elem.area_id==item.data.area_id){elem.value=elem.id.toString();elem.label=elem.name;return true}}):[]),
+    default:item.data[key],
+    mandatory:true
+  };
   key='email';
   inputFields[key] = {
     name: 'item[' +key +']',
@@ -177,9 +205,33 @@ const setInputFields=async ()=>{
     mandatory:true
   };
   item.inputFields=inputFields;
-
-
 }
+
+$(document).ready(function()
+{
+  $(document).off("change", "#part_id");
+  $(document).on("change",'#part_id',async function()
+  {
+    let part_id=$(this).val();
+    let key='area_id';
+    item.inputFields[key].options=taskData.location_areas.filter((item)=>{ if(item.part_id==part_id){item.value=item.id.toString();item.label=item.name;return true}})
+    await systemFunctions.delay(1);
+    $('#'+key).val('');
+    key='territory_id';
+    item.inputFields[key].options=[];
+    $('#'+key).val('');
+  })
+  $(document).off("change", "#area_id");
+  $(document).on("change",'#area_id',async function()
+  {
+    let area_id=$(this).val();
+    let key='territory_id';
+    item.inputFields[key].options=taskData.location_territories.filter((item)=>{ if(item.area_id==area_id){item.value=item.id.toString();item.label=item.name;return true}})
+    await systemFunctions.delay(1);
+    $('#'+key).val('');
+  })
+});
+
 const save=async (save_and_new)=>{
   let formData=new FormData(document.getElementById('formSaveItem'))
   await axios.post(taskData.api_url+'/save-item',formData).then((res)=>{
