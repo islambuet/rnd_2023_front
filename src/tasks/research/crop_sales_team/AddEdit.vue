@@ -4,7 +4,6 @@
       <router-link :to="taskData.api_url" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" ><i class="feather icon-corner-up-left"></i> {{labels.get('label_back')}}</router-link>
       <template v-if="item.exists">
         <button  type="button" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="save(false)"><i class="feather icon-save"></i> {{labels.get('label_save')}}</button>
-        <button  type="button" class="mr-2 mb-2 btn btn-sm bg-gradient-primary" @click="save(true)"><i class="feather icon-plus-square"></i> {{labels.get('label_save_new')}}</button>
       </template>
     </div>
   </div>
@@ -16,6 +15,7 @@
     <div class="card-body">
       <form id="formSaveItem">
         <InputTemplate :inputItems="item.inputFields" />
+        <InputTemplate v-if="item.showInputFields2" :inputItems="item.inputFields2" />
       </form>
     </div>
   </div>
@@ -40,7 +40,9 @@ let taskData = inject('taskData')
 let item=reactive({
   id:0,
   exists:false,
+  showInputFields2:false,
   inputFields:{},
+  inputFields2:{},
   data:{
     id:0,
     name:'',
@@ -188,50 +190,48 @@ const setInputFields=async ()=>{
     mandatory:true
   };
   item.inputFields=inputFields;
+}
+const setInputFields2=async (itemData)=>{
+  item.inputFields2= {};
   await systemFunctions.delay(1);
-  if(!(item.data.part_id>0)){$('#part_id').trigger('change');}
-  if(!(item.data.area_id>0)){$('#area_id').trigger('change');}
+  let inputFields2={}
 
+  let key='market_size';
+  inputFields2[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'text',
+    default:itemData?itemData[key]:'',
+    mandatory:false
+  };
+  key='sowing_periods';
+  inputFields2[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'checkbox',
+    options:Array.from({length: 12}, (elem,index) => { return {'value':index+1+'','label':labels.get('label_month_short_'+(index+1))}}),
+    default:itemData?itemData[key].split(','):[],
+    mandatory:false
+  };
+  key='competitor_variety';
+  inputFields2[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'text',
+    default:itemData?itemData[key]:'',
+    mandatory:false
+  };
 
+  key='reason_sales';
+  inputFields2[key] = {
+    name: 'item[' +key +']',
+    label: labels.get('label_'+key),
+    type:'textarea',
+    default:itemData?itemData[key]:'',
+    mandatory:false
+  };
+  item.inputFields2=inputFields2;
 }
-const save=async (save_and_new)=>{
-  let formData=new FormData(document.getElementById('formSaveItem'))
-  await axios.post(taskData.api_url+'/save-item',formData).then((res)=>{
-    if (res.data.error == "") {
-      globalVariables.loadListData=true;
-      toastFunctions.showSuccessfullySavedMessage();
-      if(save_and_new){
-        if(item.id>0){
-          router.push(taskData.api_url+"/add")
-        }
-        else{
-          setInputFields();
-        }
-      }
-      else{
-        router.push(taskData.api_url)
-      }
-    }
-    else{
-      toastFunctions.showResponseError(res.data)
-    }
-  });
-
-}
-const getItem=async ()=>{
-  await axios.get(taskData.api_url+'/get-item/'+ item.id).then((res)=>{
-    if (res.data.error == "") {
-      item.data=res.data.item;
-      setInputFields();
-      item.exists=true;
-    }
-    else{
-      toastFunctions.showResponseError(res.data)
-    }
-  });
-}
-  item.id=route.params['item_id']?route.params['item_id']:0;
-
 $(document).ready(function()
 {
   $(document).off("change", "#crop_id");
@@ -241,6 +241,7 @@ $(document).ready(function()
     let key='crop_type2_id';
     item.inputFields[key].options=taskData.crop_types2.filter((item)=>{ if(item.crop_id==crop_id){item.value=item.id.toString();item.label=item.name;return true}})
     $('#'+key).val('');
+    getItem();
   })
   $(document).off("change", "#part_id");
   $(document).on("change",'#part_id',function()
@@ -252,6 +253,7 @@ $(document).ready(function()
     key='territory_id';
     item.inputFields[key].options=[];
     $('#'+key).val('');
+    getItem();
   })
   $(document).off("change", "#area_id");
   $(document).on("change",'#area_id',function()
@@ -260,23 +262,51 @@ $(document).ready(function()
     let key='territory_id';
     item.inputFields[key].options=taskData.location_territories.filter((item)=>{ if(item.area_id==area_id){item.value=item.id.toString();item.label=item.name;return true}})
     $('#'+key).val('');
+    getItem();
+  })
+  $(document).off("change", "#territory_id");
+  $(document).off("change", "#crop_type2_id");
+  $(document).on("change",'#territory_id,#crop_type2_id',function()
+  {
+    getItem();
   })
 });
-  if(item.id>0){
-    if(!(taskData.permissions.action_2)){
-      toastFunctions.showAccessDenyMessage();
-    }
-    else{
-      getItem();
-    }
+const getItem=async ()=>{
+  item.showInputFields2=false;
+  await systemFunctions.delay(1);
+  let territory_id=$('input[name="item[territory_id]"]').val();
+  let crop_type2_id=$('#crop_type2_id').val();
+  if(territory_id>0 && crop_type2_id>0){
+
+    await axios.get(taskData.api_url+'/get-item-by-croptype2_id-territory_id/'+crop_type2_id+'/'+territory_id).then((res)=>{
+      if (res.data.error == "") {
+        setInputFields2(res.data.item);
+        item.showInputFields2=true;
+      }
+      else{
+        toastFunctions.showResponseError(res.data)
+      }
+    });
   }
-  else{
-    if(!(taskData.permissions.action_1)){
-      toastFunctions.showAccessDenyMessage();
+
+
+}
+
+const save=async (save_and_new)=>{
+  let formData=new FormData(document.getElementById('formSaveItem'))
+  await axios.post(taskData.api_url+'/save-item',formData).then((res)=>{
+    if (res.data.error == "") {
+      globalVariables.loadListData=true;
+      toastFunctions.showSuccessfullySavedMessage();
+      router.push(taskData.api_url)
     }
     else{
+      toastFunctions.showResponseError(res.data)
+    }
+  });
+
+}
       setInputFields();
       item.exists=true;
-    }
-  }
+
 </script>

@@ -56,5 +56,21 @@ export default {
         en:"Territory",
         bn:"কর্মচারী আইডি"
     },
+    label_market_size:{
+        en:"Market Size",
+        bn:"কর্মচারী আইডি"
+    },
+    label_sowing_periods:{
+        en:"Sowing Period",
+        bn:"কর্মচারী আইডি"
+    },
+    label_competitor_variety:{
+        en:"Competitors Variety",
+        bn:"কর্মচারী আইডি"
+    },
+    label_reason_sales:{
+        en:"Reason for the Sales",
+        bn:"কর্মচারী আইডি"
+    },
 
 }

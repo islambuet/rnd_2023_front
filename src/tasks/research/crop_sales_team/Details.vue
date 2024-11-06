@@ -41,83 +41,43 @@
     item.detailFields= {};
     await systemFunctions.delay(1);
     let detailFields={}
-    let key='id';
-    detailFields[key] = {
-      label: labels.get('label_'+key),
-      type:'hidden',
-      values:[item.data[key]],
-    };
-    key='name';
+    let key='crop_name';
     detailFields[key] = {
       label: labels.get('label_'+key),
       type:'text',
       values:[item.data[key]],
     };
-    key='crop_name';
+    key='crop_type2_name';
     detailFields[key] = {
       label: labels.get('label_'+key),
       type:'text',
       values:[item.data[key]],
     };
-    key='crop_type_name';
+    key='part_name';
     detailFields[key] = {
       label: labels.get('label_'+key),
       type:'text',
       values:[item.data[key]],
     };
-    key='crop_feature_ids';
-    let crop_features_ids=item.data[key].split(",");
-    let crop_features_names=[];
-    for(let i=0;i<taskData.crop_features.length;i++){
-      if(crop_features_ids.includes(taskData.crop_features[i].id.toString())){
-        crop_features_names.push(taskData.crop_features[i].name)
-      }
-    }
-    detailFields[key] = {
-      label: labels.get('label_'+key),
-      type:'text',
-      values:crop_features_names
-    };
-    key='whose';
+    key='area_name';
     detailFields[key] = {
       label: labels.get('label_'+key),
       type:'text',
       values:[item.data[key]],
     };
-    if(item.data.whose=='Principal'){
-      key='principal_name';
-      detailFields[key] = {
-        label: labels.get('label_'+key),
-        type:'text',
-        values:[item.data[key]],
-      };
-    }
-    if(item.data.whose=='Competitor'){
-      key='competitor_name';
-      detailFields[key] = {
-        label: labels.get('label_'+key),
-        type:'text',
-        values:[item.data[key]],
-      };
-    }
-    key='ordering';
-    detailFields[key] = {
-      label: labels.get('label_'+key),
-      type:'number',
-      values:[item.data[key]],
-    };
-    key='status';
+    key='territory_name';
     detailFields[key] = {
       label: labels.get('label_'+key),
       type:'text',
       values:[item.data[key]],
     };
-    key='retrial';
+    key='market_size';
     detailFields[key] = {
       label: labels.get('label_'+key),
       type:'text',
       values:[item.data[key]],
     };
+
     key='created_at';
     detailFields[key] = {
       label: labels.get('label_'+key),

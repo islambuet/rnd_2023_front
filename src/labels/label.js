@@ -218,4 +218,52 @@ export default {
         en:"RND Code",
         bn:"কর্মচারী আইডি"
     },
+    label_month_short_1:{
+        en:"Jan",
+        bn:"কর্মচারী আইডি"
+    },
+    label_month_short_2:{
+        en:"Feb",
+        bn:"কর্মচারী আইডি"
+    },
+    label_month_short_3:{
+        en:"Mar",
+        bn:"কর্মচারী আইডি"
+    },
+    label_month_short_4:{
+        en:"Apr",
+        bn:"কর্মচারী আইডি"
+    },
+    label_month_short_5:{
+        en:"May",
+        bn:"কর্মচারী আইডি"
+    },
+    label_month_short_6:{
+        en:"Jun",
+        bn:"কর্মচারী আইডি"
+    },
+    label_month_short_7:{
+        en:"Jul",
+        bn:"কর্মচারী আইডি"
+    },
+    label_month_short_8:{
+        en:"Aug",
+        bn:"কর্মচারী আইডি"
+    },
+    label_month_short_9:{
+        en:"Sep",
+        bn:"কর্মচারী আইডি"
+    },
+    label_month_short_10:{
+        en:"Oct",
+        bn:"কর্মচারী আইডি"
+    },
+    label_month_short_11:{
+        en:"Nov",
+        bn:"কর্মচারী আইডি"
+    },
+    label_month_short_12:{
+        en:"Dec",
+        bn:"কর্মচারী আইডি"
+    },
 }

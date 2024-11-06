@@ -35,7 +35,6 @@
             <button class="btn btn-sm bg-gradient-primary dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{labels.get('label_action')}}</button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0; left: 0; transform: translate3d(0px, 38px, 0px);">
               <router-link v-if="taskData.permissions.action_0"  :to="taskData.api_url+'/details/'+item.id" class="dropdown-item text-info btn-sm" ><i class="feather icon-camera"></i> {{labels.get('label_details')}}</router-link>
-              <router-link v-if="taskData.permissions.action_2"  :to="taskData.api_url+'/edit/'+item.id" class="dropdown-item text-info btn-sm" ><i class="feather icon-edit"></i> {{labels.get('label_edit')}}</router-link>
             </div>
           </td>
           <template v-for="(column,key) in taskData.columns.all">
@@ -82,25 +81,6 @@
         filter:{from:'',to:''},
         class:'col_1'
       };
-      key='name';
-      columns[key]={
-        label: labels.get('label_'+key),
-        hideable:false,
-        filterable:true,
-        sortable:true,
-        type:'text',
-        filter:{from:'',to:''}
-      };
-      key='whose';
-      columns[key]={
-        label: labels.get('label_'+key),
-        hideable:true,
-        sortable:true,
-        filterable:true,
-        type:'dropdown',
-        filter:{from:'',to:'',options:[{value:'ARM',label:'ARM'},{value:'Principal',label:'Principal'},{value:'Competitor',label:'Competitor'}]},
-
-      };
       key='crop_name';
       columns[key]={
         label: labels.get('label_'+key),
@@ -110,7 +90,7 @@
         type:'dropdown',
         filter:{from:'',to:'',options:taskData.crops.map((item)=>{ return {value:item.name,label:item.name}}),}
       };
-      key='crop_type_name';
+      key='crop_type2_name';
       columns[key]={
         label: labels.get('label_'+key),
         hideable:true,
@@ -119,35 +99,32 @@
         type:'text',
         filter:{from:'',to:''}
       };
-      key='ordering';
+      key='part_name';
       columns[key]={
         label: labels.get('label_'+key),
         hideable:true,
-        filterable:false,
-        sortable:true,
-        type:'number',
-        filter:{from:'',to:''},
-        class:'col_1'
-      };
-      key='status';
-      columns[key]={
-        label: labels.get('label_'+key),
-        hideable:true,
-        sortable:true,
         filterable:true,
+        sortable:true,
         type:'dropdown',
-        filter:{from:'',to:'',options:[{value:'Active',label:'Active'},{value:'In-Active',label:'In-Active'}]},
-        class:'col_1'
+        filter:{from:'',to:'',options:taskData.location_parts.map((item)=>{ return {value:item.name,label:item.name}}),}
       };
-      key='retrial';
+      key='area_name';
       columns[key]={
         label: labels.get('label_'+key),
         hideable:true,
-        sortable:true,
         filterable:true,
-        type:'dropdown',
-        filter:{from:'',to:'',options:[{label:"Yes",value:'Yes'},{label:"No",value:'No'}]},
-        class:'col_1'
+        sortable:true,
+        type:'text',
+        filter:{from:'',to:''}
+      };
+      key='territory_name';
+      columns[key]={
+        label: labels.get('label_'+key),
+        hideable:true,
+        filterable:true,
+        sortable:true,
+        type:'text',
+        filter:{from:'',to:''}
       };
       key='created_at';
       columns[key]={

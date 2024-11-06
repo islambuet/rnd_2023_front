@@ -49,8 +49,6 @@
     location_territories:[],
   })
   labels.add([{language:globalVariables.language,file:'tasks'+taskData.api_url+'/labels.js'}])
-  console.log(globalVariables.user)
-
   const routing=async ()=>{
     await getItems(taskData.pagination);//Load at least once
     if(route.path==taskData.api_url){
