@@ -44,6 +44,7 @@
     user_locations:{},
     crops:[],
     crop_types2:[],
+    competitor_varieties:[],
     location_parts:[],
     location_areas :[],
     location_territories:[],
@@ -101,6 +102,7 @@
         taskData.user_locations=res.data.user_locations;
         taskData.crops=res.data.crops;
         taskData.crop_types2=res.data.crop_types2;
+        taskData.competitor_varieties=res.data.competitor_varieties;
         taskData.location_parts=res.data.location_parts;
         taskData.location_areas=res.data.location_areas;
         taskData.location_territories=res.data.location_territories;

@@ -47,6 +47,7 @@ let item=reactive({
     crop_type2_name:'',
     part_name:'',
     area_name:'',
+    competitorVarieties:[],
     territory_name:'',
     characteries:'',
   }
@@ -134,7 +135,21 @@ const setInputFields=async ()=>{
     default:sowing_periods_names.join('<br>'),
     mandatory:false
   };
-
+  key='competitor_varieties_ids';
+  let competitor_varieties_ids=item.data[key].split(",");
+  let competitor_varieties_names=[];
+  for(let i=0;i<taskData.competitor_varieties.length;i++){
+    if(competitor_varieties_ids.includes(taskData.competitor_varieties[i].id.toString())){
+      competitor_varieties_names.push(taskData.competitor_varieties[i].name)
+    }
+  }
+  inputFields[key] = {
+    name: key,
+    label: labels.get('label_'+key),
+    type:'textonly',
+    default:competitor_varieties_names.join('<br>'),
+    mandatory:false
+  };
   key='characteries';
   inputFields[key] = {
     name: 'item[' +key +']',
