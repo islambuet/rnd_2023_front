@@ -170,7 +170,6 @@ const setInputFields=async ()=>{
 
   }
 
-
   key='crop_id';
   inputFields[key] = {
     name: 'crop_id',
@@ -191,7 +190,7 @@ const setInputFields=async ()=>{
   };
   item.inputFields=inputFields;
 }
-const setInputFields2=async (itemData)=>{
+const setInputFields2=async (itemData,competitorVarieties)=>{
   item.inputFields2= {};
   await systemFunctions.delay(1);
   let inputFields2={}
@@ -202,6 +201,7 @@ const setInputFields2=async (itemData)=>{
     label: labels.get('label_'+key),
     type:'text',
     default:itemData?itemData[key]:'',
+    class:'float_positive',
     mandatory:false
   };
   key='sowing_periods';
@@ -211,17 +211,19 @@ const setInputFields2=async (itemData)=>{
     type:'checkbox',
     options:Array.from({length: 12}, (elem,index) => { return {'value':index+1+'','label':labels.get('label_month_short_'+(index+1))}}),
     default:itemData?itemData[key].split(','):[],
-    mandatory:false
+    mandatory:false,
+    inline:true
   };
-  key='competitor_variety';
+  key='competitor_varieties_ids';
   inputFields2[key] = {
     name: 'item[' +key +']',
     label: labels.get('label_'+key),
-    type:'text',
-    default:itemData?itemData[key]:'',
-    mandatory:false
+    type:'checkbox',
+    options:competitorVarieties?competitorVarieties.map((elem)=>{ return {value:elem.id+'',label:elem.name}}):[],
+    default:itemData?itemData[key].split(','):[],
+    mandatory:false,
+    inline:false
   };
-
   key='reason_sales';
   inputFields2[key] = {
     name: 'item[' +key +']',
@@ -280,7 +282,7 @@ const getItem=async ()=>{
 
     await axios.get(taskData.api_url+'/get-item-by-croptype2_id-territory_id/'+crop_type2_id+'/'+territory_id).then((res)=>{
       if (res.data.error == "") {
-        setInputFields2(res.data.item);
+        setInputFields2(res.data.item,res.data.competitor_varieties);
         item.showInputFields2=true;
       }
       else{

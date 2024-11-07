@@ -64,7 +64,7 @@ export default {
         en:"Sowing Period",
         bn:"কর্মচারী আইডি"
     },
-    label_competitor_variety:{
+    label_competitor_varieties_ids:{
         en:"Competitors Variety",
         bn:"কর্মচারী আইডি"
     },

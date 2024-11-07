@@ -104,4 +104,14 @@ const setInputFields=()=>{
       default:'',
       mandatory:true
     };
+    key='sowing_periods';
+      inputFields2[key] = {
+        name: 'item[' +key +']',
+        label: labels.get('label_'+key),
+        type:'checkbox',
+        options:Array.from({length: 12}, (elem,index) => { return {'value':index+1+'','label':labels.get('label_month_short_'+(index+1))}}),
+        default:itemData?itemData[key].split(','):[],
+        mandatory:false,
+        inline:false
+      };
     item.inputFields=inputFields;
